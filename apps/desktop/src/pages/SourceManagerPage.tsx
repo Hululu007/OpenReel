@@ -446,7 +446,7 @@ export default function SourceManagerPage() {
             disabled={videoSources.length === 0}
           >
             <Copy className="size-4 mr-2" />
-            导出全部
+            导出视频源
           </Button>
           <Button
             variant="default"

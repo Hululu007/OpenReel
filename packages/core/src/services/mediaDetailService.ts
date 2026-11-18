@@ -30,6 +30,19 @@ export interface EnsureDetailResult {
   error?: string;
 }
 
+/**
+ * 「只探测不落库」的详情拉取结果。
+ * 供批量重新探测使用：复用 ensureDetail 的源顺序、标题校验与跨源兜底，
+ * 但不写 media_source / episode / play_source / media_detail。
+ */
+export interface ProbeDetailResult {
+  ok: boolean;
+  sourceId: string | null;
+  /** 每集一组播放地址（按集号升序；同集多线路按源站顺序排列） */
+  episodeUrls: string[][];
+  error?: string;
+}
+
 /** 解析 CMS 的 `vod_play_from` / `vod_play_url`（与采集链路同一套规则） */
 export function parsePlayUrlGroups(vodPlayFrom: string, vodPlayUrl: string): { sources: string[]; episodes: { title: string; url: string }[][] } {
   const sources = vodPlayFrom ? vodPlayFrom.split('$$$').map((s) => s.trim()).filter(Boolean) : [];
@@ -344,14 +357,21 @@ export class MediaDetailService {
       .trim();
   }
 
-  /** 把一页详情写成 episode / play_source / media_detail（覆盖该媒体在该源下的旧明细） */
-  private async writeDetail(
+  /**
+   * 解析一页详情为待写入行（纯解析，不触库）。
+   * 写入详情与「只探测不落库」共用同一套集号/版本归并语义，避免两条路径对不上。
+   */
+  private buildDetailRows(
     media: Media | null,
     mediaId: number,
     sourceId: string,
     items: CMSMediaItem[]
-  ): Promise<void> {
-    if (items.length === 0) return;
+  ): {
+    episodesBatch: Episode[];
+    playSourcesBatch: PlaySource[];
+    keys: string[];
+    descriptionSource: string;
+  } {
     // 季号必须沿用旧采集语义（title 的季号 == media.seriesSeason）：
     // 写死 1 会让 series_season>1 的影片剧集全落到第 1 季，播放页按 currentSeason 查不到（实测第五季 → 0 集）。
     const seasonNumber = media?.seriesSeason || normalizer.extractSeasonNumber(media?.title || '') || 1;
@@ -401,6 +421,23 @@ export class MediaDetailService {
       }
     }
 
+    return { episodesBatch, playSourcesBatch, keys, descriptionSource };
+  }
+
+  /** 把一页详情写成 episode / play_source / media_detail（覆盖该媒体在该源下的旧明细） */
+  private async writeDetail(
+    media: Media | null,
+    mediaId: number,
+    sourceId: string,
+    items: CMSMediaItem[]
+  ): Promise<void> {
+    if (items.length === 0) return;
+    const { episodesBatch, playSourcesBatch, keys, descriptionSource } = this.buildDetailRows(
+      media,
+      mediaId,
+      sourceId,
+      items
+    );
     const description = descriptionSource ? await normalizer.normalizeDescription(descriptionSource) : null;
 
     await this.db.withTransactionAsync(async () => {
@@ -437,6 +474,110 @@ export class MediaDetailService {
       }
       await this.db.upsertMediaDetail(mediaId, sourceId, new Date().toISOString(), description);
     });
+  }
+
+  /**
+   * 拉取该媒体的播放地址，但**不写任何表**（供批量重新探测等只读判定使用）。
+   *
+   * 复用 ensureDetail 的源顺序、标题校验与跨源按名兜底；与 ensureDetail 的差异只有两点：
+   *  1. 不落库（不写 media_source / episode / play_source / media_detail，也不触发详情缓存淘汰）；
+   *  2. 不走「TTL 内缓存直接返回」——库内缓存由调用方自行优先使用，本方法只负责联网取最新地址。
+   */
+  async fetchPlayUrlsForProbe(mediaId: number, opts?: { sourceId?: string }): Promise<ProbeDetailResult> {
+    const media = await this.db.getMediaById(mediaId);
+    const sources = await this.db.getMediaSourcesByMediaId(mediaId);
+
+    // 指定源优先，其余按 updated_at 降序兜底（与 ensureDetail 一致）
+    const ordered = opts?.sourceId
+      ? [
+          ...sources.filter((s) => s.sourceId === opts.sourceId),
+          ...sources.filter((s) => s.sourceId !== opts.sourceId),
+        ]
+      : sources;
+
+    let lastError = '';
+    const tried = new Set<string>();
+
+    for (const src of ordered) {
+      tried.add(src.sourceId);
+      const videoSource = await this.db.getVideoSourceById(src.sourceId);
+      if (!videoSource || !videoSource.baseUrl) {
+        lastError = `视频源「${src.sourceId}」不可用`;
+        continue;
+      }
+
+      try {
+        const adapter = new CMSAdapter(videoSource.baseUrl);
+        const items = await this.fetchVerifiedItems(adapter, src.sourceId, src.vodId, media, mediaId);
+        if (items.length === 0) {
+          lastError = `源站无该影片详情（源=${src.sourceId}）`;
+          continue;
+        }
+        const episodeUrls = this.collectProbeUrlGroups(media, items);
+        if (episodeUrls.length === 0) {
+          lastError = `源站详情无可用播放地址（源=${src.sourceId}）`;
+          continue;
+        }
+        return { ok: true, sourceId: src.sourceId, episodeUrls };
+      } catch (err) {
+        lastError = err instanceof Error ? err.message : String(err);
+        console.warn(`[MediaDetail] 探测拉取详情失败 media=${mediaId} source=${src.sourceId}: ${lastError}`);
+      }
+    }
+
+    // 已知源全部失败 → 在「其它已启用源」按片名兜底（与 ensureDetail 同语义，只是不写索引）
+    if (media?.title) {
+      try {
+        const enabled = await this.db.getEnabledVideoSources();
+        for (const vs of enabled) {
+          if (!vs.baseUrl || tried.has(vs.id)) continue;
+          try {
+            const adapter = new CMSAdapter(vs.baseUrl);
+            const items = await this.searchVerifiedItems(adapter, media, mediaId);
+            if (items.length === 0) continue;
+            const episodeUrls = this.collectProbeUrlGroups(media, items);
+            if (episodeUrls.length === 0) continue;
+            console.log(`[MediaDetail] 探测换源命中 media=${mediaId} 新源=${vs.id}`);
+            return { ok: true, sourceId: vs.id, episodeUrls };
+          } catch (err) {
+            lastError = err instanceof Error ? err.message : String(err);
+          }
+        }
+      } catch (err) {
+        console.warn(`[MediaDetail] 探测跨源兜底失败 media=${mediaId}:`, err instanceof Error ? err.message : String(err));
+      }
+    }
+
+    return { ok: false, sourceId: null, episodeUrls: [], error: lastError || '所有视频源均无法获取播放地址' };
+  }
+
+  /**
+   * 把详情条目解析成「每集一组播放地址」。
+   * 集号/版本归并规则与 buildDetailRows 完全一致：电影的多版本条目归到第 1 集；同集多线路合并成一组。
+   */
+  private collectProbeUrlGroups(media: Media | null, items: CMSMediaItem[]): string[][] {
+    const isMovie = media?.type === 'MOVIE';
+    const byEpisode = new Map<number, string[]>();
+
+    for (const item of items) {
+      const { episodes: epGroups } = parsePlayUrlGroups(item.vod_play_from || '', item.vod_play_url || '');
+      for (const eps of epGroups) {
+        for (let i = 0; i < eps.length; i++) {
+          const ep = eps[i];
+          if (!ep.url) continue;
+          const isVersion = isMovie && isVersionTitle(ep.title);
+          const epNumber = isVersion ? 1 : i + 1;
+          const existing = byEpisode.get(epNumber);
+          if (existing) {
+            if (!existing.includes(ep.url)) existing.push(ep.url);
+          } else {
+            byEpisode.set(epNumber, [ep.url]);
+          }
+        }
+      }
+    }
+
+    return [...byEpisode.entries()].sort((a, b) => a[0] - b[0]).map(([, urls]) => urls);
   }
 }
 

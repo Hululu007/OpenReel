@@ -429,7 +429,7 @@ export default function SourceManagerScreen({ navigation }: Props) {
               搜索采集
             </Button>
             <Button variant="secondary" size="md" style={styles.actionBtn} onPress={handleExportAll}>
-              导出全部
+              导出视频源
             </Button>
           </View>
         </View>

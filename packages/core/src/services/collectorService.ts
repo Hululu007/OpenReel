@@ -12,6 +12,7 @@ import { SystemConfigService } from './systemConfigService';
 import { ensureStorageForCollect, formatBytes } from './storageGuard';
 import type { ShortDramaConfig } from './systemConfigService';
 import { VideoDurationService } from './videoDurationService';
+import { MediaDetailService } from './mediaDetailService';
 import { RecommendationService } from './recommendationService';
 import { PerfMeter } from './perfMeter';
 import { beginCollectKeepAwake, endCollectKeepAwake } from './keepAwake';
@@ -138,6 +139,8 @@ function parsePlayInfo(
 const MAX_FAILED_ITEMS = 300;
 /** 批量重新探测的并发 worker 数（全局 worker 池，与播放页探测同量级） */
 const REPROBE_CONCURRENCY = 8;
+/** 批量重新探测「按需拉详情」的并发上限：探测本身 8 并发，详情同时打 8 路极易被源站限流，压到 2 */
+const REPROBE_DETAIL_FETCH_CONCURRENCY = 2;
 /** 探测进度写库节流间隔：并发下每部都写会让 collect_task 更新量翻倍 */
 const REPROBE_PROGRESS_PERSIST_INTERVAL_MS = 1000;
 /** 探测进度/status 写库超时：超时应放弃本次写并继续，绝不能因一次写库挂死整个任务 */
@@ -3083,6 +3086,64 @@ const title = await normalizer.normalizeTitle(item.vod_name);
     const failedItems: { id: number; title: string }[] = [];
 
     const durationService = new VideoDurationService();
+    // 按需详情：复用 MediaDetailService 的源顺序/标题校验/跨源兜底，但不落库
+    const detailService = new MediaDetailService(this.db);
+
+    // 详情拉取限流：8 个探测 worker 共用，避免同时联网拉详情被源站限流（探测本身并发不变）
+    let detailActive = 0;
+    const detailWaiters: Array<() => void> = [];
+    const withDetailSlot = async <T>(fn: () => Promise<T>): Promise<T> => {
+      while (detailActive >= REPROBE_DETAIL_FETCH_CONCURRENCY) {
+        await new Promise<void>((resolve) => detailWaiters.push(resolve));
+      }
+      detailActive++;
+      try {
+        return await fn();
+      } finally {
+        detailActive--;
+        const next = detailWaiters.shift();
+        if (next) next();
+      }
+    };
+
+    /**
+     * 库内已缓存的播放地址（用户打开过播放页的片）。
+     * 索引采集只写 media/media_source，这里通常为空；先读库能省掉一次详情请求。
+     */
+    const readCachedUrlGroups = async (mediaId: number): Promise<string[][]> => {
+      const episodes = await this.db.getEpisodesByMediaId(mediaId);
+      if (episodes.length === 0) return [];
+      const byEpisode = new Map<string, string[]>();
+      for (const ep of episodes) {
+        const sources = await this.db.getPlaySourcesByEpisodeId(ep.id);
+        if (sources.length === 0) continue;
+        // key 只用于把同季同集的多线路聚合，不参与排序（探测任意一集成功即止）
+        const key = `${ep.seasonNumber}:${ep.episodeNumber}`;
+        const urls = byEpisode.get(key) ?? [];
+        for (const source of sources) {
+          if (!urls.includes(source.url)) urls.push(source.url);
+        }
+        byEpisode.set(key, urls);
+      }
+      return [...byEpisode.values()];
+    };
+
+    /** 逐集逐线路探测时长，成功 1 集即止；cancelled=true 表示任务被取消 */
+    const probeUrlGroups = async (
+      groups: string[][]
+    ): Promise<{ duration: number | null; cancelled: boolean; tried: number }> => {
+      const episodeCount = Math.min(config.probeEpisodeCount, groups.length);
+      let tried = 0;
+      for (let i = 0; i < episodeCount; i++) {
+        if (abortSignal?.aborted) return { duration: null, cancelled: true, tried };
+        for (const url of groups[i] ?? []) {
+          tried++;
+          const result = await durationService.getDurationFromM3U8(url);
+          if (result !== null) return { duration: result, cancelled: false, tried };
+        }
+      }
+      return { duration: null, cancelled: false, tried };
+    };
 
     console.log(`[批量重新探测] 开始批量重新探测，共 ${total} 部媒体，并发 ${Math.max(1, Math.min(REPROBE_CONCURRENCY, total))}`);
 
@@ -3153,55 +3214,41 @@ const title = await normalizer.normalizeTitle(item.vod_name);
       console.log(`[批量重新探测] DB 连接状态: ${this.db ? '存在' : '不存在'}`);
 
       try {
-        // 批量口径只筛 FALLBACK/NULL，这批媒体必然没有 episode_duration，直接逐集探测
-        console.log(`[批量重新探测] "${media.title}" 开始查询剧集`);
-        const episodes = await this.db.getEpisodesByMediaId(media.id);
-        console.log(`[批量重新探测] "${media.title}" 查到 ${episodes.length} 集`);
-        if (episodes.length === 0) {
-          console.log(`[批量重新探测] "${media.title}" 无剧集数据，跳过`);
-          return 'failed';
+        // 1. 库内缓存优先：用户打开过播放页的片（索引采集后绝大多数为空）
+        const cachedGroups = await readCachedUrlGroups(media.id);
+        let probed = await probeUrlGroups(cachedGroups);
+        if (probed.cancelled) {
+          console.log(`[批量重新探测] 任务被取消`);
+          return 'cancelled';
         }
+        let totalSourcesTried = probed.tried;
 
-        const probeEpisodeCount = Math.min(config.probeEpisodeCount, episodes.length);
-        console.log(`[批量重新探测] "${media.title}" 将探测 ${probeEpisodeCount} 集`);
-        let totalSourcesTried = 0;
-        let successDuration: number | null = null;
-
-        for (let i = 0; i < probeEpisodeCount; i++) {
+        // 2. 库内无地址或地址全部失效 → 按需拉详情（不落库），再探测
+        if (probed.duration === null) {
+          console.log(
+            `[批量重新探测] "${media.title}" 库内${cachedGroups.length === 0 ? '无播放地址' : '地址探测失败'}，按需拉取详情（不落库）`
+          );
+          const fetched = await withDetailSlot(() => detailService.fetchPlayUrlsForProbe(media.id));
           if (abortSignal?.aborted) {
             console.log(`[批量重新探测] 任务被取消`);
             return 'cancelled';
           }
-
-          console.log(`[批量重新探测] "${media.title}" 正在查询第 ${i + 1} 集的播放源`);
-          const sources = await this.db.getPlaySourcesByEpisodeId(episodes[i].id);
-          console.log(`[批量重新探测] "${media.title}" 第 ${i + 1} 集有 ${sources.length} 个播放源`);
-          if (sources.length === 0) {
-            console.log(`[批量重新探测] "${media.title}" 第${i + 1}集 无播放源`);
-            continue;
-          }
-
-          console.log(`[批量重新探测] "${media.title}" 第 ${i + 1}集 共${sources.length}个播放源`);
-
-          for (const source of sources) {
-            totalSourcesTried++;
-            console.log(`[批量重新探测] "${media.title}" 尝试探测源: ${source.url.substring(0, 50)}...`);
-            const result = await durationService.getDurationFromM3U8(source.url);
-            console.log(`[批量重新探测] "${media.title}" 探测结果: ${result}`);
-            if (result !== null) {
-              successDuration = result;
-              break;
+          if (fetched.ok) {
+            console.log(
+              `[批量重新探测] "${media.title}" 详情拉取成功: 源=${fetched.sourceId}, ${fetched.episodeUrls.length} 集`
+            );
+            probed = await probeUrlGroups(fetched.episodeUrls);
+            totalSourcesTried += probed.tried;
+            if (probed.cancelled) {
+              console.log(`[批量重新探测] 任务被取消`);
+              return 'cancelled';
             }
+          } else {
+            console.log(`[批量重新探测] "${media.title}" 详情拉取失败: ${fetched.error}`);
           }
-
-          if (successDuration !== null) break;
         }
 
-        if (abortSignal?.aborted) {
-          console.log(`[批量重新探测] 任务被取消`);
-          return 'cancelled';
-        }
-
+        const successDuration = probed.duration;
         if (successDuration !== null) {
           const durationMin = successDuration / 60;
           const isShortDrama = normalizer.isShortDramaByDuration(durationMin, config.durationThresholdMinutes);
@@ -3216,7 +3263,7 @@ const title = await normalizer.normalizeTitle(item.vod_name);
           return 'long';
         }
 
-        console.log(`[批量重新探测] "${media.title}" 探测失败 (${probeEpisodeCount}集全部失败, 尝试${totalSourcesTried}个源, ${Date.now() - mediaStart}ms)，保持原状态`);
+        console.log(`[批量重新探测] "${media.title}" 探测失败 (尝试${totalSourcesTried}个源, ${Date.now() - mediaStart}ms)，保持原状态`);
         return 'failed';
       } catch (error) {
         console.error(`[批量重新探测] "${media.title}" 探测异常 (${Date.now() - mediaStart}ms):`, error);

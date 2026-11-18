@@ -367,7 +367,7 @@ export function SourceManagerScreen() {
             />
             <TVButton
               id="src-export"
-              label="导出全部"
+              label="导出视频源"
               variant="primary"
               labelFontSize={scale(14)}
               style={styles.actionBtn}
