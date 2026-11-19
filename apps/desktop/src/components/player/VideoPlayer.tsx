@@ -5,6 +5,7 @@ import {
   MediaProvider,
   PlayButton,
   useMediaState,
+  useMediaPlayer,
   isHLSProvider,
   type MediaPlayerInstance,
   type MediaProviderAdapter,
@@ -46,6 +47,43 @@ function CenterPlayButton() {
     >
       <PlayIcon />
     </PlayButton>
+  );
+}
+
+/**
+ * 全屏按钮（替换 Vidstack 默认实现，全屏机制保持原样）。
+ *
+ * Vidstack 的 FullscreenButton 在 `onPress`（pointerup）里调 requestFullscreen，
+ * WKWebView 会间歇性以「Cannot request fullscreen without transient activation」拒绝，
+ * 表现为「全屏按钮点很多次才生效」。这里只把触发时机换到 click（同步调用
+ * player.enterFullscreen/exitFullscreen），全屏目标与状态仍是 Vidstack 的
+ * media-player **元素级全屏**——「全屏切集保持全屏」依赖该语义；不改为窗口全屏。
+ */
+function FullscreenSlotButton() {
+  const player = useMediaPlayer();
+  const isFullscreen = useMediaState('fullscreen');
+  const Icon = isFullscreen
+    ? defaultLayoutIcons.FullscreenButton.Exit
+    : defaultLayoutIcons.FullscreenButton.Enter;
+  return (
+    <button
+      type="button"
+      className="vds-fullscreen-button vds-button"
+      aria-label={isFullscreen ? '退出全屏' : '进入全屏'}
+      title={isFullscreen ? '退出全屏' : '进入全屏'}
+      onClick={() => {
+        // 仍在 Vidstack 的 media-player 元素上做元素级全屏（状态/PIP 联动/切集语义不变），
+        // 只是把触发时机从 pointerup 换到 click，保证 WKWebView 认可用户手势激活。
+        if (!player) return;
+        if (document.fullscreenElement) {
+          player.exitFullscreen().catch((err) => console.error('[VideoPlayer] 退出全屏失败:', err));
+        } else {
+          player.enterFullscreen().catch((err) => console.error('[VideoPlayer] 进入全屏失败:', err));
+        }
+      }}
+    >
+      <Icon className="vds-icon" />
+    </button>
   );
 }
 
@@ -564,6 +602,12 @@ export function VideoPlayer({
         keyTarget={keyTarget}
         keyShortcuts={KEY_SHORTCUTS}
         className="w-full h-full"
+        // 锁比容器（画中画）必须把比例也传给播放器根节点：vidstack 基线样式给
+        // [data-media-player][data-view-type='video'] 硬编码 aspect-ratio:16/9，
+        // 而 [data-media-provider]/<video> 都是 aspect-ratio:inherit + height:auto，
+        // 只给外层 div 设比例的话 <video> 仍是 16:9 盒子 —— 竖屏画面会被
+        // object-fit:contain 缩进扁盒子（实测只剩窗口宽 1/3）。不传时行为不变（16:9）。
+        aspectRatio={lockedRatio ? String(lockedRatio) : undefined}
         onProviderChange={handleProviderChange}
         onLoadedMetadata={onLoadedMetadata}
         onVolumeChange={(event) => {
@@ -641,6 +685,7 @@ export function VideoPlayer({
           smallLayoutWhen={false}
           translations={ZH_TRANSLATIONS}
           slots={{
+            fullscreenButton: <FullscreenSlotButton />,
             pipButton: onPipOpen ? (
               <button
                 type="button"
