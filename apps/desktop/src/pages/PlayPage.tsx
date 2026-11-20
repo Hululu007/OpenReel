@@ -384,6 +384,8 @@ export default function PlayPage() {
       const result = await hideMediaByGenres(selectedHideGenres);
       toast(`已隐藏 ${result.hidden} 个「${selectedHideGenres.join('/')}」类视频`);
       setHideDialogOpen(false);
+      // 需求：隐藏成功后返回来源页（路由切换使列表页重新挂载并重查），不停留在播放页
+      navigate(-1);
     } catch (err: any) {
       toast(`隐藏失败: ${err.message || '未知错误'}`, 'error');
       setHideDialogOpen(false);

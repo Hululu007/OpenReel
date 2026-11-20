@@ -17,6 +17,7 @@ import { ArrowLeft, Star, Settings, ChevronRight, X, Play } from 'lucide-react-n
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { SystemConfigService, UNCATEGORIZED_GENRE, VideoDurationService, resolveDefaultPlayTarget, prefetchPlayTargets } from '@openreel/core';
 import { clearCategoryFilterCache } from '../categoryFilterCache';
+import { showToast } from '../components/Toast';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColors } from '../themes/useThemeColors';
@@ -982,7 +983,9 @@ export default function PlayScreen({ route, navigation }: Props) {
       const result = await hideMediaByGenres(selectedHideGenres);
       clearCategoryFilterCache();
       setHideModalVisible(false);
-      Alert.alert('已隐藏', `已隐藏 ${result.hidden} 个「${selectedHideGenres.join('/')}」类视频`);
+      // 需求：隐藏成功后不在播放页停留 —— 立即回来源列表（来源页聚焦时静默重查，见 CategoryScreen/HomeScreen）
+      navigation.goBack();
+      showToast(`已隐藏 ${result.hidden} 个「${selectedHideGenres.join('/')}」类视频`, 'success');
     } catch (err: any) {
       setHideModalVisible(false);
       Alert.alert('错误', err.message || '隐藏失败');

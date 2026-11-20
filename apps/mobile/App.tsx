@@ -76,6 +76,7 @@ import AnimeScreen from './src/pages/AnimeScreen';
 import DocumentaryScreen from './src/pages/DocumentaryScreen';
 import Sidebar from './src/components/Sidebar';
 import CollectProgressDialog from './src/components/CollectProgressDialog';
+import Toast from './src/components/Toast';
 import { ResourceOverlay } from './src/components/ResourceOverlay';
 import { UpdateHint } from './src/components/UpdateHint';
 import { fetchLatestRelease, compareVersions, getUpdateBadgeStore } from '@openreel/core';
@@ -126,6 +127,8 @@ function RootNavigator() {
       <Sidebar />
       <UpdateHint />
       <CollectProgressDialog />
+      {/* 全局轻提示：隐藏等操作返回来源页后仍需显示成功提示（播放页自身不挂 Toast） */}
+      <Toast />
     </>
   );
 }

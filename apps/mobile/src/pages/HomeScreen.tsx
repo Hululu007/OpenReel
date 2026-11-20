@@ -351,6 +351,14 @@ export default function HomeScreen() {
     };
   }, [privacyAgreed, sourcesChecked, usageGuideDone, videoSources.length, provider]);
 
+  // 「最新」列表加载：仅用户偏好含「追新电影」时查；返回首页时同样需要重查（隐藏某类后立即剔除）
+  const loadLatestMedia = useCallback(() => {
+    if (!userUsageTypes.includes('NEW_MOVIES')) return;
+    provider.listMedia({ type: 'MOVIE', page: 1, pageSize: 5, sort: 'latest' })
+      .then((r) => setLatestMedia(r.items))
+      .catch(() => {});
+  }, [provider, userUsageTypes]);
+
   useEffect(() => {
     loadUserUsageTypes();
     loadFavorites();
@@ -358,21 +366,21 @@ export default function HomeScreen() {
   }, []);
 
   // 每次回到首页时刷新列表：保证儿童模式开关后首页立即反映最新过滤结果
+  const didInitFocusRef = useRef(false);
   useFocusEffect(
     useCallback(() => {
       loadUserUsageTypes();
       loadFavorites();
       loadWatchHistory(1);
-    }, [loadUserUsageTypes, loadFavorites, loadWatchHistory]),
+      // 「最新」：首帧由上方挂载 effect 负责，仅返回本页时重查（播放页隐藏某类后首页立即剔除）
+      if (didInitFocusRef.current) loadLatestMedia();
+      else didInitFocusRef.current = true;
+    }, [loadUserUsageTypes, loadFavorites, loadWatchHistory, loadLatestMedia]),
   );
 
   useEffect(() => {
-    if (userUsageTypes.includes('NEW_MOVIES')) {
-      provider.listMedia({ type: 'MOVIE', page: 1, pageSize: 5, sort: 'latest' })
-        .then((r) => setLatestMedia(r.items))
-        .catch(() => {});
-    }
-  }, [userUsageTypes, provider]);
+    loadLatestMedia();
+  }, [loadLatestMedia]);
 
   useEffect(() => {
     if (favorites.length === 0) { setFavMediaList([]); return; }
@@ -440,12 +448,8 @@ export default function HomeScreen() {
 
   const handleMobileCollectLatest = useCallback(async () => {
     await collectLatest();
-    if (userUsageTypes.includes('NEW_MOVIES')) {
-      provider.listMedia({ type: 'MOVIE', page: 1, pageSize: 5, sort: 'latest' })
-        .then((r) => setLatestMedia(r.items))
-        .catch(() => {});
-    }
-  }, [collectLatest, provider, userUsageTypes]);
+    loadLatestMedia();
+  }, [collectLatest, loadLatestMedia]);
 
   const maybeShowDeleteHint = useCallback(async () => {
     if (hintVisible) return;

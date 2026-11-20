@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert, Modal, TextInput, Clipboard,
 import { useAppStore, getProvider } from '../useAppStore';
 import { SourceImportService, exportSourcesToJson, AI_SOURCE_PROMPT, AI_SOURCE_IMPORT_SAMPLE } from '@openreel/core';
 import type { VideoSource, CollectTask, ImportSourceItem, ParsedImportSource } from '@openreel/core';
-import Toast, { showToast } from '../components/Toast';
+import { showToast } from '../components/Toast';
 import { useThemeColors } from '../themes/useThemeColors';
 import { useThemeStore } from '../themes/store';
 import { useScaledFontSize } from '../themes/useScaledFontSize';
@@ -397,7 +397,6 @@ export default function SourceManagerScreen({ navigation }: Props) {
   return (
     <BlurredBackground imageUrl={null}>
     <View style={styles.container}>
-      <Toast />
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.header}>
           <View style={styles.headerRow}>

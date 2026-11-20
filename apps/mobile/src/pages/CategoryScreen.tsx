@@ -99,24 +99,35 @@ export default function CategoryScreen({ type }: CategoryScreenProps) {
   const [expandedFilter, setExpandedFilter] = useState<string | null>(null);
 
   const isLoadingRef = useRef(false);
+  // 静默重查（返回本页时）互斥与作废标记：不与首屏/筛选加载打架，且被新加载覆盖时丢弃旧结果
+  const silentReloadRef = useRef(false);
+  const silentStaleRef = useRef(false);
   const flatListRef = useRef<FlatList>(null);
   const tabsHidden = useRef(new Animated.Value(0)).current;
   const prevScrollY = useRef(0);
   const [bgImageUrl, setBgImageUrl] = useState<string | null>(null);
 
+  // 列表查询参数唯一来源：首屏/翻页加载与返回时的静默重查共用，保证两者查询条件完全一致
+  const buildListParams = useCallback((pageNum: number) => {
+    const params: Record<string, any> = { page: pageNum, pageSize: PAGE_SIZE, type, sort };
+    if (selectedSubType) params.subType = selectedSubType;
+    if (selectedYear) params.year = selectedYear;
+    if (selectedArea) params.area = selectedArea;
+    if (selectedEpisodeType === 'short') params.isShortDrama = true;
+    else if (selectedEpisodeType === 'long') params.isShortDrama = false;
+    return params;
+  }, [type, sort, selectedSubType, selectedYear, selectedArea, selectedEpisodeType]);
+
   const loadList = useCallback(async (pageNum: number, replace: boolean) => {
     if (isLoadingRef.current) return;
     isLoadingRef.current = true;
+    // 本次加载（筛选/排序/下拉刷新）会使进行中的静默重查结果作废，避免旧结果覆盖新列表
+    silentStaleRef.current = true;
     setIsLoading(true);
     try {
-      const params: Record<string, any> = { page: pageNum, pageSize: PAGE_SIZE, type, sort };
+      const params: Record<string, any> = { ...buildListParams(pageNum) };
       // 翻页（加载更多）复用总命中数，跳过 COUNT 全表/快照序扫描；筛选/排序变更时必重计。
       if (pageNum > 1 && !replace) params.knownTotal = metaRef.current?.total;
-      if (selectedSubType) params.subType = selectedSubType;
-      if (selectedYear) params.year = selectedYear;
-      if (selectedArea) params.area = selectedArea;
-      if (selectedEpisodeType === 'short') params.isShortDrama = true;
-      else if (selectedEpisodeType === 'long') params.isShortDrama = false;
 
       const result = await provider.listMedia(params);
 
@@ -151,7 +162,7 @@ export default function CategoryScreen({ type }: CategoryScreenProps) {
       setIsLoading(false);
       isLoadingRef.current = false;
     }
-  }, [type, sort, selectedSubType, selectedYear, selectedArea, selectedEpisodeType, provider]);
+  }, [buildListParams, provider]);
 
   const loadFilterOptions = useCallback(async () => {
     const kid = (await provider.getKidModeActive()) ? '1' : '0';
@@ -181,10 +192,57 @@ export default function CategoryScreen({ type }: CategoryScreenProps) {
     loadFilterOptions();
   }, [loadFilterOptions]);
 
+  // 页码镜像：返回本页静默重查时读取当前页码（重查 1..page 页，保持「返回还原」语义）
+  const pageRef = useRef(page);
+  pageRef.current = page;
+
+  /**
+   * 从播放页/视频管理等子页返回时静默重查：隐藏/取消隐藏/采集入库后列表立即生效。
+   * - 按当前页码补齐 1..page 页（只重查第 N 页会让列表顶部缺页）
+   * - 不闪加载态、不重置页码/筛选/滚动位置（导航返回铁律）
+   * - 隐藏后总页数可能变少：页码收敛到实际取到的最后一页
+   */
+  const silentlyReload = useCallback(async () => {
+    if (silentReloadRef.current || isLoadingRef.current) return;
+    silentReloadRef.current = true;
+    silentStaleRef.current = false;
+    try {
+      const target = Math.max(1, pageRef.current);
+      const collected: Media[] = [];
+      let lastMeta: PaginatedMeta | null = null;
+      let loadedPage = 0;
+      for (let p = 1; p <= target; p += 1) {
+        const r = await provider.listMedia(buildListParams(p));
+        collected.push(...r.items);
+        lastMeta = r.meta;
+        loadedPage = p;
+        if (r.items.length < PAGE_SIZE) break; // 已到最后一页
+      }
+      if (silentStaleRef.current) return; // 期间有新的筛选/刷新加载，丢弃本次结果
+      setLoadError(false);
+      setMediaList(collected);
+      setMeta(lastMeta);
+      metaRef.current = lastMeta;
+      setPage(loadedPage || 1);
+    } catch (err) {
+      // 静默重查失败保持现状，下次返回本页再试
+      console.error('silentlyReload failed:', err);
+    } finally {
+      silentReloadRef.current = false;
+    }
+  }, [provider, buildListParams]);
+
+  // 首次 focus 交给挂载/筛选加载；之后每次返回本页：重查筛选 chips + 静默重查列表
+  const didInitFocusRef = useRef(false);
   useFocusEffect(
     useCallback(() => {
       loadFilterOptions();
-    }, [loadFilterOptions])
+      if (!didInitFocusRef.current) {
+        didInitFocusRef.current = true;
+        return;
+      }
+      silentlyReload();
+    }, [loadFilterOptions, silentlyReload])
   );
 
   useEffect(() => {
