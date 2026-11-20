@@ -265,6 +265,8 @@ export class CollectorService {
    */
   private hiddenGenresCache: { at: number; value: string[] } | null = null;
   private static readonly HIDDEN_GENRES_TTL_MS = 30_000;
+  /** 季号指纹修复只执行一次（DB 标记 + 进程内共享 Promise，避免多源并发重复跑） */
+  private movieSeasonFpTask: Promise<void> | null = null;
 
   constructor(private db: DatabaseProvider) {
     this.recommendationService = new RecommendationService(db);
@@ -334,8 +336,6 @@ export class CollectorService {
       const vodTagGenres = vodTag.split(/[,，]/).filter(Boolean);
       const rawGenres = [...new Set([...typeNameGenres, ...vodClassGenres, ...vodTagGenres])];
 
-      let mediaType = mapType(typeName, remarks, vodPlayFrom, rawGenres);
-
       // 类型二次判定只看「可播放」的播放组：跳过被过滤成空组的第一线路（如电影天堂 dytt
       // 是分享页），否则空组会让救回电影逻辑短路，把本应判为电影的正片固化成长剧。
       let firstGroupEps: { title: string; number: number }[] = [];
@@ -346,6 +346,8 @@ export class CollectorService {
           number: idx + 1,
         }));
       }
+
+      let mediaType = mapType(typeName, remarks, vodPlayFrom, rawGenres, firstGroupEps.length);
       mediaType = refineTypeByEpisodes(firstGroupEps, mediaType, title);
 
       const seasonNumber = normalizer.extractSeasonNumber(title) || 1;
@@ -807,6 +809,8 @@ sourceUpdatedAt,
     const pageStart = Date.now();
     const configService = new SystemConfigService(this.db);
     const config = await configService.getCollectConfig();
+    // 季号指纹一次性修复（同剧各季不再并成一条；DB 标记保证只跑一次）
+    await this.ensureMovieSeasonFingerprints();
 
     console.log(`[Collector] collectFromSource: sourceId=${sourceId}, baseUrl=${baseUrl}, page=${page}, pageSize=${pageSize}`);
     console.log(`[Collector] config: minYear=${config.minYear}, concurrency=${config.concurrency}`);
@@ -1220,7 +1224,7 @@ sourceUpdatedAt,
         ...(vodTag ? vodTag.split(/[,，]/).filter(Boolean) : []),
       ]),
     ];
-    let mediaType = mapType(typeName, remarks, vodPlayFrom, rawGenres);
+    let mediaType = mapType(typeName, remarks, vodPlayFrom, rawGenres, epGroups.find((g) => g.length > 0)?.length ?? 0);
     const firstPlayableGroup = epGroups.find((g) => g.length > 0);
     if (firstPlayableGroup) {
       mediaType = refineTypeByEpisodes(
@@ -1288,6 +1292,8 @@ sourceUpdatedAt,
     await this.repairMediaTypeMismatches();
     // 存量同名多版本合并（60s 节流后台执行，不阻塞搜索）
     void this.runVersionMergeOnce();
+    // 季号指纹一次性修复（同剧各季不再并成一条）
+    await this.ensureMovieSeasonFingerprints();
 
     const results: Media[] = [];
 
@@ -1368,12 +1374,24 @@ const title = await normalizer.normalizeTitle(item.vod_name);
             const vodClass = item.vod_class || '';
             const rawGenres = [...new Set([...typeName.split(/[,，]/).filter(Boolean), ...vodClass.split(/[,，]/).filter(Boolean)])];
 
-            const mediaType = mapType(typeName, remarks, item.vod_play_from || '', rawGenres);
+            const { episodes: epGroups } = parsePlayInfo(item.vod_play_from || '', item.vod_play_url || '');
+            const firstPlayableGroup = epGroups.find((g) => g.length > 0);
+            let mediaType = mapType(typeName, remarks, item.vod_play_from || '', rawGenres, firstPlayableGroup?.length ?? 0);
+            if (firstPlayableGroup) {
+              mediaType = refineTypeByEpisodes(
+                firstPlayableGroup.map((ep, idx) => ({ title: ep.title, number: idx + 1 })),
+                mediaType,
+                title
+              );
+            }
             const seasonNumber = normalizer.extractSeasonNumber(title) || 1;
             const fingerprint = await normalizer.generateFingerprint(title, year, mediaType, seasonNumber);
 
+            // 选中/去重键必须用条目自身唯一身份（源 + vod_id），不能用指纹：
+            // 同剧多季在指纹相同时曾共用一个 previewId，导致全选计数偏小、勾选一条联动全部。
+            const vodIdStr = item.vod_id != null ? String(item.vod_id) : '';
             const previewItem: CollectPreviewItem = {
-              previewId: `${source.id}:${fingerprint}`,
+              previewId: vodIdStr ? `${source.id}:${vodIdStr}` : `${source.id}:${fingerprint}:#${batch.length}`,
               fingerprint,
               title,
               year,
@@ -1413,6 +1431,8 @@ const title = await normalizer.normalizeTitle(item.vod_name);
     await this.repairMediaTypeMismatches();
     // 存量同名多版本合并（60s 节流后台执行，不阻塞保存预览）
     void this.runVersionMergeOnce();
+    // 季号指纹一次性修复必须先于保存，否则旧合并行会让本次保存再建一条同名同季
+    await this.ensureMovieSeasonFingerprints();
 
     const effectiveMinYear = overrides?.unlimitedYear ? 0 : config.minYear;
 
@@ -1442,6 +1462,77 @@ const title = await normalizer.normalizeTitle(item.vod_name);
     return { saved, hiddenItems };
   }
 
+  /**
+   * 存量修复（一次性，DB 标记控制）：标题带季号的电影历史上指纹不含季号
+   * （movie:片名:年份），同剧各季被并成一条；而 media_source 主键是 (media_id, source_id)，
+   * 同源多季只能保留一个 vod_id，其余季直接丢失。
+   * 这里给这类行补上 :sN 与 series_group/series_season，与新的指纹规则对齐。
+   * 只改 media 行的指纹/季信息，不动剧集、播放源与引用表；目标指纹已被占用时跳过该行。
+   */
+  async repairMovieSeasonFingerprints(): Promise<number> {
+    const configService = new SystemConfigService(this.db);
+    if ((await configService.getString('movie_season_fp_migrated', '')) === '1') return 0;
+
+    const rows = await this.db.select<{ id: number; title: string; year: number; fingerprint: string }>(
+      `SELECT id, title, year, fingerprint FROM media
+        WHERE type = 'MOVIE' AND fingerprint NOT GLOB '*:s[0-9]*'
+          AND (title LIKE '%季%' OR lower(title) LIKE '%season%' OR lower(title) LIKE '% s_%')`
+    );
+
+    const updates: { id: number; fingerprint: string; seriesGroup: string | null; seriesSeason: number | null }[] = [];
+    for (const row of rows) {
+      const season = normalizer.extractSeasonNumber(row.title);
+      if (season == null) continue;
+      const next = await normalizer.generateFingerprint(row.title, row.year, 'MOVIE', season);
+      if (next === row.fingerprint) continue;
+      const occupied = await this.db.select<{ id: number }>(
+        'SELECT id FROM media WHERE fingerprint = ? LIMIT 1',
+        [next]
+      );
+      if (occupied.length > 0 && occupied[0].id !== row.id) {
+        console.warn(`[Collector] 季号指纹修复跳过（目标指纹已存在）: ${row.title} -> ${next}`);
+        continue;
+      }
+      updates.push({
+        id: row.id,
+        fingerprint: next,
+        seriesGroup: normalizer.extractSeriesGroup(next),
+        seriesSeason: normalizer.extractSeriesSeason(next),
+      });
+    }
+
+    if (updates.length > 0) {
+      const now = new Date().toISOString();
+      await this.db.withTransactionAsync(async () => {
+        for (const u of updates) {
+          await this.db.execute(
+            'UPDATE media SET fingerprint = ?, series_group = ?, series_season = ?, updated_at = ? WHERE id = ?',
+            [u.fingerprint, u.seriesGroup, u.seriesSeason, now, u.id]
+          );
+        }
+      });
+      console.log(`[Collector] 季号指纹修复完成: ${updates.length} 条`);
+    }
+    await configService.setString('movie_season_fp_migrated', '1');
+    return updates.length;
+  }
+
+  /** 采集/保存前确保季号指纹修复已执行（进程内共享 Promise + DB 标记） */
+  private async ensureMovieSeasonFingerprints(): Promise<void> {
+    if (!this.movieSeasonFpTask) {
+      this.movieSeasonFpTask = (async () => {
+        try {
+          await this.repairMovieSeasonFingerprints();
+        } catch (err) {
+          // 失败不写 DB 标记，下次调用可重试
+          this.movieSeasonFpTask = null;
+          console.error('[Collector] 季号指纹修复失败:', err);
+        }
+      })();
+    }
+    await this.movieSeasonFpTask;
+  }
+
   /** 判断一条 TV 记录是否像「被误判为电视剧的电影」：genre 首个元素为「XX片」类（喜剧片/动作片…，来自源 type_name，是电影类目固有命名）。 */
   private isMovieLikeTvRow(row: { genre: string | null }): boolean {
     if (!row.genre) return false;
@@ -1466,8 +1557,8 @@ const title = await normalizer.normalizeTitle(item.vod_name);
    * 护栏：仅处理 TV 非短剧、current/total ≤ 2、且 genre 首元素为「XX片」候选；≥2 条且全无版式词标题的跳过。
    */
   async repairMediaTypeMismatches(): Promise<number> {
-    const tvRows = await this.db.select<{ id: number; fingerprint: string; genre: string | null }>(
-      `SELECT id, fingerprint, genre FROM media
+    const tvRows = await this.db.select<{ id: number; title: string; year: number; fingerprint: string; genre: string | null }>(
+      `SELECT id, title, year, fingerprint, genre FROM media
        WHERE type = 'TV' AND fingerprint LIKE 'tv:%:s1' AND is_short_drama = 0
          AND (current_episodes IS NULL OR current_episodes <= 2)
          AND (total_episodes IS NULL OR total_episodes <= 2)`
@@ -1492,7 +1583,8 @@ const title = await normalizer.normalizeTitle(item.vod_name);
           if (!hasMovieStyleTitle) continue;
         }
 
-        const movieFp = `movie:${match[1]}:${match[2]}`;
+        // 用与正常入库一致的指纹规则（标题带季号的电影会保留 :sN），避免与采集路径产出不一致
+        const movieFp = await normalizer.generateFingerprint(row.title, row.year, 'MOVIE', 1);
         const movieId = movieIdByFp.get(movieFp);
 
         if (movieId && movieId !== row.id) {

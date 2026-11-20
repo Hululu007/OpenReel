@@ -1692,6 +1692,12 @@ export class TauriSqlProvider implements DatabaseProvider {
        ON CONFLICT(media_id, source_id) DO UPDATE SET vod_id = excluded.vod_id, updated_at = excluded.updated_at`,
       [mediaId, sourceId, vodId, updatedAt]
     );
+    // 一个源的 vod_id 只应对应一条 media：历史上同剧多季被合并时，旧行会残留同源同 vod 的映射，
+    // 导致按 vod 回查串行。这里在写入新归属后清掉其它 media 上的同一 (source, vod) 映射。
+    await this.db!.execute(
+      `DELETE FROM media_source WHERE source_id = ? AND vod_id = ? AND media_id <> ?`,
+      [sourceId, vodId, mediaId]
+    );
   }
 
   async getMediaSourcesByMediaId(mediaId: number): Promise<Array<{ sourceId: string; vodId: string; updatedAt: string | null }>> {

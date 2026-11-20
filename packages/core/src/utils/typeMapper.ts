@@ -58,21 +58,33 @@ export function mapType(
   typeName: string,
   remarks: string,
   playFrom?: string,
-  genreArray?: string[]
+  genreArray?: string[],
+  /** 播放地址里第一组可播放线路的实际集数（已解析）；用于纠正 remarks 写法不规范的 AI 漫剧/短剧 */
+  episodeCount?: number
 ): MediaType {
   const t = (typeName || '').trim();
   const r = (remarks || '').trim();
   const pf = (playFrom || '').trim();
 
   if (isAiDrama(t, r, ...(genreArray || []))) {
-    // AI 漫剧/短剧单集视为电影；多集（全N集/共N集/更新至N集/第N集）按剧集处理
+    // AI 漫剧/短剧：多集按剧集处理，单集才是电影。
+    // remarks 写法不统一（全80集 / 第46-47集 / 合集2 / 更新全集…），
+    // 因此同时参考播放地址里解析出的实际集数，避免实际多集被误判成电影后与同剧其他季合并。
     const multiEpMatch =
       r.match(/全\s*(\d+)\s*集/) ||
       r.match(/共\s*(\d+)\s*集/) ||
       r.match(/更新至\s*(\d+)\s*集/) ||
       r.match(/第\s*(\d+)\s*集/);
-    const epNum = multiEpMatch ? parseInt(multiEpMatch[1], 10) : 0;
-    if (epNum <= 1) return 'MOVIE';
+    const rangeMatch = r.match(/第\s*\d+\s*[-~至]\s*(\d+)\s*集/);
+    const packMatch = r.match(/合集\s*(\d+)/);
+    const declared = Math.max(
+      multiEpMatch ? parseInt(multiEpMatch[1], 10) : 0,
+      rangeMatch ? parseInt(rangeMatch[1], 10) : 0,
+      packMatch ? parseInt(packMatch[1], 10) : 0,
+      episodeCount && episodeCount > 0 ? episodeCount : 0
+    );
+    if (declared <= 1) return 'MOVIE';
+    return 'TV';
   }
 
   for (const kw of ANIME_KEYWORDS) {

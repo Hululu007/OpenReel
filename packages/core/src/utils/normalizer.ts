@@ -264,6 +264,13 @@ export class DataNormalizer {
     const normalizedTitle = cleanTitle;
 
     if (type === 'MOVIE') {
+      // 标题自带「第N季 / Season N」的影片（多为分季漫剧/短剧）按季落成独立条目：
+      // 否则各季算出同一指纹会被合并成一条，而 media_source 主键是 (media_id, source_id)，
+      // 同源多季只能保留最后一个 vod_id，其余季直接丢失。
+      const explicitSeason = this.extractSeasonNumber(title);
+      if (explicitSeason != null) {
+        return `movie:${normalizedTitle}:${year}:s${explicitSeason}`;
+      }
       return `movie:${normalizedTitle}:${year}`;
     }
 
