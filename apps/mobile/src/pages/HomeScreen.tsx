@@ -18,10 +18,11 @@ import CategoryHeader from '../components/CategoryHeader';
 import BlurredBackground from '../components/BlurredBackground';
 import { KidLockBanner } from '../components/KidLockBanner';
 import type { Media, Episode, UserUsageType, WatchHistory } from '@openreel/core';
+import { AWARD_CATALOG } from '@openreel/core';
 import { getSplashStore } from '@openreel/core';
 import { radius } from '../themes/radiusTokens';
 import { openMediaPlay } from '../utils/openMediaPlay';
-import { Sparkles, Film, Tv, Clock, Heart, X } from 'lucide-react-native';
+import { Sparkles, Film, Tv, Clock, Heart, X, Trophy, ChevronRight } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -862,6 +863,43 @@ export default function HomeScreen() {
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
+
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={() => navigation.navigate('Rankings')}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 12,
+            marginHorizontal: 15,
+            marginTop: 14,
+            padding: 14,
+            borderRadius: radius.lg,
+            backgroundColor: hexToRgba(colors.card, cardOpacity / 100),
+          }}
+        >
+          <View
+            style={{
+              width: 42,
+              height: 42,
+              borderRadius: 21,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: hexToRgba(colors.warning, 0.16),
+            }}
+          >
+            <Trophy size={20} color={colors.warning} />
+          </View>
+          <View style={{ flex: 1, minWidth: 0 }}>
+            <Text style={{ fontSize: s(15), fontWeight: '600', color: colors.text }}>
+              {Math.max(...AWARD_CATALOG.lists.map((l) => l.year ?? 0))} 颁奖季 · 年度榜单
+            </Text>
+            <Text style={{ fontSize: s(11), color: colors.textSecondary, marginTop: 3 }} numberOfLines={1}>
+              豆瓣年度 / 奥斯卡 / 金球 / 戛纳 / 金马 / 白玉兰：先看本地能不能播
+            </Text>
+          </View>
+          <ChevronRight size={18} color={colors.mutedForeground} />
+        </TouchableOpacity>
 
         {userUsageTypes.includes('SEARCH_FIRST') && renderSearchFirstCard()}
         {userUsageTypes.includes('NEW_MOVIES') && renderNewMoviesCard()}

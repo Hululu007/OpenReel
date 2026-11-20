@@ -15,6 +15,8 @@ export type RootStackParamList = {
     title?: string;
   } & MediaNavState;
   Search: { keyword?: string } & MediaNavState;
+  Rankings: undefined;
+  RankingDetail: { listId: string };
   Detail: {
     mediaId: number;
     title?: string;

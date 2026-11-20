@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { Media, Episode, WatchHistory } from '@openreel/core';
 import { useThemeColors, useScaledFontSize, radius, useThemeStore } from '@openreel/expo-ui';
-import { Film, Tv, Clock, Heart } from 'lucide-react-native';
+import { Film, Tv, Clock, Heart, Trophy } from 'lucide-react-native';
 
 import { useAppStore, getProvider, getStore } from '../useAppStore';
 import { TVFocusable } from '../focus/TVFocusable';
@@ -339,7 +339,7 @@ export function HomeScreen() {
     const i = renderedSections.findIndex((s) => s.key === key);
     return renderedSections[i + 1]?.entryId;
   };
-  const navDownTargetId = empty || showSourceGuide ? undefined : renderedSections[0]?.entryId;
+  const navDownTargetId = empty || showSourceGuide ? undefined : 'home-rankings';
 
   const cardHeaderStyle = [
     styles.card,
@@ -642,6 +642,28 @@ export function HomeScreen() {
           </View>
         ) : (
           <>
+            {!empty ? (
+              <TVFocusable
+                id="home-rankings"
+                onPress={() => nav.navigate('Rankings')}
+                nextFocusDownId={renderedSections[0]?.entryId}
+                style={[
+                  styles.rankingsBanner,
+                  { backgroundColor: hexToRgba(colors.surface, cardOpacity / 100), borderColor: colors.border },
+                ]}
+                testID="tv-home-rankings"
+              >
+                <Trophy size={tv(22)} color={colors.warning} />
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.rankingsTitle, { color: colors.foreground, fontSize: scale(18) }]}>
+                    年度榜单
+                  </Text>
+                  <Text style={[styles.rankingsDesc, { color: colors.mutedForeground, fontSize: scale(13) }]}>
+                    豆瓣年度 / 奥斯卡 / 电影节 / 华语电视奖项，先看本地能不能播
+                  </Text>
+                </View>
+              </TVFocusable>
+            ) : null}
             {empty ? (
               <View style={[styles.emptyBox, { backgroundColor: hexToRgba(colors.surface, cardOpacity / 100), borderColor: colors.border }]}>
                 <Text style={[styles.emptyTitle, { color: colors.foreground, fontSize: scale(22) }]}>
@@ -701,6 +723,18 @@ const styles = StyleSheet.create({
     paddingBottom: TV_LAYOUT.paddingY * 2,
   },
   status: { paddingVertical: tv(40), textAlign: 'center' },
+  rankingsBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tv(14),
+    borderRadius: tv(12),
+    borderWidth: 1,
+    paddingVertical: tv(14),
+    paddingHorizontal: tv(18),
+    marginBottom: tv(16),
+  },
+  rankingsTitle: { fontWeight: '700' },
+  rankingsDesc: { marginTop: tv(2) },
   card: {
     borderRadius: tv(12),
     // 区块大卡外框去边框：与移动端 usageCard（无边框）保持一致

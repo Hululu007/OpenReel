@@ -53,6 +53,8 @@ import { useThemeColors } from './src/themes/useThemeColors';
 import HomeScreen from './src/pages/HomeScreen';
 import SearchScreen from './src/pages/SearchScreen';
 import KeywordCollectScreen from './src/pages/KeywordCollectScreen';
+import RankingsScreen from './src/pages/RankingsScreen';
+import RankingDetailScreen from './src/pages/RankingDetailScreen';
 import PlayScreen from './src/pages/PlayScreen';
 import SourceManagerScreen from './src/pages/SourceManagerScreen';
 import AiSourceImportScreen from './src/pages/AiSourceImportScreen';
@@ -101,6 +103,8 @@ function RootNavigator() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Search" component={SearchScreen} options={{ animation: 'default' }} />
         <Stack.Screen name="KeywordCollect" component={KeywordCollectScreen} options={{ animation: 'default' }} />
+        <Stack.Screen name="Rankings" component={RankingsScreen} options={{ animation: 'default' }} />
+        <Stack.Screen name="RankingDetail" component={RankingDetailScreen} options={{ animation: 'default' }} />
         <Stack.Screen name="Movie" component={MovieScreen} />
         <Stack.Screen name="TV" component={TVScreen} />
         <Stack.Screen name="Variety" component={VarietyScreen} />

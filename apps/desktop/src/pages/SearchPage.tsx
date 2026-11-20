@@ -1,12 +1,13 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import type { Media, PaginatedResponse } from '@openreel/core';
 import { getProvider, getStore } from '../init';
+import { getAwardService } from './rankings/useAwards';
 import { useBackgroundStore } from '../themes/backgroundStore';
 import { MediaGrid } from '@/components/MediaCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search, X, Database, Clock, Flame, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Search, X, Database, Clock, Flame, ChevronLeft, ChevronRight, Trophy } from 'lucide-react';
 
 const pageSize = 30;
 
@@ -129,6 +130,14 @@ export default function SearchPage() {
   };
 
   const activeKw = q;
+  const relatedLists = useMemo(() => {
+    if (!activeKw) return [];
+    try {
+      return getAwardService().findListsByKeyword(activeKw, 4);
+    } catch {
+      return [];
+    }
+  }, [activeKw]);
 
   return (
     <div className="p-6 space-y-5 max-w-7xl mx-auto">
@@ -163,6 +172,27 @@ export default function SearchPage() {
 
       {activeKw ? (
         <div className="space-y-4">
+          {relatedLists.length > 0 && (
+            <div className="rounded-lg bg-[var(--color-card-alpha)] backdrop-blur-sm p-3">
+              <div className="flex items-center gap-2 mb-2 text-sm">
+                <Trophy className="size-4 text-amber-400" />
+                <span className="font-medium">相关榜单</span>
+                <span className="text-xs text-muted-foreground">「{activeKw}」匹配到 {relatedLists.length} 个榜单</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {relatedLists.map((list) => (
+                  <button
+                    key={list.id}
+                    type="button"
+                    onClick={() => navigate(`/rankings/${encodeURIComponent(list.id)}`)}
+                    className="text-xs px-3 py-1.5 rounded-full bg-[var(--color-secondary-alpha)] text-text-secondary hover:bg-[var(--color-hover-alpha)] hover:text-text transition-colors"
+                  >
+                    {list.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           <h2 className="text-lg font-medium">搜索结果："{activeKw}"</h2>
           {searching ? (
             <div className="flex items-center justify-center h-64 text-muted-foreground">搜索中...</div>

@@ -19,6 +19,8 @@ import TVPage from './pages/TVPage';
 import VarietyPage from './pages/VarietyPage';
 import AnimePage from './pages/AnimePage';
 import DocumentaryPage from './pages/DocumentaryPage';
+import RankingsPage from './pages/RankingsPage';
+import RankingDetailPage from './pages/RankingDetailPage';
 import SearchPage from './pages/SearchPage';
 import SubtypePage from './pages/SubtypePage';
 import PlayPage from './pages/PlayPage';
@@ -159,6 +161,8 @@ useEffect(() => {
                       <Route path="/variety" element={<VarietyPage />} />
                       <Route path="/anime" element={<AnimePage />} />
                       <Route path="/documentary" element={<DocumentaryPage />} />
+                      <Route path="/rankings" element={<RankingsPage />} />
+                      <Route path="/rankings/:listId" element={<RankingDetailPage />} />
                       <Route path="/search" element={<SearchPage />} />
                       <Route path="/subtype/:type/:subType" element={<SubtypePage />} />
                       <Route path="/play/:episodeId" element={<PlayPage />} />

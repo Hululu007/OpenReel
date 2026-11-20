@@ -18,6 +18,7 @@ import {
   Music,
   BookOpen,
   Camera,
+  Trophy,
   X,
   CheckCircle,
   AlertCircle,
@@ -36,6 +37,7 @@ const navItems = [
   { to: '/variety', label: '综艺', icon: Music },
   { to: '/anime', label: '动漫', icon: BookOpen },
   { to: '/documentary', label: '纪录片', icon: Camera },
+  { to: '/rankings', label: '榜单', icon: Trophy },
   { to: '/settings', label: '设置', icon: Settings },
 ];
 
@@ -114,7 +116,7 @@ let sourceGuideShownThisLaunch = false;
 let collectGuideShownThisLaunch = false;
 
 export function Layout() {
-  const [appVersion, setAppVersion] = useState('1.0.245');
+  const [appVersion, setAppVersion] = useState('1.0.246');
   const [sourcesLoaded, setSourcesLoaded] = useState(false);
   const [showUsageGuide, setShowUsageGuide] = useState(false);
   const [showSourceGuide, setShowSourceGuide] = useState(false);

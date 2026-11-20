@@ -45,6 +45,8 @@ import LicenseScreen from './src/pages/LicenseScreen';
 import HelpCenterScreen from './src/pages/HelpCenterScreen';
 import CollectGuideScreen from './src/pages/CollectGuideScreen';
 import KidLockScreen from './src/pages/KidLockScreen';
+import RankingsScreen from './src/pages/RankingsScreen';
+import RankingDetailScreen from './src/pages/RankingDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +67,8 @@ function RootNavigator() {
         <Stack.Screen name="Home" component={HomeScreen} options={{ animation: 'none' }} />
         <Stack.Screen name="Category" component={CategoryScreen} />
         <Stack.Screen name="Search" component={SearchScreen} options={{ animation: 'slide_from_right' }} />
+        <Stack.Screen name="Rankings" component={RankingsScreen} />
+        <Stack.Screen name="RankingDetail" component={RankingDetailScreen} />
         <Stack.Screen name="Detail" component={DetailScreen} />
         <Stack.Screen name="Play" component={PlayScreen} options={{ animation: 'fade' }} />
         <Stack.Screen name="Favorites" component={FavoritesScreen} />

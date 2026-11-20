@@ -1334,8 +1334,17 @@ sourceUpdatedAt,
 
   async searchKeywordPreview(
     keyword: string,
-    overrides?: { unlimitedYear?: boolean },
-    onBatch?: (batch: CollectPreviewItem[], sourceIndex: number, totalSources: number) => void
+    overrides?: {
+      unlimitedYear?: boolean;
+      /** 单源搜索超时（ms）；榜单找片用更短的超时，避免慢源把一次点击拖到几分钟。 */
+      searchTimeoutMs?: number;
+      /** 单源搜索重试次数；榜单找片用 1。 */
+      searchMaxRetries?: number;
+      /** 单源最多处理多少条搜索结果（详情请求逐条发生，条数越多越慢）。 */
+      maxItemsPerSource?: number;
+    },
+    onBatch?: (batch: CollectPreviewItem[], sourceIndex: number, totalSources: number) => void,
+    signal?: AbortSignal
   ): Promise<CollectPreviewItem[]> {
     const sources = await this.db.getEnabledVideoSources();
     const configService = new SystemConfigService(this.db);
@@ -1344,17 +1353,23 @@ sourceUpdatedAt,
     const results: CollectPreviewItem[] = [];
 
     for (let si = 0; si < sources.length; si++) {
+      if (signal?.aborted) break;
       const source = sources[si];
       const batch: CollectPreviewItem[] = [];
       try {
         const adapter = new CMSAdapter(source.baseUrl);
         await this.db.incrementSourceRequestCount(source.id);
-        const response = await adapter.search(keyword, 1);
+        const response = await adapter.search(keyword, 1, signal, {
+          timeout: overrides?.searchTimeoutMs,
+          maxRetries: overrides?.searchMaxRetries,
+        });
 
-        for (const listItem of response.list) {
+        const maxItems = overrides?.maxItemsPerSource ?? response.list.length;
+        for (const listItem of response.list.slice(0, Math.max(0, maxItems))) {
+          if (signal?.aborted) break;
           try {
             await this.db.incrementSourceRequestCount(source.id);
-            const detailResponse = await adapter.getDetail(String(listItem.vod_id));
+            const detailResponse = await adapter.getDetail(String(listItem.vod_id), signal);
             if (!detailResponse.list || detailResponse.list.length === 0) {
               await this.db.incrementSourceFailCount(source.id);
               continue;
@@ -1416,6 +1431,9 @@ const title = await normalizer.normalizeTitle(item.vod_name);
       onBatch?.(batch, si, sources.length);
     }
 
+    // unlimitedYear 会把全局 normalizer 的 minYear 改成 0；调用结束必须恢复，
+    // 否则后续普通采集/搜索会意外收录低于采集配置年份的内容。
+    normalizer.setMinYear(config.minYear);
     return results;
   }
 

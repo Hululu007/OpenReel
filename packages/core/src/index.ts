@@ -48,6 +48,8 @@ export { KidLockService } from './services/kidLockService';
 export { VideoDurationService, setVideoFetchFn, getVideoFetchFn } from './services/videoDurationService';
 export { SourceImportService, exportSourcesToJson } from './services/sourceImportService';
 export { RecommendationService, type RecommendationOverview, type DislikedMediaItem, type TagBlacklistItem } from './services/recommendationService';
+export { AwardService } from './services/awardService';
+export * from './awards/catalog';
 export { resolveDefaultPlayTarget, type DefaultPlayTarget } from './services/playbackTarget';
 export { prefetchPlayTargets, resetPlayPrefetchCache } from './services/playPrefetch';
 export { repairUserMediaIndex, collectRepairCandidates, backfillUserMediaSources, type IndexRepairResult, type BackfillSourcesResult } from './services/indexRepairService';

@@ -1,0 +1,4874 @@
+{
+  "version": "2026-11-20",
+  "updatedAt": "2026-11-20T14:40:27.949Z",
+  "awards": [
+    {
+      "id": "oscar",
+      "name": "奥斯卡金像奖",
+      "shortName": "奥斯卡",
+      "group": "AWARDS",
+      "kind": "MOVIE",
+      "region": "美国",
+      "sourceUrl": "https://movie.douban.com/annual/2025/"
+    },
+    {
+      "id": "golden-globe",
+      "name": "金球奖",
+      "shortName": "金球奖",
+      "group": "AWARDS",
+      "kind": "MOVIE",
+      "region": "美国",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECNA7QSZI"
+    },
+    {
+      "id": "cannes",
+      "name": "戛纳电影节",
+      "shortName": "戛纳",
+      "group": "AWARDS",
+      "kind": "FESTIVAL",
+      "region": "法国",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECCU6GZUA"
+    },
+    {
+      "id": "berlinale",
+      "name": "柏林电影节",
+      "shortName": "柏林",
+      "group": "AWARDS",
+      "kind": "FESTIVAL",
+      "region": "德国",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECZAHZJTI"
+    },
+    {
+      "id": "venice",
+      "name": "威尼斯电影节",
+      "shortName": "威尼斯",
+      "group": "AWARDS",
+      "kind": "FESTIVAL",
+      "region": "意大利",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECQU75JDA"
+    },
+    {
+      "id": "golden-horse",
+      "name": "金马奖",
+      "shortName": "金马",
+      "group": "CHINESE",
+      "kind": "MOVIE",
+      "region": "中国台湾",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECBQ6CECI"
+    },
+    {
+      "id": "magnolia",
+      "name": "上海电视节白玉兰奖",
+      "shortName": "白玉兰",
+      "group": "TV",
+      "kind": "TV",
+      "region": "中国大陆",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECXI7Y6IQ"
+    },
+    {
+      "id": "emmy",
+      "name": "黄金时段艾美奖",
+      "shortName": "艾美奖",
+      "group": "TV",
+      "kind": "TV",
+      "region": "美国",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECSA77HQY"
+    },
+    {
+      "id": "douban-annual",
+      "name": "豆瓣年度榜单",
+      "shortName": "豆瓣年度",
+      "group": "DOUBAN",
+      "kind": "ANNUAL",
+      "region": "中国大陆",
+      "description": "豆瓣电影每年年底基于用户评分与标记数据发布的年度榜单。",
+      "sourceUrl": "https://movie.douban.com/annual/2025/"
+    }
+  ],
+  "lists": [
+    {
+      "id": "oscar-best-picture-alltime",
+      "awardId": "oscar",
+      "title": "历届奥斯卡金像奖最佳影片",
+      "year": 2025,
+      "kind": "ALL_TIME",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECMQHVGWI",
+      "items": [
+        {
+          "rank": 1,
+          "title": "阿诺拉",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36195543",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912764859.jpg",
+          "rating": 6.3
+        },
+        {
+          "rank": 2,
+          "title": "奥本海默",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35593344",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2876555451.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 3,
+          "title": "瞬息全宇宙",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "30314848",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2869765076.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 4,
+          "title": "健听女孩",
+          "originalTitle": null,
+          "year": 2021,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35048413",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2870510534.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 5,
+          "title": "寄生虫",
+          "originalTitle": null,
+          "year": 2019,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "27010768",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2561439800.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 6,
+          "title": "绿皮书",
+          "originalTitle": null,
+          "year": 2018,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "27060077",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2531065411.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 7,
+          "title": "水形物语",
+          "originalTitle": null,
+          "year": 2017,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26752852",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2506388632.jpg",
+          "rating": 7.2
+        },
+        {
+          "rank": 8,
+          "title": "月光男孩",
+          "originalTitle": null,
+          "year": 2016,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26648249",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2373594741.jpg",
+          "rating": 7.4
+        },
+        {
+          "rank": 9,
+          "title": "聚焦",
+          "originalTitle": null,
+          "year": 2015,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "25954475",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2263822658.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 10,
+          "title": "鸟人",
+          "originalTitle": null,
+          "year": 2014,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "20438962",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2203838902.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 11,
+          "title": "为奴十二年",
+          "originalTitle": null,
+          "year": 2013,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "6879185",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2167964789.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 12,
+          "title": "逃离德黑兰",
+          "originalTitle": null,
+          "year": 2012,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "6549903",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1844091387.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 13,
+          "title": "艺术家",
+          "originalTitle": null,
+          "year": 2011,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "6097775",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1341276735.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 14,
+          "title": "国王的演讲",
+          "originalTitle": null,
+          "year": 2010,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "4023638",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p768879237.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 15,
+          "title": "拆弹部队",
+          "originalTitle": null,
+          "year": 2008,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2028645",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p770541118.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 16,
+          "title": "贫民窟的百万富翁",
+          "originalTitle": null,
+          "year": 2008,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2209573",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2434249040.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 17,
+          "title": "老无所依",
+          "originalTitle": null,
+          "year": 2007,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1857099",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p551171670.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 18,
+          "title": "无间道风云",
+          "originalTitle": null,
+          "year": 2006,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1315316",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1471403480.jpg",
+          "rating": 7.3
+        },
+        {
+          "rank": 19,
+          "title": "撞车",
+          "originalTitle": null,
+          "year": 2004,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1388216",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2075132390.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 20,
+          "title": "百万美元宝贝",
+          "originalTitle": null,
+          "year": 2004,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1309016",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1734930026.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 21,
+          "title": "指环王3：王者无敌",
+          "originalTitle": null,
+          "year": 2003,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1291552",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2642829472.jpg",
+          "rating": 9.3
+        },
+        {
+          "rank": 22,
+          "title": "芝加哥",
+          "originalTitle": null,
+          "year": 2002,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1307697",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2454020352.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 23,
+          "title": "美丽心灵",
+          "originalTitle": null,
+          "year": 2001,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1306029",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1665997400.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 24,
+          "title": "角斗士",
+          "originalTitle": null,
+          "year": 2000,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1293530",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1601948450.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 25,
+          "title": "美国丽人",
+          "originalTitle": null,
+          "year": 1999,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292062",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1309847196.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 26,
+          "title": "莎翁情史",
+          "originalTitle": null,
+          "year": 1998,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1300220",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1201856136.jpg",
+          "rating": 7.3
+        },
+        {
+          "rank": 27,
+          "title": "泰坦尼克号",
+          "originalTitle": null,
+          "year": 1997,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292722",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p457760035.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 28,
+          "title": "英国病人",
+          "originalTitle": null,
+          "year": 1996,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1291853",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2408623752.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 29,
+          "title": "勇敢的心",
+          "originalTitle": null,
+          "year": 1995,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1294639",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2455767018.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 30,
+          "title": "阿甘正传",
+          "originalTitle": null,
+          "year": 1994,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292720",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p510876253.jpg",
+          "rating": 9.5
+        }
+      ]
+    },
+    {
+      "id": "golden-globe-82-winners",
+      "awardId": "golden-globe",
+      "title": "第82届金球奖获奖名单",
+      "year": 2025,
+      "edition": "第82届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECNA7QSZI",
+      "items": [
+        {
+          "rank": 1,
+          "title": "粗野派",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "30388206",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2916648316.jpg",
+          "rating": 7.2
+        },
+        {
+          "rank": 2,
+          "title": "艾米莉亚·佩雷斯",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35900114",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2910508932.jpg",
+          "rating": 6.3
+        },
+        {
+          "rank": 3,
+          "title": "我仍在此",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35512487",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921338462.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 4,
+          "title": "不同的男人",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35936716",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2910708691.jpg",
+          "rating": 6.6
+        },
+        {
+          "rank": 5,
+          "title": "某种物质",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35882838",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912441039.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 6,
+          "title": "真正的痛苦",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36065388",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2909571677.jpg",
+          "rating": 7.4
+        },
+        {
+          "rank": 7,
+          "title": "秘密会议",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35948807",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2915820112.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 8,
+          "title": "猫猫的奇幻漂流",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35603727",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2934155823.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 9,
+          "title": "挑战者",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35742980",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2902765793.jpg",
+          "rating": 6.5
+        },
+        {
+          "rank": 10,
+          "title": "魔法坏女巫",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "3148694",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2915239151.jpg",
+          "rating": 6.9
+        },
+        {
+          "rank": 11,
+          "title": "幕府将军 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "30291334",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2903967561.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 12,
+          "title": "绝望写手 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35932853",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907023485.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 13,
+          "title": "熊家餐馆 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36631942",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2908559531.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 14,
+          "title": "驯鹿宝贝",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36151169",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2906769501.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 15,
+          "title": "企鹅人 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35604181",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911831149.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 16,
+          "title": "真探 第四季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35809047",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2901570743.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 17,
+          "title": "黄阿丽：单身女士",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37033721",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2913757896.jpg",
+          "rating": 7.8
+        }
+      ]
+    },
+    {
+      "id": "cannes-79-winners",
+      "awardId": "cannes",
+      "title": "第79届戛纳电影节获奖名单",
+      "year": 2026,
+      "edition": "第79届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECMNABFUI",
+      "items": [
+        {
+          "rank": 1,
+          "title": "峡湾",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37168181",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2935830446.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 2,
+          "title": "米诺陶",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37291549",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2933907728.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 3,
+          "title": "黑球",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37215318",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2936994837.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 4,
+          "title": "故土",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37487816",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2935691855.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 5,
+          "title": "我们的救赎",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36660162",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2935124161.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 6,
+          "title": "懦夫",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37148241",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2932617088.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 7,
+          "title": "突如其来",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37342630",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2931445409.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 8,
+          "title": "向往的冒险",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35954702",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2932693157.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 9,
+          "title": "少年挥拳",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "38436522",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2932169514.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 10,
+          "title": "每时每刻",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36159749",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2932646643.jpg",
+          "rating": 7.4
+        },
+        {
+          "rank": 11,
+          "title": "钢铁男孩",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36614615",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2933677391.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 12,
+          "title": "雾中的大象",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36473054",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2936438158.jpg",
+          "rating": 7.2
+        },
+        {
+          "rank": 13,
+          "title": "刚果男孩",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36903388",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2932448265.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 14,
+          "title": "永恒的母性本能",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37045793",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2932370366.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 15,
+          "title": "神之子",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36976760",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2936190804.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 16,
+          "title": "萨娜",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36338749",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2932570660.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 17,
+          "title": "忽喇喇似大厦倾",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37294802",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2937275430.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 18,
+          "title": "爆炸性物种",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37273184",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2932657121.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 19,
+          "title": "行走之人",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36481235",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2936022402.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 20,
+          "title": "活着万岁",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "38422811",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2931566699.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 21,
+          "title": "细筒靴",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "38428059",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2934525366.jpg",
+          "rating": 6.5
+        },
+        {
+          "rank": 22,
+          "title": "无名女孩",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36686123",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2931558923.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 23,
+          "title": "余烬青春",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37291496",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2933748592.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 24,
+          "title": "故土",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37202829",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2932777842.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 25,
+          "title": "瘴气营地的青春性事与死亡",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36801617",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2932757705.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 26,
+          "title": "革命的预演",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "38415392",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2932504905.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 27,
+          "title": "铁皮城堡",
+          "originalTitle": null,
+          "year": 2026,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "38422842",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2937149173.jpg",
+          "rating": 0
+        }
+      ]
+    },
+    {
+      "id": "cannes-palme-alltime",
+      "awardId": "cannes",
+      "title": "历届戛纳电影节金棕榈奖",
+      "year": 2023,
+      "kind": "ALL_TIME",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECCU6GZUA",
+      "items": [
+        {
+          "rank": 1,
+          "title": "坠落的审判",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35633650",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2896940977.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 2,
+          "title": "悲情三角",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "27066152",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2880467086.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 3,
+          "title": "钛",
+          "originalTitle": null,
+          "year": 2021,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "34820925",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2663190044.jpg",
+          "rating": 6.4
+        },
+        {
+          "rank": 4,
+          "title": "寄生虫",
+          "originalTitle": null,
+          "year": 2019,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "27010768",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2561439800.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 5,
+          "title": "小偷家族",
+          "originalTitle": null,
+          "year": 2018,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "27622447",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2530599636.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 6,
+          "title": "方形",
+          "originalTitle": null,
+          "year": 2017,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26610229",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2495377597.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 7,
+          "title": "我是布莱克",
+          "originalTitle": null,
+          "year": 2016,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26653676",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2375876272.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 8,
+          "title": "流浪的迪潘",
+          "originalTitle": null,
+          "year": 2015,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26295860",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2267673050.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 9,
+          "title": "冬眠",
+          "originalTitle": null,
+          "year": 2014,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "21770915",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2197728937.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 10,
+          "title": "阿黛尔的生活",
+          "originalTitle": null,
+          "year": 2013,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "10535568",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2162563238.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 11,
+          "title": "爱",
+          "originalTitle": null,
+          "year": 2012,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "4798707",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p1566292031.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 12,
+          "title": "生命之树",
+          "originalTitle": null,
+          "year": 2011,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2336735",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2242204049.jpg",
+          "rating": 7.2
+        },
+        {
+          "rank": 13,
+          "title": "能召回前世的布米叔叔",
+          "originalTitle": null,
+          "year": 2010,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "4280102",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2493056005.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 14,
+          "title": "白丝带",
+          "originalTitle": null,
+          "year": 2009,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2464346",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2196608840.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 15,
+          "title": "墙壁之间",
+          "originalTitle": null,
+          "year": 2008,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2170919",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p479629463.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 16,
+          "title": "四月三周两天",
+          "originalTitle": null,
+          "year": 2007,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2078989",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2445800653.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 17,
+          "title": "风吹麦浪",
+          "originalTitle": null,
+          "year": 2006,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1780122",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2357074945.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 18,
+          "title": "孩子",
+          "originalTitle": null,
+          "year": 2005,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1418570",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1509446756.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 19,
+          "title": "华氏9/11",
+          "originalTitle": null,
+          "year": 2004,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1308774",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p616131991.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 20,
+          "title": "大象",
+          "originalTitle": null,
+          "year": 2003,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292272",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p455148092.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 21,
+          "title": "钢琴家",
+          "originalTitle": null,
+          "year": 2002,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1296736",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p1381339291.jpg",
+          "rating": 9.3
+        },
+        {
+          "rank": 22,
+          "title": "儿子的房间",
+          "originalTitle": null,
+          "year": 2001,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1306524",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2262756726.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 23,
+          "title": "黑暗中的舞者",
+          "originalTitle": null,
+          "year": 2000,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1291562",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p1910831341.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 24,
+          "title": "罗塞塔",
+          "originalTitle": null,
+          "year": 1999,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1300820",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2187719666.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 25,
+          "title": "永恒和一日",
+          "originalTitle": null,
+          "year": 1998,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1293455",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1391839595.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 26,
+          "title": "樱桃的滋味",
+          "originalTitle": null,
+          "year": 1997,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1296177",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2522781398.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 27,
+          "title": "鳗鱼",
+          "originalTitle": null,
+          "year": 1997,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1303453",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903230182.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 28,
+          "title": "秘密与谎言",
+          "originalTitle": null,
+          "year": 1996,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1294477",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2409793183.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 29,
+          "title": "地下",
+          "originalTitle": null,
+          "year": 1995,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292206",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1833776334.jpg",
+          "rating": 9.2
+        },
+        {
+          "rank": 30,
+          "title": "低俗小说",
+          "originalTitle": null,
+          "year": 1994,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1291832",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1910902213.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 31,
+          "title": "钢琴课",
+          "originalTitle": null,
+          "year": 1993,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1293818",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1084436357.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 32,
+          "title": "霸王别姬",
+          "originalTitle": null,
+          "year": 1993,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1291546",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911205318.jpg",
+          "rating": 9.6
+        },
+        {
+          "rank": 33,
+          "title": "善意的背叛",
+          "originalTitle": null,
+          "year": 1992,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292990",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2442222605.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 34,
+          "title": "巴顿·芬克",
+          "originalTitle": null,
+          "year": 1991,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1298043",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1058380546.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 35,
+          "title": "我心狂野",
+          "originalTitle": null,
+          "year": 1990,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1298974",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2199394686.jpg",
+          "rating": 7.4
+        },
+        {
+          "rank": 36,
+          "title": "性、谎言和录像带",
+          "originalTitle": null,
+          "year": 1989,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292341",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p919743828.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 37,
+          "title": "征服者佩尔",
+          "originalTitle": null,
+          "year": 1987,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1298784",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2383383703.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 38,
+          "title": "在撒旦的阳光下",
+          "originalTitle": null,
+          "year": 1987,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1410735",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2554842686.jpg",
+          "rating": 7.3
+        },
+        {
+          "rank": 39,
+          "title": "教会",
+          "originalTitle": null,
+          "year": 1986,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1294620",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p590016178.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 40,
+          "title": "爸爸去出差",
+          "originalTitle": null,
+          "year": 1985,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1303056",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2355743053.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 41,
+          "title": "德州巴黎",
+          "originalTitle": null,
+          "year": 1984,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1302061",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2237305324.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 42,
+          "title": "楢山节考",
+          "originalTitle": null,
+          "year": 1983,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1296703",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p981755735.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 43,
+          "title": "自由之路",
+          "originalTitle": null,
+          "year": 1982,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1295774",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2460452298.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 44,
+          "title": "大失踪",
+          "originalTitle": null,
+          "year": 1982,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292927",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2163980468.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 45,
+          "title": "铁人",
+          "originalTitle": null,
+          "year": 1981,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1401370",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p1584410951.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 46,
+          "title": "影武者",
+          "originalTitle": null,
+          "year": 1980,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1303067",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p997945263.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 47,
+          "title": "爵士春秋",
+          "originalTitle": null,
+          "year": 1979,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1299330",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2192967650.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 48,
+          "title": "铁皮鼓",
+          "originalTitle": null,
+          "year": 1979,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292207",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1792296798.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 49,
+          "title": "现代启示录",
+          "originalTitle": null,
+          "year": 1979,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1292260",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2501047088.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 50,
+          "title": "木屐树",
+          "originalTitle": null,
+          "year": 1978,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1306266",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2381203798.jpg",
+          "rating": 8.5
+        }
+      ]
+    },
+    {
+      "id": "berlinale-75-winners",
+      "awardId": "berlinale",
+      "title": "第75届柏林国际电影节获奖名单",
+      "year": 2025,
+      "edition": "第75届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECMU76GZQ",
+      "items": [
+        {
+          "rank": 1,
+          "title": "性梦爱三部曲：梦",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36117334",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917731188.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 2,
+          "title": "王洛埃，未竟之作",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37199930",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2918222746.jpg",
+          "rating": 6.6
+        },
+        {
+          "rank": 3,
+          "title": "天空的另一面",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36493869",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2926374850.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 5,
+          "title": "生息之地",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "34842493",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918379379.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 6,
+          "title": "如果有腿，我会踢你",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36481186",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924032376.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 7,
+          "title": "蓝月亮",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36913754",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2923817103.jpg",
+          "rating": 6.8
+        },
+        {
+          "rank": 8,
+          "title": "二〇二五年的欧陆",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37170426",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918425908.jpg",
+          "rating": 6.9
+        },
+        {
+          "rank": 10,
+          "title": "普通的生活",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37037113",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918062909.jpg",
+          "rating": 6.6
+        },
+        {
+          "rank": 11,
+          "title": "再会科基",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37165708",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2918054044.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 13,
+          "title": "魔鬼之烟（把烧过的火柴放在同一个盒子里）",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35411157",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918062377.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 15,
+          "title": "女孩，你怎么了？",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35688392",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2926412845.jpg",
+          "rating": 6.4
+        },
+        {
+          "rank": 16,
+          "title": "旗帜下的日光",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35744690",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917310238.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 17,
+          "title": "蝴蝶的记忆",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37204577",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917731268.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 18,
+          "title": "太空百合战姬",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37162020",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2927254437.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 24,
+          "title": "去海边的路",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37070295",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2927066347.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 28,
+          "title": "惊讶的表情",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37204567",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917599319.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 36,
+          "title": "隐于流水之下",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37164877",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917731284.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 37,
+          "title": "无声挚爱",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36473138",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918006100.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 38,
+          "title": "默尔恩来信",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37164978",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917731266.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 40,
+          "title": "瞬息法则",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37204544",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2919350444.jpg",
+          "rating": 0
+        }
+      ]
+    },
+    {
+      "id": "berlinale-bear-alltime",
+      "awardId": "berlinale",
+      "title": "历届柏林电影节金熊奖获奖影片",
+      "year": 2020,
+      "kind": "ALL_TIME",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECZAHZJTI",
+      "items": [
+        {
+          "rank": 1,
+          "title": "无邪",
+          "originalTitle": null,
+          "year": 2020,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "34958728",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2588633607.jpg",
+          "rating": 7.4
+        },
+        {
+          "rank": 2,
+          "title": "同义词",
+          "originalTitle": null,
+          "year": 2019,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "27047918",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2552351956.jpg",
+          "rating": 6.9
+        },
+        {
+          "rank": 3,
+          "title": "不要碰我",
+          "originalTitle": null,
+          "year": 2018,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26727889",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2513628502.jpg",
+          "rating": 6.4
+        },
+        {
+          "rank": 4,
+          "title": "肉与灵",
+          "originalTitle": null,
+          "year": 2017,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26935675",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2426269453.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 5,
+          "title": "海上火焰",
+          "originalTitle": null,
+          "year": 2016,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26344731",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2327044682.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 6,
+          "title": "出租车",
+          "originalTitle": null,
+          "year": 2015,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26304167",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2236812017.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 7,
+          "title": "白日焰火",
+          "originalTitle": null,
+          "year": 2014,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "21941804",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2174645340.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 8,
+          "title": "孩童姿势",
+          "originalTitle": null,
+          "year": 2013,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "10553750",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2015318863.jpg",
+          "rating": 7.3
+        },
+        {
+          "rank": 9,
+          "title": "凯撒必须死",
+          "originalTitle": null,
+          "year": 2012,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "10438582",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1786394193.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 10,
+          "title": "一次别离",
+          "originalTitle": null,
+          "year": 2011,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "5964718",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2189835254.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 11,
+          "title": "蜂蜜",
+          "originalTitle": null,
+          "year": 2010,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "4221335",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2338564111.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 12,
+          "title": "伤心的奶水",
+          "originalTitle": null,
+          "year": 2009,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "3445586",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2327650746.jpg",
+          "rating": 7.4
+        },
+        {
+          "rank": 13,
+          "title": "精英部队",
+          "originalTitle": null,
+          "year": 2007,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "2284851",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p912245002.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 14,
+          "title": "图雅的婚事",
+          "originalTitle": null,
+          "year": 2006,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1966460",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p581291401.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 15,
+          "title": "格巴维察",
+          "originalTitle": null,
+          "year": 2006,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1480321",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2497251702.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 16,
+          "title": "卡雅利沙的卡门",
+          "originalTitle": null,
+          "year": 2005,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1309008",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2589144489.jpg",
+          "rating": 5.4
+        },
+        {
+          "rank": 17,
+          "title": "勇往直前",
+          "originalTitle": null,
+          "year": 2004,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1309012",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2510135787.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 18,
+          "title": "尘世之间",
+          "originalTitle": null,
+          "year": 2002,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1297605",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p1701788404.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 19,
+          "title": "血腥星期天",
+          "originalTitle": null,
+          "year": 2002,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1306426",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p1127804930.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 20,
+          "title": "千与千寻",
+          "originalTitle": null,
+          "year": 2001,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1291561",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2557573348.jpg",
+          "rating": 9.4
+        }
+      ]
+    },
+    {
+      "id": "venice-82-winners",
+      "awardId": "venice",
+      "title": "第82届威尼斯电影节获奖名单",
+      "year": 2025,
+      "edition": "第82届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECQU75JDA",
+      "items": [
+        {
+          "rank": 1,
+          "title": "父母姐弟",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36635632",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2925539252.jpg",
+          "rating": 6.6
+        },
+        {
+          "rank": 2,
+          "title": "云之下",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37168459",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924840884.jpg",
+          "rating": 6.4
+        },
+        {
+          "rank": 3,
+          "title": "粉碎机",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "34881732",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2921011784.jpg",
+          "rating": 5.8
+        },
+        {
+          "rank": 4,
+          "title": "欣德·拉贾布之声",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37445715",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2925889524.jpg",
+          "rating": 6.8
+        },
+        {
+          "rank": 5,
+          "title": "执笔",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37193871",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2928515985.jpg",
+          "rating": 7.1
+        },
+        {
+          "rank": 6,
+          "title": "日掛中天",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36964147",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2926379611.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 7,
+          "title": "恩典",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37143216",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2927598773.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 8,
+          "title": "寂静的朋友",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "26967871",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2931581706.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 9,
+          "title": "极限竞技",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37380085",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924838458.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 10,
+          "title": "末路同途",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37446165",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924749683.jpg",
+          "rating": 6.4
+        },
+        {
+          "rank": 11,
+          "title": "被遗忘的树之歌",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37446326",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2925892878.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 12,
+          "title": "常春藤",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37202888",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2927344516.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 13,
+          "title": "我们的最后一年",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36440290",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2925012368.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 14,
+          "title": "阿拉贝拉的绑架",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36937388",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924471773.jpg",
+          "rating": 6.3
+        },
+        {
+          "rank": 15,
+          "title": "没有凯莉的日子",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37247277",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924718260.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 16,
+          "title": "迷失之地",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36879624",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2932030911.jpg",
+          "rating": 7.3
+        },
+        {
+          "rank": 17,
+          "title": "云在两千米",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36498073",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924708280.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 18,
+          "title": "漫长的告别",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37440540",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2926772165.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 19,
+          "title": "不足5克的藏红花",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37440677",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2932358191.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 20,
+          "title": "无界之环",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37234857",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2935651781.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 21,
+          "title": "短暂的夏天",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35707923",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924877475.jpg",
+          "rating": 6.2
+        },
+        {
+          "rank": 22,
+          "title": "小芭舒",
+          "originalTitle": null,
+          "year": 1989,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "1308105",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2871580564.jpg",
+          "rating": 7.1
+        },
+        {
+          "rank": 23,
+          "title": "阿米尔的内心",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37449546",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2926574464.jpg",
+          "rating": 0
+        }
+      ]
+    },
+    {
+      "id": "golden-horse-60-winners",
+      "awardId": "golden-horse",
+      "title": "第60届金马奖获奖名单",
+      "year": 2023,
+      "edition": "第60届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECBQ6CECI",
+      "items": [
+        {
+          "rank": 1,
+          "title": "老狐狸",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35611467",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2900908599.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 2,
+          "title": "富都青年",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35211921",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2913175326.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 3,
+          "title": "小晓",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35942301",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2925113572.jpg",
+          "rating": 6.8
+        },
+        {
+          "rank": 4,
+          "title": "本日公休",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "34850550",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2936073428.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 5,
+          "title": "大山来了",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "33393265",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2899586672.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 6,
+          "title": "关于我和鬼变成家人的那件事",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35698284",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2881995796.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 7,
+          "title": "年少日记",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "34940879",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2906644236.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 8,
+          "title": "但愿人长久",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35211513",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2898583588.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 9,
+          "title": "（真）新的一天",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36582618",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903606680.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 10,
+          "title": "疫起",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35211920",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2927704796.jpg",
+          "rating": 7.2
+        },
+        {
+          "rank": 11,
+          "title": "周处除三害",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36151692",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2905021483.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 12,
+          "title": "五月雪",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35211950",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2896080932.jpg",
+          "rating": 6.7
+        },
+        {
+          "rank": 14,
+          "title": "奇幻西游：新世界",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36588177",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921747009.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 15,
+          "title": "直到我看见彼岸",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36395026",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2891604994.jpg",
+          "rating": 6.9
+        },
+        {
+          "rank": 16,
+          "title": "夏梦回",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36553326",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2909930387.jpg",
+          "rating": 7.2
+        }
+      ]
+    },
+    {
+      "id": "magnolia-30-winners",
+      "awardId": "magnolia",
+      "title": "第30届上海电视节白玉兰奖获奖名单",
+      "year": 2025,
+      "edition": "第30届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECXI7Y6IQ",
+      "items": [
+        {
+          "rank": 1,
+          "title": "我的阿勒泰",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36245596",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2905618615.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 2,
+          "title": "山花烂漫时",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35496807",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2912813745.jpg",
+          "rating": 9.6
+        },
+        {
+          "rank": 3,
+          "title": "我是刑警",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35370845",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2915664869.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 4,
+          "title": "玫瑰的故事",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35665988",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2909198461.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 5,
+          "title": "西北岁月",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36493358",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2898107993.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 6,
+          "title": "边水往事",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36097760",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912133840.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 7,
+          "title": "小巷人家",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36534750",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907416715.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 8,
+          "title": "国色芳华",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36126283",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917205606.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 9,
+          "title": "军刀行动",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36812709",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907320264.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 10,
+          "title": "尽情享用！ 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "37345881",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2934604238.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 11,
+          "title": "英雄联盟：双城之战 第二季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35669844",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2913171099.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 12,
+          "title": "自由之夏 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "37409736",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2923027715.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 13,
+          "title": "逆境前行",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "35332730",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2906495675.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 14,
+          "title": "是坏情绪啊，没关系",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36559512",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2913776990.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 15,
+          "title": "简牍探中华",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36243702",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2901293553.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 16,
+          "title": "喜人奇妙夜",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36540857",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2909967290.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 17,
+          "title": "城中之城",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35209732",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2906704315.jpg",
+          "rating": 6.6
+        },
+        {
+          "rank": 18,
+          "title": "赵琳的探险日记",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36065708",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2894013194.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 19,
+          "title": "歌手2024",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36640253",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2908214966.jpg",
+          "rating": 4.4
+        },
+        {
+          "rank": 20,
+          "title": "永远的行走与中国相遇 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36961979",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2910488405.jpg",
+          "rating": 0
+        }
+      ]
+    },
+    {
+      "id": "emmy-77-winners",
+      "awardId": "emmy",
+      "title": "第77届黄金时段艾美奖获奖名单",
+      "year": 2025,
+      "edition": "第77届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECSA77HQY",
+      "items": [
+        {
+          "rank": 1,
+          "title": "匹兹堡医护前线 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36831851",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2920601490.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 2,
+          "title": "人生切割术 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35783948",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2916136388.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 3,
+          "title": "流人 第四季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35918977",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911746593.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 4,
+          "title": "安多 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35914829",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919086768.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 5,
+          "title": "片厂风云 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36156271",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919141958.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 6,
+          "title": "绝望写手 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35932853",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907023485.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 7,
+          "title": "某人某地 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36430977",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2913925905.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 8,
+          "title": "混沌少年时 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36820950",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2922177671.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 9,
+          "title": "企鹅人 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35604181",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911831149.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 10,
+          "title": "约翰·奥利弗上周今夜秀 第十一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36678200",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2906969778.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 11,
+          "title": "扣扣熊晚间秀 第十季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "37193720",
+          "posterUrl": "https://img2.doubanio.com/f/frodo/568eb8fac54d39fe599b0de8c3f2aee1dbc43cf0/pics/subject/tv_large.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 12,
+          "title": "周六夜现场五十周年特别篇",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "37225845",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918494547.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 13,
+          "title": "背叛者 第二季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36226048",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2902953732.jpg",
+          "rating": 8.2
+        }
+      ]
+    },
+    {
+      "id": "emmy-76-winners",
+      "awardId": "emmy",
+      "title": "第76届黄金时段艾美奖获奖名单",
+      "year": 2024,
+      "edition": "第76届",
+      "kind": "WINNERS",
+      "sourceUrl": "https://m.douban.com/subject_collection/ECDA7UYMA",
+      "items": [
+        {
+          "rank": 1,
+          "title": "幕府将军 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "30291334",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2903967561.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 2,
+          "title": "早间新闻 第三季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35730930",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2897264808.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 3,
+          "title": "王冠 第六季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35135995",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2900014859.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 4,
+          "title": "史密斯夫妇 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35361158",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903133387.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 5,
+          "title": "流人 第三季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35918976",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2900832423.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 6,
+          "title": "绝望写手 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35932853",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907023485.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 7,
+          "title": "熊家餐馆 第二季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35993168",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2891768874.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 8,
+          "title": "驯鹿宝贝",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "36151169",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2906769501.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 9,
+          "title": "真探 第四季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35809047",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2901570743.jpg",
+          "rating": 7
+        },
+        {
+          "rank": 10,
+          "title": "冰血暴 第五季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "35774682",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2897046410.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 11,
+          "title": "雷普利",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "winner": true,
+          "doubanId": "26415434",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903600763.jpg",
+          "rating": 8.7
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2023-chinese-movies",
+      "awardId": "douban-annual",
+      "title": "豆瓣2023评分最高华语电影",
+      "year": 2023,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2023/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "流浪地球2",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35267208",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2916835424.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 2,
+          "title": "长安三万里",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "36035676",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2893820209.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 3,
+          "title": "椒麻堂会",
+          "originalTitle": null,
+          "year": 2021,
+          "type": "MOVIE",
+          "doubanId": "27305997",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2666413657.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 4,
+          "title": "关于我和鬼变成家人的那件事",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "35698284",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2881995796.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 5,
+          "title": "宇宙探索编辑部",
+          "originalTitle": null,
+          "year": 2021,
+          "type": "MOVIE",
+          "doubanId": "34941536",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2889865405.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 6,
+          "title": "封神第一部：朝歌风云",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "10604086",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2895465725.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 7,
+          "title": "我爱你！",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35818074",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2888042597.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 8,
+          "title": "三大队",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35208463",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2901703469.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 9,
+          "title": "保你平安",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "35457272",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2889498097.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 10,
+          "title": "涉过愤怒的海",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "33456512",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2900852349.jpg",
+          "rating": 7.1
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2023-foreign-movies",
+      "awardId": "douban-annual",
+      "title": "豆瓣2023评分最高外语电影",
+      "year": 2023,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2023/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "奥本海默",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35593344",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2876555451.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 2,
+          "title": "蜘蛛侠：纵横宇宙",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "30391186",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2892315297.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 3,
+          "title": "银河护卫队3",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "26258779",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2887888463.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 4,
+          "title": "坠落的审判",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35633650",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2896940977.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 5,
+          "title": "芭比",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "4058939",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2890207440.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 6,
+          "title": "穿靴子的猫2",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "25868125",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2885032978.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 7,
+          "title": "狗神",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35736202",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2901534046.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 8,
+          "title": "巴比伦",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "34467461",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2889092995.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 9,
+          "title": "网络谜踪2",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "34795100",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2888957412.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 10,
+          "title": "伊尼舍林的报丧女妖",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "34969348",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2877252828.jpg",
+          "rating": 7.9
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2023-hidden-gems",
+      "awardId": "douban-annual",
+      "title": "豆瓣2023冷门佳片",
+      "year": 2023,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2023/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "俄罗斯方块",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "26087471",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2888730530.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 2,
+          "title": "奈德",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35385225",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2899067250.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 3,
+          "title": "鲸",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "35312421",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2885153371.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 4,
+          "title": "金币灰黄",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "35869849",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2892515451.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 5,
+          "title": "达尔瓦",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "35354592",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2887091640.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 6,
+          "title": "小士兵",
+          "originalTitle": null,
+          "year": 2019,
+          "type": "MOVIE",
+          "doubanId": "30472706",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2574342101.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 7,
+          "title": "本日公休",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "34850550",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2936073428.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 8,
+          "title": "脐带",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "34948595",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2889236161.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 9,
+          "title": "剧透预警",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "MOVIE",
+          "doubanId": "30396388",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2882014595.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 10,
+          "title": "自由之声",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "30454682",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2893085018.jpg",
+          "rating": 7.7
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2023-chinese-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2023评分最高华语剧集",
+      "year": 2023,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2023/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "漫长的季节",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35588177",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2890906384.jpg",
+          "rating": 9.4
+        },
+        {
+          "rank": 2,
+          "title": "三体",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "26647087",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2886492021.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 3,
+          "title": "去有风的地方",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35662223",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2885759819.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 4,
+          "title": "不良执念清除师",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35839999",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2885470890.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 5,
+          "title": "有生之年",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35679640",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2897014020.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 6,
+          "title": "八尺门的辩护人",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35705832",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2884967683.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 7,
+          "title": "狂飙",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35465232",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2886376181.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 8,
+          "title": "莲花楼",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35633163",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2895958304.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 9,
+          "title": "古相思曲",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "36155049",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2893594852.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 10,
+          "title": "繁城之下",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35725842",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2899317221.jpg",
+          "rating": 8.5
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2023-returning-english-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2023评分最高英美续订剧",
+      "year": 2023,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2023/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "了不起的麦瑟尔夫人 第五季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35774728",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2889621415.jpg",
+          "rating": 9.4
+        },
+        {
+          "rank": 2,
+          "title": "继承之战 第四季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35638422",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2888728568.jpg",
+          "rating": 9.3
+        },
+        {
+          "rank": 3,
+          "title": "洛基 第二季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35244032",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2896254228.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 4,
+          "title": "曼达洛人 第三季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35048728",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2887343397.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 5,
+          "title": "足球教练 第三季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35237371",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2888728873.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 6,
+          "title": "心跳漏一拍 第二季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35908208",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2895256665.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 7,
+          "title": "好想做一次 第四季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35796339",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2892241985.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 8,
+          "title": "熊家餐馆 第二季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35993168",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2891768874.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 9,
+          "title": "好兆头 第二季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35511391",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2893951785.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 10,
+          "title": "9号秘事 第八季",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "TV",
+          "doubanId": "35919996",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2891922063.jpg",
+          "rating": 8.4
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2023-new-english-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2023评分最高英美新剧",
+      "year": 2023,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2023/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "1923 第一季",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "TV",
+          "doubanId": "35794664",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2884549449.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 2,
+          "title": "最后生还者 第一季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "25848328",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2884221114.jpg",
+          "rating": 9
+        },
+        {
+          "rank": 3,
+          "title": "同路人",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35591396",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2902963512.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 4,
+          "title": "乱世微光",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35869056",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2895335202.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 5,
+          "title": "怒呛人生 第一季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35413042",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2890296057.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 6,
+          "title": "电击少女",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "30463492",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2890367559.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 7,
+          "title": "化学课",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35339377",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2898087478.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 8,
+          "title": "V世代 第一季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35211473",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2898632379.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 9,
+          "title": "海贼王(真人版) 第一季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "27093536",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2897001977.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 10,
+          "title": "扑克脸 第一季",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "35402785",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2886311509.jpg",
+          "rating": 8
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2024-chinese-movies",
+      "awardId": "douban-annual",
+      "title": "豆瓣2024评分最高华语电影",
+      "year": 2024,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2024/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "好东西",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36154853",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2915454411.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 2,
+          "title": "出走的决心",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36587974",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912830708.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 3,
+          "title": "破·地狱",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36712987",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2915837972.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 4,
+          "title": "年少日记",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "34940879",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2906644236.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 5,
+          "title": "雄狮少年2",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "35883131",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2915942528.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 6,
+          "title": "周处除三害",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "36151692",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2905021483.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 7,
+          "title": "年会不能停！",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35725869",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2901057189.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 8,
+          "title": "我们一起摇太阳",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36149032",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2904467472.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 9,
+          "title": "走走停停",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "35956190",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2907440658.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 10,
+          "title": "老狐狸",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35611467",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2900908599.jpg",
+          "rating": 8.1
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2024-foreign-movies",
+      "awardId": "douban-annual",
+      "title": "豆瓣2024评分最高外语电影",
+      "year": 2024,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2024/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "机器人之梦",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35426925",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2928203369.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 2,
+          "title": "泳者之心",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "26656728",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2910815887.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 3,
+          "title": "首尔之春",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35712804",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2905141611.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 4,
+          "title": "姥姥的外孙",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36328210",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911511570.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 5,
+          "title": "怪物",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35797709",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2913062136.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 6,
+          "title": "因果报应",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36934908",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2915350868.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 7,
+          "title": "头脑特工队2",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36090457",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2907600518.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 8,
+          "title": "沙丘2",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "35575567",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2937594025.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 9,
+          "title": "蓦然回首",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36765646",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2914342253.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 10,
+          "title": "排球少年！！垃圾场决战",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36060209",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2909378407.jpg",
+          "rating": 8.2
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2024-hidden-gems",
+      "awardId": "douban-annual",
+      "title": "豆瓣2024冷门佳片",
+      "year": 2024,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2024/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "还有明天",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "36445098",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2918279456.jpg",
+          "rating": 9.3
+        },
+        {
+          "rank": 2,
+          "title": "杂种",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35699773",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2900726031.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 3,
+          "title": "乘船而去",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35268501",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2905567453.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 4,
+          "title": "只此青绿",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36401998",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2932557500.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 5,
+          "title": "12年级的失败",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "36629878",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2919487674.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 6,
+          "title": "从今以后",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "35618436",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903787472.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 7,
+          "title": "我们最后一次做孩子",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35973112",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2899254712.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 8,
+          "title": "僧侣和枪",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35861594",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2897818679.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 9,
+          "title": "枯叶",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35928797",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2906354047.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 10,
+          "title": "奇美拉",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "MOVIE",
+          "doubanId": "35448539",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2892253589.jpg",
+          "rating": 7.7
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2024-chinese-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2024评分最高华语剧集",
+      "year": 2024,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2024/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "山花烂漫时",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35496807",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2912813745.jpg",
+          "rating": 9.6
+        },
+        {
+          "rank": 2,
+          "title": "我的阿勒泰",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36245596",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2905618615.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 3,
+          "title": "问苍茫",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "36354085",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2901874168.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 4,
+          "title": "繁花",
+          "originalTitle": null,
+          "year": 2023,
+          "type": "TV",
+          "doubanId": "34874646",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2902705337.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 5,
+          "title": "唐朝诡事录之西行",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36188849",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2910162228.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 6,
+          "title": "天行健",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35656028",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2874883359.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 7,
+          "title": "日光之城",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36059770",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2913484543.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 8,
+          "title": "不够善良的我们",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36151693",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2899493402.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 9,
+          "title": "小巷人家",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36534750",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907416715.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 10,
+          "title": "边水往事",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36097760",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912133840.jpg",
+          "rating": 7.9
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2024-new-english-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2024评分最高英美新剧",
+      "year": 2024,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2024/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "谜探路德维希 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36419921",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2914830853.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 2,
+          "title": "百年孤独 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "30482958",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2913960454.jpg",
+          "rating": 9.2
+        },
+        {
+          "rank": 3,
+          "title": "雷普利",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "26415434",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903600763.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 4,
+          "title": "辐射 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35128081",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2928966665.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 5,
+          "title": "企鹅人 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35604181",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911831149.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 6,
+          "title": "驯鹿宝贝",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36151169",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2906769501.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 7,
+          "title": "豺狼的日子 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36323224",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2916366967.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 8,
+          "title": "老练律师 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36402104",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2913321636.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 9,
+          "title": "人生复本 第一季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35819414",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2906805578.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 10,
+          "title": "空战群英",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "21264415",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2903403191.jpg",
+          "rating": 8.4
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2024-returning-english-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2024评分最高英美续订剧",
+      "year": 2024,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2024/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "小谢尔顿 第七季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35420025",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2903443592.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 2,
+          "title": "万物生灵 第五季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36731231",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2913225910.jpg",
+          "rating": 9.4
+        },
+        {
+          "rank": 3,
+          "title": "9号秘事 第九季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35919997",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2909704282.jpg",
+          "rating": 9.2
+        },
+        {
+          "rank": 4,
+          "title": "绝望写手 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35932853",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2907023485.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 5,
+          "title": "良医 第七季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36370737",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2903141594.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 6,
+          "title": "流人 第四季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35918977",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911746593.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 7,
+          "title": "夜访吸血鬼 第二季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36107982",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2906635249.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 8,
+          "title": "我的天才女友 第四季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35785050",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912471803.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 9,
+          "title": "黄石 第五季",
+          "originalTitle": null,
+          "year": 2022,
+          "type": "TV",
+          "doubanId": "35758380",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2912719682.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 10,
+          "title": "心跳漏一拍 第三季",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "35908210",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2913772101.jpg",
+          "rating": 8.6
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2025-chinese-movies",
+      "awardId": "douban-annual",
+      "title": "豆瓣2025评分最高华语电影",
+      "year": 2025,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2025/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "南京照相馆",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36809864",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924276740.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 2,
+          "title": "哪吒之魔童闹海",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "34780991",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2916323291.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 3,
+          "title": "罗小黑战记2",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36448279",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2923537864.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 4,
+          "title": "浪浪山小妖怪",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36438475",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2923770138.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 5,
+          "title": "捕风追影",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36600459",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924069675.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 6,
+          "title": "戏台",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "35483395",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2923749086.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 7,
+          "title": "长安的荔枝",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36185502",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2926288464.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 8,
+          "title": "诡才之道",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "35364691",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917676972.jpg",
+          "rating": 7.6
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2025-foreign-movies",
+      "awardId": "douban-annual",
+      "title": "豆瓣2025评分最高外语电影",
+      "year": 2025,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2025/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "F1：狂飙飞车",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "35689244",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2922238175.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 2,
+          "title": "疯狂动物城2",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "26817136",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2926605350.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 3,
+          "title": "新·驯龙高手",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36247731",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2922512455.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 4,
+          "title": "初吻",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36894170",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2927586493.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 5,
+          "title": "一战再战",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36176155",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2925146362.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 6,
+          "title": "关于约会的一切",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "37067150",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924636647.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 7,
+          "title": "碟中谍8：最终清算",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "30433456",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921570919.jpg",
+          "rating": 7.5
+        },
+        {
+          "rank": 8,
+          "title": "罪人",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36742579",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2920268831.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 9,
+          "title": "坏蛋联盟2",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36829507",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2923073504.jpg",
+          "rating": 7.6
+        },
+        {
+          "rank": 10,
+          "title": "利刃出鞘3",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "35419153",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924862475.jpg",
+          "rating": 7.6
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2025-hidden-gems",
+      "awardId": "douban-annual",
+      "title": "豆瓣2025冷门佳片",
+      "year": 2025,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2025/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "夜班",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36752929",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924388657.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 2,
+          "title": "唐顿庄园3：盛世终章",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "35881440",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2922967026.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 3,
+          "title": "看我今天怎么说",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36766358",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917688288.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 4,
+          "title": "秋日何时来",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36639612",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2914011396.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 5,
+          "title": "巴黎夏日",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36742572",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919689159.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 6,
+          "title": "隔壁房间",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36687720",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911534490.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 7,
+          "title": "我仍在此",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "35512487",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921338462.jpg",
+          "rating": 7.9
+        },
+        {
+          "rank": 8,
+          "title": "便衣警察",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "36803039",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2927087156.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 9,
+          "title": "铁血战士：杀戮之王",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "doubanId": "37309928",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2921714294.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 10,
+          "title": "查克的一生",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "doubanId": "36399569",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2922436399.jpg",
+          "rating": 7.8
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2025-chinese-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2025评分最高华语剧集",
+      "year": 2025,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2025/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "无尽的尽头",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36656706",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2920542088.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 2,
+          "title": "异人之下之决战！碧游村",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36575783",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917410188.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 3,
+          "title": "我们与恶的距离2",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "33437319",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921024298.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 4,
+          "title": "忘了我记得",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36808875",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919563442.jpg",
+          "rating": 8.3
+        },
+        {
+          "rank": 5,
+          "title": "沙尘暴",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36305412",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2919690721.jpg",
+          "rating": 8.1
+        },
+        {
+          "rank": 6,
+          "title": "鹊刀门传奇 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36641286",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2917653751.jpg",
+          "rating": 8.2
+        },
+        {
+          "rank": 7,
+          "title": "唐朝诡事录之长安",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36318037",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2911439080.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 8,
+          "title": "国色芳华",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36126283",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917205606.jpg",
+          "rating": 7.8
+        },
+        {
+          "rank": 9,
+          "title": "沉默的荣耀",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36516431",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2925525277.jpg",
+          "rating": 8
+        },
+        {
+          "rank": 10,
+          "title": "九重紫",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36185935",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917713095.jpg",
+          "rating": 7.8
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2025-new-english-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2025评分最高英美新剧",
+      "year": 2025,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2025/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "匹兹堡医护前线 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36831851",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2920601490.jpg",
+          "rating": 9.5
+        },
+        {
+          "rank": 2,
+          "title": "都是她的错",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36778966",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2926850313.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 3,
+          "title": "混沌少年时 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36820950",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2922177671.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 4,
+          "title": "片厂风云 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36156271",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919141958.jpg",
+          "rating": 8.8
+        },
+        {
+          "rank": 5,
+          "title": "小丑回魂：欢迎来到德里镇 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "35819117",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2925484384.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 6,
+          "title": "嗜血法医：杀魔复生 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36243809",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2922085112.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 7,
+          "title": "白宫杀人事件",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36230209",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918873218.jpg",
+          "rating": 8.4
+        },
+        {
+          "rank": 8,
+          "title": "悬案解码 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36392949",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921261378.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 9,
+          "title": "欢愉的艺术",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "TV",
+          "doubanId": "36186396",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2920817917.jpg",
+          "rating": 8.5
+        },
+        {
+          "rank": 10,
+          "title": "同乐者 第一季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36352371",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2926012363.jpg",
+          "rating": 8.2
+        }
+      ]
+    },
+    {
+      "id": "douban-annual-2025-returning-english-series",
+      "awardId": "douban-annual",
+      "title": "豆瓣2025评分最高英美续订剧",
+      "year": 2025,
+      "kind": "ANNUAL",
+      "sourceUrl": "https://movie.douban.com/annual/2025/",
+      "items": [
+        {
+          "rank": 1,
+          "title": "怪奇物语 第五季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "35774681",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2927467335.jpg",
+          "rating": 9.2
+        },
+        {
+          "rank": 2,
+          "title": "万物生灵 第六季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36787728",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2926214816.jpg",
+          "rating": 9.4
+        },
+        {
+          "rank": 3,
+          "title": "流人 第五季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36689815",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924888795.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 4,
+          "title": "绝望写手 第四季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36910966",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919270400.jpg",
+          "rating": 9.2
+        },
+        {
+          "rank": 5,
+          "title": "安多 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "35914829",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2919086768.jpg",
+          "rating": 8.9
+        },
+        {
+          "rank": 6,
+          "title": "彩排 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36066726",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2920143154.jpg",
+          "rating": 9.1
+        },
+        {
+          "rank": 7,
+          "title": "黑镜 第七季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36653963",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2920242376.jpg",
+          "rating": 8.6
+        },
+        {
+          "rank": 8,
+          "title": "镀金时代 第三季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36697817",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2922174952.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 9,
+          "title": "1923 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36135937",
+          "posterUrl": "https://img2.doubanio.com/view/photo/m_ratio_poster/public/p2918020941.jpg",
+          "rating": 8.7
+        },
+        {
+          "rank": 10,
+          "title": "星期三 第二季",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "TV",
+          "doubanId": "36208369",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2924118236.jpg",
+          "rating": 8.4
+        }
+      ]
+    }
+  ]
+}

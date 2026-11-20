@@ -97,10 +97,18 @@ export class CMSAdapter {
     return this.requestWithRetry(url, signal, { timeout: DETAIL_PAGE_TIMEOUT_MS, maxRetries: DETAIL_MAX_RETRIES });
   }
 
-  async search(keyword: string, page: number = 1, signal?: AbortSignal): Promise<CMSListResponse> {
+  async search(
+    keyword: string,
+    page: number = 1,
+    signal?: AbortSignal,
+    opts?: { timeout?: number; maxRetries?: number }
+  ): Promise<CMSListResponse> {
     const encodedKeyword = encodeURIComponent(keyword);
     const url = `${this.baseUrl}?ac=videolist&wd=${encodedKeyword}&pg=${page}`;
-    return this.requestWithRetry(url, signal);
+    return this.requestWithRetry(url, signal, {
+      timeout: opts?.timeout ?? 30000,
+      maxRetries: opts?.maxRetries ?? this.maxRetries,
+    });
   }
 
   async getDetail(ids: string, signal?: AbortSignal): Promise<CMSListResponse> {

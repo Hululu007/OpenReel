@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Media, Episode, UserUsageType, WatchHistory } from '@openreel/core';
+import { AWARD_CATALOG } from '@openreel/core';
 import { useAppStore, getProvider } from '../useAppStore';
 import { openMediaPlay } from '../utils/openMediaPlay';
 import { useBackgroundStore } from '../themes/backgroundStore';
@@ -12,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Card } from '@/components/ui/card';
 import { KeywordCollectDialog } from '@/components/KeywordCollectDialog';
-import { Search, X, Heart, Clock, ChevronRight as ChevronRightIcon, Film, Tv, Sparkles, Download, Database } from 'lucide-react';
+import { Search, X, Heart, Clock, ChevronRight as ChevronRightIcon, Film, Tv, Sparkles, Download, Database, Trophy } from 'lucide-react';
 import { useToast } from '@/components/Layout';
 
 const USAGE_LABELS: Record<UserUsageType, string> = {
@@ -343,6 +344,23 @@ export default function HomePage() {
         </div>
         <Button onClick={handleSearch} variant="outline"><Search className="size-4" />本地搜索</Button>
       </div>
+
+      <Card className="p-4 flex items-center gap-4 border border-amber-400/10 bg-gradient-to-r from-amber-400/10 via-transparent to-transparent">
+        <div className="size-11 shrink-0 rounded-full bg-amber-400/15 text-amber-400 flex items-center justify-center">
+          <Trophy className="size-5" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="font-medium">
+            {Math.max(...AWARD_CATALOG.lists.map((l) => l.year ?? 0))} 颁奖季 · 年度榜单
+          </div>
+          <div className="mt-0.5 text-xs text-muted-foreground truncate">
+            豆瓣年度榜单 / 奥斯卡 / 金球 / 戛纳 / 金马 / 白玉兰 / 艾美：先看本地能不能播，缺的一键找源
+          </div>
+        </div>
+        <Button variant="outline" size="sm" onClick={() => navigate('/rankings')} className="shrink-0">
+          查看榜单 <ChevronRightIcon className="size-3 ml-1" />
+        </Button>
+      </Card>
 
       <>
         {userUsageTypes.includes('SEARCH_FIRST') && renderSearchFirstCard()}

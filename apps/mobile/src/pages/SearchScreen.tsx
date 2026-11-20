@@ -10,8 +10,9 @@ import BlurredBackground from '../components/BlurredBackground';
 import PosterImage from '../components/PosterImage';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { ArrowLeft } from 'lucide-react-native';
+import { ArrowLeft, Trophy, ChevronRight } from 'lucide-react-native';
 import { openMediaPlay } from '../utils/openMediaPlay';
+import { getAwardService } from '../awards/useAwards';
 import type { Media, PaginatedMeta } from '@openreel/core';
 
 const PAGE_SIZE = 20;
@@ -201,9 +202,35 @@ export default function SearchScreen({ navigation, route }: Props) {
       fontSize: s(13),
       color: colors.mutedForeground,
     },
+    awardSection: { paddingHorizontal: 15, paddingBottom: 10 },
+    awardHeader: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 },
+    awardHeaderText: { fontSize: s(13), fontWeight: '600', color: colors.text },
+    awardHeaderCount: { fontSize: s(11), color: colors.mutedForeground },
+    awardListWrap: { gap: 6 },
+    awardChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 8,
+      paddingHorizontal: 12,
+      paddingVertical: 9,
+      borderRadius: radius.sm,
+      backgroundColor: cardBg,
+    },
+    awardChipText: { flex: 1, fontSize: s(13), color: colors.textSecondary },
   }), [colors, surfaceBg, cardBg, s]);
 
   const [bgImageUrl, setBgImageUrl] = useState<string | null>(null);
+
+  const relatedLists = useMemo(() => {
+    const kw = keyword.trim();
+    if (!kw) return [];
+    try {
+      return getAwardService().findListsByKeyword(kw, 4);
+    } catch {
+      return [];
+    }
+  }, [keyword]);
 
   useEffect(() => {
     const first = results[0];
@@ -240,6 +267,30 @@ export default function SearchScreen({ navigation, route }: Props) {
           搜索
         </Button>
       </View>
+
+      {relatedLists.length > 0 && (
+        <View style={styles.awardSection}>
+          <View style={styles.awardHeader}>
+            <Trophy size={14} color={colors.warning} />
+            <Text style={styles.awardHeaderText}>相关榜单</Text>
+            <Text style={styles.awardHeaderCount}>{relatedLists.length} 个</Text>
+          </View>
+          <View style={styles.awardListWrap}>
+            {relatedLists.map((list) => (
+              <TouchableOpacity
+                key={list.id}
+                style={styles.awardChip}
+                onPress={() => navigation.navigate('RankingDetail', { listId: list.id })}
+              >
+                <Text style={styles.awardChipText} numberOfLines={1}>
+                  {list.title}
+                </Text>
+                <ChevronRight size={12} color={colors.mutedForeground} />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      )}
 
       {searching ? (
         <View style={styles.loadingContainer}>

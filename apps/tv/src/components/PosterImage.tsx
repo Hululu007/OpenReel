@@ -6,13 +6,15 @@ interface PosterImageProps {
   uri?: string | null;
   style: StyleProp<ImageStyle>;
   placeholder?: ReactNode;
+  /** 需要防盗链 Referer 的图床（如豆瓣）由调用方传入请求头。 */
+  headers?: Record<string, string>;
 }
 
 /**
  * 海报图：与手机端同语义（失败显示「无封面」），但 TV 端额外支持焦点态边框位置。
  * 不在此处画焦点环——焦点环统一由 TVFocusable 负责，避免双层描边。
  */
-export default function PosterImage({ uri, style, placeholder }: PosterImageProps) {
+export default function PosterImage({ uri, style, placeholder, headers }: PosterImageProps) {
   const colors = useThemeColors();
   const [failed, setFailed] = useState(false);
 
@@ -28,5 +30,5 @@ export default function PosterImage({ uri, style, placeholder }: PosterImageProp
     );
   }
 
-  return <Image source={{ uri }} style={style} onError={() => setFailed(true)} />;
+  return <Image source={{ uri, headers }} style={style} onError={() => setFailed(true)} />;
 }

@@ -51,3 +51,6 @@ apps/mobile/plugins/local_vendored/
 # prebuild 时由 config 插件生成到 ios/ 的副本（源在 assets/model-cn 与 plugins/local_vendored，可再生产，无需入库）
 apps/mobile/ios/MovieApp/model-cn/
 apps/mobile/ios/local_vendored/
+
+# Kotlin/Gradle 本地构建缓存
+**/.kotlin/

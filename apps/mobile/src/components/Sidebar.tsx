@@ -164,6 +164,9 @@ export default function Sidebar() {
             <TouchableOpacity style={styles.menuItem} onPress={() => handleNav('AppearanceSettings')}>
               <Text style={styles.menuText}>外观设置</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => handleNav('Rankings')}>
+              <Text style={styles.menuText}>年度榜单</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.menuItem} onPress={() => handleNav('SourceManager')}>
               <Text style={styles.menuText}>管理视频源</Text>
             </TouchableOpacity>
