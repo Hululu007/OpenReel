@@ -6,3 +6,4 @@
  */
 export { AWARD_CATALOG } from './awardCatalog.generated';
 export * from './types';
+export * from './edition';

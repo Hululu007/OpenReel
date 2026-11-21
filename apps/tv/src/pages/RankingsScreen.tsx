@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AwardCatalog } from '@openreel/core';
+import { getEditionShortTitle } from '@openreel/core';
 import { useThemeColors, useScaledFontSize, radius, useThemeStore, hexToRgba } from '@openreel/expo-ui';
 
 import { TVFocusable } from '../focus/TVFocusable';
@@ -16,15 +17,7 @@ import { getAwardService } from '../awards/useAwards';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 
-const GROUP_ORDER: AwardCatalog['awards'][number]['group'][] = ['AWARDS', 'CHINESE', 'TV', 'DOUBAN'];
-const GROUP_LABEL: Record<string, string> = {
-  AWARDS: '国际颁奖季',
-  CHINESE: '华语奖项',
-  TV: '剧集与电视',
-  DOUBAN: '豆瓣年度榜单',
-};
-
-/** TV 榜单首页：奖项分组 → 进入该奖项最新榜单 */
+/** TV 榜单首页：奖项分组 → 进入该奖项最新一届名单 */
 export function RankingsScreen() {
   const nav = useNavigation<Nav>();
   const colors = useThemeColors();
@@ -56,22 +49,7 @@ export function RankingsScreen() {
     return () => clearTimeout(t);
   }, []);
 
-  const groups = useMemo(
-    () =>
-      GROUP_ORDER.map((group) => ({
-        group,
-        awards: catalog.awards
-          .filter((a) => a.group === group)
-          .map((award) => ({
-            award,
-            lists: catalog.lists
-              .filter((l) => l.awardId === award.id)
-              .sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
-          }))
-          .filter((x) => x.lists.length > 0),
-      })).filter((g) => g.awards.length > 0),
-    [catalog]
-  );
+  const groups = useMemo(() => service.getAwardOverviews(), [catalog, service]);
 
   return (
     <View style={styles.container}>
@@ -88,18 +66,19 @@ export function RankingsScreen() {
         contentContainerStyle={{ paddingHorizontal: TV_LAYOUT.paddingX, paddingTop: tv(14), paddingBottom: tv(40) }}
       >
         {groups.map((group) => (
-          <View key={group.group} style={{ marginBottom: tv(18) }}>
+          <View key={group.groupKey} style={{ marginBottom: tv(18) }}>
             <Text style={[styles.groupTitle, { color: colors.foreground, fontSize: scale(19) }]}>
-              {GROUP_LABEL[group.group]}
+              {group.group}
             </Text>
             <View style={styles.awardGrid}>
-              {group.awards.map(({ award, lists }) => {
-                const latest = lists[0];
+              {group.awards.map(({ award, latest, otherEditions, allTime }) => {
+                if (!latest) return null;
+                const yearCount = (latest.year != null ? 1 : 0) + otherEditions.length;
                 return (
                   <TVFocusable
                     key={award.id}
                     id={`ranking-award:${award.id}`}
-                    onPress={() => nav.navigate('RankingDetail', { listId: latest.id })}
+                    onPress={() => nav.navigate('RankingDetail', { listId: latest.primary.id })}
                     style={[
                       styles.awardCard,
                       { backgroundColor: hexToRgba(colors.card, cardOpacity / 100) },
@@ -114,11 +93,13 @@ export function RankingsScreen() {
                       </Text>
                     </View>
                     <Text style={[styles.awardLatest, { color: colors.textSecondary, fontSize: scale(14) }]} numberOfLines={1}>
-                      {latest.title}
+                      {getEditionShortTitle(latest)}
                     </Text>
                     <Text style={[styles.awardMeta, { color: colors.mutedForeground, fontSize: scale(12) }]}>
                       {award.region ? `${award.region} · ` : ''}
-                      {lists.length} 个榜单 · {latest.items.length} 部
+                      {yearCount > 0 ? `已收录 ${yearCount} 年 · ` : ''}
+                      {latest.totalItems} 部
+                      {allTime.length > 0 ? ' · 含历届合集' : ''}
                     </Text>
                   </TVFocusable>
                 );

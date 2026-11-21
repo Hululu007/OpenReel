@@ -1,28 +1,43 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { AwardCatalog, AwardList } from '@openreel/core';
+import type { AwardCatalog, AwardEdition, AwardOverview } from '@openreel/core';
+import { getEditionActionLabel, getEditionShortTitle } from '@openreel/core';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AwardPoster } from '@/components/AwardPoster';
 import { useToast } from '@/components/Layout';
-import { Award, ChevronRight, RefreshCw, Trophy, Film, CalendarDays } from 'lucide-react';
+import { Award, ChevronRight, History, RefreshCw, Trophy, Film } from 'lucide-react';
 import { getAwardService } from './rankings/useAwards';
 
 interface AwardCardProps {
-  award: AwardCatalog['awards'][number];
-  lists: AwardList[];
-  progress?: { local: number; total: number };
-  onOpen: (listId: string) => void;
+  overview: AwardOverview;
+  progress: Record<string, { local: number; total: number }>;
+  onOpen: (edition: AwardEdition) => void;
 }
 
-function AwardCard({ award, lists, progress, onOpen }: AwardCardProps) {
-  const latest = lists[0];
-  const previews = latest.items.slice(0, 4).filter((i) => i.posterUrl);
+const KIND_LABEL: Record<string, string> = {
+  FESTIVAL: '电影节',
+  TV: '电视',
+  ANNUAL: '年度',
+  MOVIE: '电影',
+};
+
+/**
+ * 奖项卡：一个奖项只出现一次。
+ * 主入口是「最新一届」，往年与历届合集中作为次级入口，不再把每份片单平铺成 chip。
+ */
+function AwardCard({ overview, progress, onOpen }: AwardCardProps) {
+  const { award, latest, otherEditions, allTime } = overview;
+  if (!latest) return null;
+  const p = progress[latest.id];
+  const posters = latest.primary.items.slice(0, 4).filter((i) => i.posterUrl);
+  const yearCount = (latest.year != null ? 1 : 0) + otherEditions.length;
+
   return (
     <Card
       className="group p-4 flex flex-col gap-3 hover:shadow-card transition-shadow cursor-pointer"
-      onClick={() => latest && onOpen(latest.id)}
+      onClick={() => onOpen(latest)}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -30,25 +45,25 @@ function AwardCard({ award, lists, progress, onOpen }: AwardCardProps) {
             <Trophy className="size-4 text-amber-400 shrink-0" />
             <h3 className="font-semibold truncate">{award.name}</h3>
           </div>
-          <div className="mt-1 text-xs text-muted-foreground flex items-center gap-2">
+          <div className="mt-1 text-xs text-muted-foreground flex items-center gap-1.5">
             {award.region && <span>{award.region}</span>}
-            <span>·</span>
-            <span>{lists.length} 个榜单</span>
+            {award.region && <span>·</span>}
+            <span>{yearCount > 0 ? `已收录 ${yearCount} 年` : '历届合集'}</span>
           </div>
         </div>
         <Badge variant="secondary" className="shrink-0 text-[10px]">
-          {award.kind === 'FESTIVAL' ? '电影节' : award.kind === 'TV' ? '电视' : award.kind === 'ANNUAL' ? '年度' : '电影'}
+          {KIND_LABEL[award.kind] ?? '电影'}
         </Badge>
       </div>
 
       <div className="flex gap-2 text-left">
         <div className="flex -space-x-3">
-          {previews.length === 0 ? (
+          {posters.length === 0 ? (
             <div className="size-16 rounded-md bg-[var(--color-secondary-alpha)] flex items-center justify-center text-muted-foreground">
               <Film className="size-5" />
             </div>
           ) : (
-            previews.map((item, idx) => (
+            posters.map((item, idx) => (
               <div
                 key={`${item.title}-${idx}`}
                 className="size-16 rounded-md overflow-hidden border-2 border-[var(--color-background)] bg-[var(--color-secondary-alpha)]"
@@ -60,39 +75,54 @@ function AwardCard({ award, lists, progress, onOpen }: AwardCardProps) {
           )}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="text-sm truncate">{latest.title}</div>
-          <div className="mt-1 text-xs text-muted-foreground flex items-center gap-2">
-            <CalendarDays className="size-3" />
-            {latest.year ?? '历届'}
-            <span>·</span>
-            {latest.items.length} 部
+          <div className="text-sm font-medium truncate">{getEditionShortTitle(latest)}</div>
+          <div className="mt-1 text-xs text-muted-foreground">
+            {latest.year != null ? `共 ${latest.totalItems} 部` : `${latest.totalItems} 部`}
+            {p ? ` · 本地可看 ${p.local}/${p.total}` : ''}
           </div>
-          {progress && (
-            <div className="mt-1 text-xs">
-              <span className={progress.local > 0 ? 'text-emerald-400' : 'text-muted-foreground'}>
-                本地可看 {progress.local}/{progress.total}
-              </span>
-            </div>
-          )}
+          <div className="mt-1.5 text-[11px] text-muted-foreground group-hover:text-text transition-colors">
+            {getEditionActionLabel(latest)} →
+          </div>
         </div>
         <ChevronRight className="size-4 text-muted-foreground self-center group-hover:translate-x-0.5 transition-transform" />
       </div>
 
-      <div className="flex flex-wrap gap-1.5">
-        {lists.slice(0, 5).map((list) => (
-          <button
-            key={list.id}
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpen(list.id);
-            }}
-            className="text-[11px] px-2 py-1 rounded-full bg-[var(--color-secondary-alpha)] text-text-secondary hover:bg-[var(--color-hover-alpha)] hover:text-text transition-colors"
-          >
-            {list.edition ?? list.year ?? list.title}
-          </button>
-        ))}
-      </div>
+      {(otherEditions.length > 0 || allTime.length > 0) && (
+        <div className="flex flex-wrap items-center gap-1.5">
+          {otherEditions.length > 0 && (
+            <>
+              <span className="text-[11px] text-muted-foreground">往年</span>
+              {otherEditions.map((edition) => (
+                <button
+                  key={edition.id}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen(edition);
+                  }}
+                  className="text-[11px] px-2 py-1 rounded-full bg-[var(--color-secondary-alpha)] text-text-secondary hover:bg-[var(--color-hover-alpha)] hover:text-text transition-colors"
+                >
+                  {edition.year}
+                </button>
+              ))}
+            </>
+          )}
+          {allTime.map((edition) => (
+            <button
+              key={edition.id}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpen(edition);
+              }}
+              className="text-[11px] px-2 py-1 rounded-full bg-[var(--color-secondary-alpha)] text-text-secondary hover:bg-[var(--color-hover-alpha)] hover:text-text transition-colors inline-flex items-center gap-1"
+            >
+              <History className="size-3" />
+              {edition.primary.title}
+            </button>
+          ))}
+        </div>
+      )}
     </Card>
   );
 }
@@ -102,7 +132,6 @@ export default function RankingsPage() {
   const toast = useToast();
   const service = useMemo(() => getAwardService(), []);
   const [catalog, setCatalog] = useState<AwardCatalog>(() => service.getBundledCatalog());
-  const [year, setYear] = useState<number | 'all'>('all');
   const [progress, setProgress] = useState<Record<string, { local: number; total: number }>>({});
   const [checking, setChecking] = useState(false);
 
@@ -129,61 +158,34 @@ export default function RankingsPage() {
     if (main) main.scrollTop = 0;
   }, []);
 
-  const years = useMemo(() => {
-    const set = new Set<number>();
-    for (const list of catalog.lists) if (list.year) set.add(list.year);
-    return [...set].sort((a, b) => b - a);
-  }, [catalog]);
-
-  const groups = useMemo(() => {
-    const filtered = catalog.lists.filter((l) => year === 'all' || l.year === year);
-    const groupOrder: AwardCatalog['awards'][number]['group'][] = ['AWARDS', 'CHINESE', 'TV', 'DOUBAN'];
-    const labels: Record<string, string> = {
-      AWARDS: '国际颁奖季',
-      CHINESE: '华语奖项',
-      TV: '剧集与电视',
-      DOUBAN: '豆瓣年度榜单',
-    };
-    return groupOrder
-      .map((group) => {
-        const awards = catalog.awards
-          .filter((a) => a.group === group)
-          .map((award) => ({
-            award,
-            lists: filtered
-              .filter((l) => l.awardId === award.id)
-              .sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
-          }))
-          .filter((x) => x.lists.length > 0);
-        return { group, label: labels[group], awards };
-      })
-      .filter((g) => g.awards.length > 0);
-  }, [catalog, year]);
+  const overviews = useMemo(() => service.getAwardOverviews(), [catalog, service]);
 
   useEffect(() => {
     let cancelled = false;
-    const latest = groups.flatMap((g) => g.awards.map(({ lists }) => lists[0])).filter(Boolean);
-    if (latest.length === 0) return;
     void (async () => {
-      for (const list of latest) {
-        if (cancelled) return;
-        try {
-          const matches = await service.matchList(list, { refineMissing: false });
-          if (cancelled) return;
-          const local = matches.filter((m) => m.status === 'PLAYABLE').length;
-          setProgress((prev) => ({
-            ...prev,
-            [list.id]: { local, total: list.items.length },
-          }));
-        } catch {
-          // 单条榜单统计失败不影响页面
+      for (const group of overviews) {
+        for (const { latest } of group.awards) {
+          if (!latest || cancelled) continue;
+          let local = 0;
+          let total = 0;
+          for (const list of latest.lists) {
+            if (cancelled) return;
+            total += list.items.length;
+            try {
+              const matches = await service.matchList(list, { refineMissing: false });
+              local += matches.filter((m) => m.status === 'PLAYABLE').length;
+            } catch {
+              // 单份名单统计失败不影响其余
+            }
+          }
+          if (!cancelled) setProgress((prev) => ({ ...prev, [latest.id]: { local, total } }));
         }
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, [groups, service]);
+  }, [overviews, service]);
 
   const handleCheckUpdate = async () => {
     setChecking(true);
@@ -200,6 +202,10 @@ export default function RankingsPage() {
     }
   };
 
+  const openEdition = (edition: AwardEdition) => {
+    navigate(`/rankings/${encodeURIComponent(edition.primary.id)}`);
+  };
+
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -209,7 +215,7 @@ export default function RankingsPage() {
             年度榜单
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            豆瓣年度榜单、奥斯卡、金球、电影节与华语电视奖项，直接看本地能不能播，缺的可以一键找源。
+            豆瓣年度榜单、奥斯卡、金球、电影节与华语电视奖项，一年一个入口；直接看本地能不能播，缺的可以一键找源。
           </p>
         </div>
         <Button variant="outline" size="sm" onClick={handleCheckUpdate} disabled={checking}>
@@ -218,50 +224,19 @@ export default function RankingsPage() {
         </Button>
       </div>
 
-      <Card className="p-3 flex flex-wrap items-center gap-2">
-        <span className="text-xs text-muted-foreground mr-1">年份</span>
-        <button
-          type="button"
-          onClick={() => setYear('all')}
-          className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
-            year === 'all'
-              ? 'bg-[var(--color-muted-alpha)] text-text'
-              : 'bg-[var(--color-secondary-alpha)] text-text-secondary hover:text-text'
-          }`}
-        >
-          全部
-        </button>
-        {years.map((y) => (
-          <button
-            key={y}
-            type="button"
-            onClick={() => setYear(y)}
-            className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
-              year === y
-                ? 'bg-[var(--color-muted-alpha)] text-text'
-                : 'bg-[var(--color-secondary-alpha)] text-text-secondary hover:text-text'
-            }`}
-          >
-            {y}
-          </button>
-        ))}
-        <span className="ml-auto text-[11px] text-muted-foreground">数据版本 {catalog.version}</span>
-      </Card>
-
-      {groups.map((group) => (
-        <section key={group.group} className="space-y-3">
+      {overviews.map((group) => (
+        <section key={group.groupKey} className="space-y-3">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold">{group.label}</h2>
+            <h2 className="text-lg font-semibold">{group.group}</h2>
             <span className="text-xs text-muted-foreground">{group.awards.length} 个奖项</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {group.awards.map(({ award, lists }) => (
+            {group.awards.map((overview) => (
               <AwardCard
-                key={award.id}
-                award={award}
-                lists={lists}
-                progress={progress[lists[0]?.id]}
-                onOpen={(listId) => navigate(`/rankings/${encodeURIComponent(listId)}`)}
+                key={overview.award.id}
+                overview={overview}
+                progress={progress}
+                onOpen={openEdition}
               />
             ))}
           </div>
@@ -269,7 +244,9 @@ export default function RankingsPage() {
       ))}
 
       <p className="text-[11px] text-muted-foreground leading-relaxed">
+        榜单按「奖项 → 年份 → 名单」组织，每个奖项每年一个入口，「历届」合集单独列出；豆瓣一年内的多份片单在同一页分栏展示。
         榜单与获奖名单来自豆瓣公开页面/片单快照，仅用于影片发现与本地库匹配；「本地可看」表示本地已登记视频源、点击后按需获取播放地址。
+        数据版本 {catalog.version}
       </p>
     </div>
   );

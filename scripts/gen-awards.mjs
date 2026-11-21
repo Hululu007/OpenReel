@@ -171,14 +171,14 @@ const AWARD_COLLECTIONS = [
     awardId: 'oscar',
     collectionId: 'ECMQHVGWI',
     slug: 'oscar-best-picture-alltime',
-    title: '历届奥斯卡金像奖最佳影片',
+    title: '奥斯卡历届最佳影片',
     kind: 'ALL_TIME',
   },
   {
     awardId: 'golden-globe',
     collectionId: 'ECNA7QSZI',
     slug: 'golden-globe-82-winners',
-    title: '第82届金球奖获奖名单',
+    title: '金球奖 2025 获奖名单',
     year: 2025,
     edition: '第82届',
     kind: 'WINNERS',
@@ -187,7 +187,7 @@ const AWARD_COLLECTIONS = [
     awardId: 'cannes',
     collectionId: 'ECMNABFUI',
     slug: 'cannes-79-winners',
-    title: '第79届戛纳电影节获奖名单',
+    title: '戛纳电影节 2026 获奖名单',
     year: 2026,
     edition: '第79届',
     kind: 'WINNERS',
@@ -196,15 +196,14 @@ const AWARD_COLLECTIONS = [
     awardId: 'cannes',
     collectionId: 'ECCU6GZUA',
     slug: 'cannes-palme-alltime',
-    title: '历届戛纳电影节金棕榈奖',
-    year: 2023,
+    title: '戛纳历届金棕榈奖',
     kind: 'ALL_TIME',
   },
   {
     awardId: 'berlinale',
     collectionId: 'ECMU76GZQ',
     slug: 'berlinale-75-winners',
-    title: '第75届柏林国际电影节获奖名单',
+    title: '柏林电影节 2025 获奖名单',
     year: 2025,
     edition: '第75届',
     kind: 'WINNERS',
@@ -213,15 +212,14 @@ const AWARD_COLLECTIONS = [
     awardId: 'berlinale',
     collectionId: 'ECZAHZJTI',
     slug: 'berlinale-bear-alltime',
-    title: '历届柏林电影节金熊奖获奖影片',
-    year: 2020,
+    title: '柏林历届金熊奖',
     kind: 'ALL_TIME',
   },
   {
     awardId: 'venice',
     collectionId: 'ECQU75JDA',
     slug: 'venice-82-winners',
-    title: '第82届威尼斯电影节获奖名单',
+    title: '威尼斯电影节 2025 获奖名单',
     year: 2025,
     edition: '第82届',
     kind: 'WINNERS',
@@ -230,7 +228,7 @@ const AWARD_COLLECTIONS = [
     awardId: 'golden-horse',
     collectionId: 'ECBQ6CECI',
     slug: 'golden-horse-60-winners',
-    title: '第60届金马奖获奖名单',
+    title: '金马奖 2023 获奖名单',
     year: 2023,
     edition: '第60届',
     kind: 'WINNERS',
@@ -239,7 +237,7 @@ const AWARD_COLLECTIONS = [
     awardId: 'magnolia',
     collectionId: 'ECXI7Y6IQ',
     slug: 'magnolia-30-winners',
-    title: '第30届上海电视节白玉兰奖获奖名单',
+    title: '白玉兰奖 2025 获奖名单',
     year: 2025,
     edition: '第30届',
     kind: 'WINNERS',
@@ -248,7 +246,7 @@ const AWARD_COLLECTIONS = [
     awardId: 'emmy',
     collectionId: 'ECSA77HQY',
     slug: 'emmy-77-winners',
-    title: '第77届黄金时段艾美奖获奖名单',
+    title: '艾美奖 2025 获奖名单',
     year: 2025,
     edition: '第77届',
     kind: 'WINNERS',
@@ -257,7 +255,7 @@ const AWARD_COLLECTIONS = [
     awardId: 'emmy',
     collectionId: 'ECDA7UYMA',
     slug: 'emmy-76-winners',
-    title: '第76届黄金时段艾美奖获奖名单',
+    title: '艾美奖 2024 获奖名单',
     year: 2024,
     edition: '第76届',
     kind: 'WINNERS',
@@ -271,6 +269,19 @@ const ANNUAL_SLUGS = {
   '评分最高华语剧集': 'chinese-series',
   '评分最高英美新剧': 'new-english-series',
   '评分最高英美续订剧': 'returning-english-series',
+};
+
+/**
+ * 豆瓣一年有 6 份片单，它们属于同一「届」，UI 里作为同一页的 section 展示，
+ * 而不是 6 个并列年份入口。这里给每份片单一个人话名称。
+ */
+const ANNUAL_SECTION_LABELS = {
+  '评分最高华语电影': '华语电影',
+  '评分最高外语电影': '外语电影',
+  '冷门佳片': '冷门佳片',
+  '评分最高华语剧集': '华语剧集',
+  '评分最高英美新剧': '英美新剧',
+  '评分最高英美续订剧': '英美续订剧',
 };
 
 function parseYearFromCard(cardSubtitle) {
@@ -336,6 +347,7 @@ async function buildAnnualLists() {
         title: `豆瓣${year}${normalizedTitle}`,
         year,
         kind: 'ANNUAL',
+        sectionLabel: ANNUAL_SECTION_LABELS[title] || ANNUAL_SECTION_LABELS[normalizedTitle] || undefined,
         sourceUrl: `https://movie.douban.com/annual/${year}/`,
         items,
       });
@@ -357,7 +369,9 @@ async function buildAwardLists() {
       winner: def.kind === 'WINNERS' || def.kind === 'ALL_TIME' ? true : undefined,
     }));
     if (items.length === 0) continue;
-    const year = def.year ?? items.reduce((max, it) => Math.max(max, it.year), 0) + 1;
+    // 历届合集不属于任何「一届」，不要再伪造一个抓取年（旧版曾因此让戛纳/柏林凭空多出年份）。
+    const year =
+      def.kind === 'ALL_TIME' ? undefined : def.year ?? items.reduce((max, it) => Math.max(max, it.year), 0) + 1;
     lists.push({
       id: def.slug,
       awardId: def.awardId,

@@ -19,6 +19,7 @@ import type {
   AwardItem,
   AwardItemMatch,
 } from '@openreel/core';
+import { getEditionTitle } from '@openreel/core';
 import { getProvider } from '../init';
 import { openMediaPlay } from '../utils/openMediaPlay';
 import { useThemeColors } from '../themes/useThemeColors';
@@ -75,13 +76,16 @@ export default function RankingDetailScreen() {
     () => catalog.awards.find((a) => a.id === list?.awardId),
     [catalog, list]
   );
-  const siblingLists = useMemo(
-    () =>
-      catalog.lists
-        .filter((l) => l.awardId === list?.awardId)
-        .sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
-    [catalog, list]
+  /** 当前榜单所属的「届」：同届多份名单 = 页内分栏，不同届 = 年份切换。 */
+  const edition = useMemo(
+    () => (list && catalog ? service.getEditionOfList(list.id) : undefined),
+    [catalog, list, service]
   );
+  const sectionLists = edition?.lists ?? [];
+  const otherEditions = useMemo(() => {
+    if (!edition) return [];
+    return service.getAwardEditions(edition.award.id).filter((e) => e.id !== edition.id);
+  }, [catalog, edition, service]);
 
   const refreshMatches = useCallback(async () => {
     if (!list) return;
@@ -518,10 +522,12 @@ export default function RankingDetailScreen() {
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <Text style={styles.headerTitle} numberOfLines={1}>
-              {list.title}
+              {edition ? getEditionTitle(edition) : list.title}
             </Text>
             <Text style={styles.headerSub} numberOfLines={1}>
-              {award?.name} · {list.year ?? '历届'} · {list.items.length} 部
+              {award?.name}
+              {edition?.year != null ? ` · ${edition.year}` : ''} · {list.items.length} 部
+              {edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''}
             </Text>
           </View>
           <TouchableOpacity style={styles.iconBtn} onPress={refreshMatches} disabled={loading}>
@@ -566,13 +572,13 @@ export default function RankingDetailScreen() {
           </TouchableOpacity>
         </View>
 
-        {siblingLists.length > 1 && (
+        {sectionLists.length > 1 && (
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 15, paddingTop: 10, gap: 8 }}
           >
-            {siblingLists.map((l) => (
+            {sectionLists.map((l) => (
               <TouchableOpacity
                 key={l.id}
                 style={[styles.listTab, l.id === list.id && styles.listTabActive]}
@@ -580,11 +586,31 @@ export default function RankingDetailScreen() {
                 activeOpacity={0.85}
               >
                 <Text style={[styles.listTabText, l.id === list.id && styles.listTabTextActive]}>
-                  {l.edition ?? l.year ?? l.title}
+                  {l.sectionLabel ?? l.title}（{l.items.length}）
                 </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
+        )}
+
+        {otherEditions.length > 0 && (
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 15, paddingTop: 8 }}>
+            <Text style={{ fontSize: s(11), color: colors.mutedForeground, marginRight: 8 }}>
+              其他年份
+            </Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
+              {otherEditions.map((e) => (
+                <TouchableOpacity
+                  key={e.id}
+                  style={styles.listTab}
+                  onPress={() => navigation.replace('RankingDetail', { listId: e.primary.id })}
+                  activeOpacity={0.85}
+                >
+                  <Text style={styles.listTabText}>{e.year != null ? e.year : '历届'}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
         )}
 
         <FlatList

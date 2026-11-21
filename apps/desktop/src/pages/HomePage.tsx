@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Media, Episode, UserUsageType, WatchHistory } from '@openreel/core';
-import { AWARD_CATALOG } from '@openreel/core';
 import { useAppStore, getProvider } from '../useAppStore';
 import { openMediaPlay } from '../utils/openMediaPlay';
 import { useBackgroundStore } from '../themes/backgroundStore';
@@ -351,7 +350,7 @@ export default function HomePage() {
         </div>
         <div className="min-w-0 flex-1">
           <div className="font-medium">
-            {Math.max(...AWARD_CATALOG.lists.map((l) => l.year ?? 0))} 颁奖季 · 年度榜单
+            颁奖季 · 年度榜单
           </div>
           <div className="mt-0.5 text-xs text-muted-foreground truncate">
             豆瓣年度榜单 / 奥斯卡 / 金球 / 戛纳 / 金马 / 白玉兰 / 艾美：先看本地能不能播，缺的一键找源

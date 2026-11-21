@@ -18,7 +18,6 @@ import CategoryHeader from '../components/CategoryHeader';
 import BlurredBackground from '../components/BlurredBackground';
 import { KidLockBanner } from '../components/KidLockBanner';
 import type { Media, Episode, UserUsageType, WatchHistory } from '@openreel/core';
-import { AWARD_CATALOG } from '@openreel/core';
 import { getSplashStore } from '@openreel/core';
 import { radius } from '../themes/radiusTokens';
 import { openMediaPlay } from '../utils/openMediaPlay';
@@ -892,7 +891,7 @@ export default function HomeScreen() {
           </View>
           <View style={{ flex: 1, minWidth: 0 }}>
             <Text style={{ fontSize: s(15), fontWeight: '600', color: colors.text }}>
-              {Math.max(...AWARD_CATALOG.lists.map((l) => l.year ?? 0))} 颁奖季 · 年度榜单
+              颁奖季 · 年度榜单
             </Text>
             <Text style={{ fontSize: s(11), color: colors.textSecondary, marginTop: 3 }} numberOfLines={1}>
               豆瓣年度 / 奥斯卡 / 金球 / 戛纳 / 金马 / 白玉兰：先看本地能不能播

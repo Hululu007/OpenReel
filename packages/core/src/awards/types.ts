@@ -51,17 +51,48 @@ export interface AwardItem {
   note?: string;
 }
 
+/**
+ * 「一届」内的名单分区名，如豆瓣一年 6 份片单的「华语电影 / 外语电影 / 冷门佳片」。
+ * 同一 awardId + year 的多份榜单在 UI 里是同一页的 section，不并列成多个年份入口。
+ */
 export interface AwardList {
   id: string;
   awardId: string;
   title: string;
-  /** 榜单年份（颁奖年/年度榜单年份），用于分组与排序；历届片单可缺省。 */
+  /** 榜单年份（颁奖年/年度榜单年份）；历届合集缺省——它不属于任何一年。 */
   year?: number;
-  /** 届次文案，如「第 98 届」。 */
+  /** 届次文案，如「第 98 届」。仅作数据留存，**不上屏**。 */
   edition?: string;
   kind: AwardListKind;
+  /** 同一届内的分区名（多份名单时作为页内 tab 文案）。 */
+  sectionLabel?: string;
   sourceUrl?: string;
   items: AwardItem[];
+}
+
+/** 一届 = 同一奖项同一年里的全部名单；year 缺省表示「历届合集」。 */
+export interface AwardEdition {
+  /** 唯一键，与 AwardService.getEditionKey 一致（`awardId:year` / `awardId:all`）。 */
+  id: string;
+  award: AwardDef;
+  year?: number;
+  /** 该届的全部名单（多份时 UI 作为 section 切换）。 */
+  lists: AwardList[];
+  /** 默认打开的那份名单。 */
+  primary: AwardList;
+  /** 该届条目总数（跨 section 累加）。 */
+  totalItems: number;
+}
+
+/** 首页单个奖项的入口结构：一个奖项只出现一次。 */
+export interface AwardOverview {
+  award: AwardDef;
+  /** 主入口：最新一届；只有历届合集的奖项则为该合集。 */
+  latest?: AwardEdition;
+  /** 其余年份（按年倒序，每一年一条）。 */
+  otherEditions: AwardEdition[];
+  /** 历届合集（不属于任何年份，独立入口）。 */
+  allTime: AwardEdition[];
 }
 
 export interface AwardCatalog {

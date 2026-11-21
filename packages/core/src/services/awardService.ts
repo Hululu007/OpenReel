@@ -9,11 +9,14 @@ import type {
   AwardCollectPending,
   AwardCollectProgress,
   AwardCollectResult,
+  AwardEdition,
+  AwardGroup,
   AwardItem,
   AwardItemMatch,
   AwardList,
   AwardMatchConfidence,
   AwardMediaCandidate,
+  AwardOverview,
 } from '../awards/types';
 
 const CACHE_KEY = 'awards.catalog.v1';
@@ -214,30 +217,88 @@ export class AwardService {
     return (this.catalog ?? AWARD_CATALOG).lists.find((l) => l.id === listId);
   }
 
-  /** 榜单首页数据：按奖项分组，奖项内按年份倒序。 */
-  getGroupedLists(): Array<{
+  /** 一届的唯一键：awardId + 年份；历届合集用 all。 */
+  getEditionKey(awardId: string, year?: number): string {
+    return `${awardId}:${year ?? 'all'}`;
+  }
+
+  /**
+   * 把一个奖项的榜单聚合成「届」。
+   *
+   * 用户心智只有「奖项 → 哪一年 → 名单」；豆瓣一年给 6 份片单（华语电影/外语电影/…），
+   * 它们属于同一届，作为同一页的 section，不再并列成 6 个年份入口。
+   * 历届合集没有年份，单独成一个 edition（year 缺省），不参与年份排序。
+   */
+  getAwardEditions(awardId: string): AwardEdition[] {
+    const catalog = this.catalog ?? AWARD_CATALOG;
+    const award = catalog.awards.find((a) => a.id === awardId);
+    if (!award) return [];
+    const byKey = new Map<string, AwardList[]>();
+    for (const list of catalog.lists) {
+      if (list.awardId !== awardId) continue;
+      const key = this.getEditionKey(awardId, list.year);
+      const bucket = byKey.get(key);
+      if (bucket) bucket.push(list);
+      else byKey.set(key, [list]);
+    }
+    const editions: AwardEdition[] = [...byKey.values()].map((lists) => ({
+      id: this.getEditionKey(awardId, lists[0]?.year),
+      award,
+      year: lists[0]?.year,
+      lists,
+      primary: lists[0],
+      totalItems: lists.reduce((n, l) => n + l.items.length, 0),
+    }));
+    return editions.sort((a, b) => (b.year ?? -1) - (a.year ?? -1));
+  }
+
+  /** 某条榜单所属的「届」（详情页据此拿 section 与年份切换）。 */
+  getEditionOfList(listId: string): AwardEdition | undefined {
+    const list = this.getList(listId);
+    if (!list) return undefined;
+    return this.getAwardEditions(list.awardId).find(
+      (e) => this.getEditionKey(e.award.id, e.year) === this.getEditionKey(list.awardId, list.year)
+    );
+  }
+
+  /**
+   * 榜单首页数据：按分区 → 奖项 → 届 组织。
+   * 每个奖项只返回一次，最新一届作为主入口，其余年份与历届合集作为次级入口。
+   */
+  getAwardOverviews(): Array<{
     group: string;
-    award: AwardCatalog['awards'][number];
-    lists: AwardList[];
+    groupKey: AwardGroup;
+    awards: AwardOverview[];
   }> {
     const catalog = this.catalog ?? AWARD_CATALOG;
-    const groupOrder = ['AWARDS', 'CHINESE', 'TV', 'DOUBAN'];
-    const groupLabel: Record<string, string> = {
+    const groupOrder: AwardGroup[] = ['AWARDS', 'CHINESE', 'TV', 'DOUBAN'];
+    const groupLabel: Record<AwardGroup, string> = {
       AWARDS: '国际颁奖季',
       CHINESE: '华语奖项',
       TV: '剧集与电视',
       DOUBAN: '豆瓣年度榜单',
     };
-    const out: Array<{ group: string; award: AwardCatalog['awards'][number]; lists: AwardList[] }> = [];
-    for (const group of groupOrder) {
-      for (const award of catalog.awards.filter((a) => a.group === group)) {
-        const lists = catalog.lists
-          .filter((l) => l.awardId === award.id)
-          .sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
-        if (lists.length > 0) out.push({ group: groupLabel[group] ?? group, award, lists });
-      }
-    }
-    return out;
+    return groupOrder
+      .map((groupKey) => {
+        const awards = catalog.awards
+          .filter((a) => a.group === groupKey)
+          .map((award): AwardOverview => {
+            const editions = this.getAwardEditions(award.id);
+            const yearEditions = editions.filter((e) => e.year != null);
+            const allTime = editions.filter((e) => e.year == null);
+            // 没有年度名单的奖项（如只有「历届最佳影片」），把合集当作主入口，不再重复出现在次级入口。
+            const allTimeIsPrimary = yearEditions.length === 0 && allTime.length > 0;
+            return {
+              award,
+              latest: yearEditions[0] ?? allTime[0],
+              otherEditions: yearEditions.slice(1),
+              allTime: allTimeIsPrimary ? allTime.slice(1) : allTime,
+            };
+          })
+          .filter((x) => x.latest);
+        return { group: groupLabel[groupKey], groupKey, awards };
+      })
+      .filter((g) => g.awards.length > 0);
   }
 
   /** 首页/搜索联动：按奖项名或榜单名找相关榜单。 */
@@ -254,20 +315,6 @@ export class AwardService {
       .filter((l) => hitAwards.has(l.awardId) || l.title.toLowerCase().includes(raw))
       .sort((a, b) => (b.year ?? 0) - (a.year ?? 0))
       .slice(0, limit);
-  }
-
-  /** 最近榜单（首页颁奖季卡片用）：按年份倒序，按奖项去重取最新一条。 */
-  getLatestLists(limit = 4): AwardList[] {
-    const catalog = this.catalog ?? AWARD_CATALOG;
-    const seen = new Set<string>();
-    const out: AwardList[] = [];
-    for (const list of [...catalog.lists].sort((a, b) => (b.year ?? 0) - (a.year ?? 0))) {
-      if (seen.has(list.awardId)) continue;
-      seen.add(list.awardId);
-      out.push(list);
-      if (out.length >= limit) break;
-    }
-    return out;
   }
 
   /** 清空匹配缓存（找片入库后调用）。 */

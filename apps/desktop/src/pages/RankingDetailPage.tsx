@@ -7,6 +7,7 @@ import type {
   AwardItem,
   AwardItemMatch,
 } from '@openreel/core';
+import { getEditionTitle } from '@openreel/core';
 import { getProvider } from '../init';
 import { openMediaPlay } from '../utils/openMediaPlay';
 import { Button } from '@/components/ui/button';
@@ -77,13 +78,16 @@ export default function RankingDetailPage() {
     () => catalog.awards.find((a) => a.id === list?.awardId),
     [catalog, list]
   );
-  const siblingLists = useMemo(
-    () =>
-      catalog.lists
-        .filter((l) => l.awardId === list?.awardId)
-        .sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
-    [catalog, list]
+  /** 当前榜单所属的「届」：同一届的多份名单在本页作为分栏切换，不同届作为年份切换。 */
+  const edition = useMemo(
+    () => (list && catalog ? service.getEditionOfList(list.id) : undefined),
+    [catalog, list, service]
   );
+  const sectionLists = edition?.lists ?? [];
+  const otherEditions = useMemo(() => {
+    if (!edition) return [];
+    return service.getAwardEditions(edition.award.id).filter((e) => e.id !== edition.id);
+  }, [catalog, edition, service]);
 
   const refreshMatches = useCallback(async () => {
     if (!list) return;
@@ -297,14 +301,21 @@ export default function RankingDetailPage() {
           </Button>
           <h1 className="text-2xl font-bold flex items-center gap-2">
             <Award className="size-6 text-amber-400 shrink-0" />
-            <span className="truncate">{list.title}</span>
+            <span className="truncate">{edition ? getEditionTitle(edition) : list.title}</span>
           </h1>
           <div className="mt-1 text-sm text-muted-foreground flex flex-wrap items-center gap-2">
             <span>{award?.name}</span>
             <span>·</span>
-            <span>{list.year ?? '历届'}</span>
-            <span>·</span>
-            <span>{list.items.length} 部</span>
+            {edition?.year != null && (
+              <>
+                <span>{edition.year}</span>
+                <span>·</span>
+              </>
+            )}
+            <span>
+              {list.items.length} 部
+              {edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''}
+            </span>
             {list.kind === 'WINNERS' && (
               <Badge variant="secondary" className="text-[10px]">
                 获奖名单
@@ -338,10 +349,10 @@ export default function RankingDetailPage() {
         </div>
       </div>
 
-      {siblingLists.length > 1 && (
+      {sectionLists.length > 1 && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-muted-foreground">切换榜单</span>
-          {siblingLists.map((l) => (
+          <span className="text-xs text-muted-foreground">名单</span>
+          {sectionLists.map((l) => (
             <button
               key={l.id}
               type="button"
@@ -352,7 +363,24 @@ export default function RankingDetailPage() {
                   : 'bg-[var(--color-secondary-alpha)] text-text-secondary hover:bg-[var(--color-hover-alpha)] hover:text-text'
               }`}
             >
-              {l.edition ?? l.year ?? l.title}
+              {l.sectionLabel ?? l.title}
+              <span className="ml-1 opacity-60">{l.items.length}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {otherEditions.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs text-muted-foreground">其他年份</span>
+          {otherEditions.map((e) => (
+            <button
+              key={e.id}
+              type="button"
+              onClick={() => navigate(`/rankings/${encodeURIComponent(e.primary.id)}`)}
+              className="text-xs px-3 py-1.5 rounded-full bg-[var(--color-secondary-alpha)] text-text-secondary hover:bg-[var(--color-hover-alpha)] hover:text-text transition-colors"
+            >
+              {e.year != null ? e.year : '历届'}
             </button>
           ))}
         </div>

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AwardCatalog, AwardItem, AwardItemMatch, AwardList } from '@openreel/core';
+import { getEditionTitle } from '@openreel/core';
 import { useThemeColors, useScaledFontSize, radius, useThemeStore, hexToRgba } from '@openreel/expo-ui';
 
 import { TVButton } from '../components/TVButton';
@@ -42,13 +43,16 @@ export function RankingDetailScreen() {
     () => catalog.awards.find((a) => a.id === list?.awardId),
     [catalog, list]
   );
-  const siblingLists = useMemo(
-    () =>
-      catalog.lists
-        .filter((l) => l.awardId === list?.awardId)
-        .sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
-    [catalog, list]
+  /** 同届多份名单 = 页内分栏；不同届 = 年份切换。 */
+  const edition = useMemo(
+    () => (list && catalog ? service.getEditionOfList(list.id) : undefined),
+    [catalog, list, service]
   );
+  const sectionLists = edition?.lists ?? [];
+  const otherEditions = useMemo(() => {
+    if (!edition) return [];
+    return service.getAwardEditions(edition.award.id).filter((e) => e.id !== edition.id);
+  }, [catalog, edition, service]);
 
   useEffect(() => {
     let cancelled = false;
@@ -142,10 +146,12 @@ export function RankingDetailScreen() {
         <TVButton id="ranking-detail-back" label="返回" onPress={() => nav.goBack()} testID="tv-ranking-detail-back" />
         <View style={{ flex: 1 }}>
           <Text style={[styles.topTitle, { color: colors.foreground, fontSize: scale(22) }]} numberOfLines={1}>
-            {list.title}
+            {edition ? getEditionTitle(edition) : list.title}
           </Text>
           <Text style={[styles.topHint, { color: colors.mutedForeground, fontSize: scale(13) }]}>
-            {award?.name} · {list.year ?? '历届'} · {list.items.length} 部
+            {award?.name}
+            {edition?.year != null ? ` · ${edition.year}` : ''} · {list.items.length} 部
+            {edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''}
             {loading ? ' · 正在核对本地库…' : ''}
           </Text>
         </View>
@@ -159,11 +165,11 @@ export function RankingDetailScreen() {
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: TV_LAYOUT.paddingX, paddingTop: tv(12), paddingBottom: tv(40) }}
       >
-        {siblingLists.length > 1 && (
-          <View style={{ marginBottom: tv(14) }}>
+        {sectionLists.length > 1 && (
+          <View style={{ marginBottom: tv(12) }}>
             <TVRow
               rowId="ranking-list-tabs"
-              data={siblingLists}
+              data={sectionLists}
               keyExtractor={(l) => l.id}
               itemWidth={tv(210)}
               itemHeight={tv(52)}
@@ -190,7 +196,32 @@ export function RankingDetailScreen() {
                     ]}
                     numberOfLines={1}
                   >
-                    {l.edition ?? l.year ?? l.title}
+                    {l.sectionLabel ?? l.title}（{l.items.length}）
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
+        )}
+
+        {otherEditions.length > 0 && (
+          <View style={{ marginBottom: tv(14) }}>
+            <Text style={{ color: colors.mutedForeground, fontSize: scale(13), marginBottom: tv(6) }}>
+              其他年份
+            </Text>
+            <TVRow
+              rowId="ranking-year-tabs"
+              data={otherEditions}
+              keyExtractor={(e) => e.id}
+              itemWidth={tv(120)}
+              itemHeight={tv(52)}
+              onItemPress={(e) => setActiveListId(e.primary.id)}
+              renderItem={(e) => (
+                <View
+                  style={[styles.listChip, { backgroundColor: hexToRgba(colors.card, cardOpacity / 100) }]}
+                >
+                  <Text style={[styles.listChipText, { color: colors.textSecondary, fontSize: scale(14) }]}>
+                    {e.year != null ? e.year : '历届'}
                   </Text>
                 </View>
               )}

@@ -5,8 +5,8 @@
 import type { AwardCatalog } from './types';
 
 export const AWARD_CATALOG: AwardCatalog = {
-  "version": "2026-11-20",
-  "updatedAt": "2026-11-20T14:40:27.949Z",
+  "version": "2026-11-21",
+  "updatedAt": "2026-11-21T04:32:58.506Z",
   "awards": [
     {
       "id": "oscar",
@@ -95,8 +95,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "oscar-best-picture-alltime",
       "awardId": "oscar",
-      "title": "历届奥斯卡金像奖最佳影片",
-      "year": 2025,
+      "title": "奥斯卡历届最佳影片",
       "kind": "ALL_TIME",
       "sourceUrl": "https://m.douban.com/subject_collection/ECMQHVGWI",
       "items": [
@@ -435,7 +434,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "golden-globe-82-winners",
       "awardId": "golden-globe",
-      "title": "第82届金球奖获奖名单",
+      "title": "金球奖 2025 获奖名单",
       "year": 2025,
       "edition": "第82届",
       "kind": "WINNERS",
@@ -633,7 +632,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "cannes-79-winners",
       "awardId": "cannes",
-      "title": "第79届戛纳电影节获奖名单",
+      "title": "戛纳电影节 2026 获奖名单",
       "year": 2026,
       "edition": "第79届",
       "kind": "WINNERS",
@@ -941,8 +940,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "cannes-palme-alltime",
       "awardId": "cannes",
-      "title": "历届戛纳电影节金棕榈奖",
-      "year": 2023,
+      "title": "戛纳历届金棕榈奖",
       "kind": "ALL_TIME",
       "sourceUrl": "https://m.douban.com/subject_collection/ECCU6GZUA",
       "items": [
@@ -1501,7 +1499,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "berlinale-75-winners",
       "awardId": "berlinale",
-      "title": "第75届柏林国际电影节获奖名单",
+      "title": "柏林电影节 2025 获奖名单",
       "year": 2025,
       "edition": "第75届",
       "kind": "WINNERS",
@@ -1519,17 +1517,6 @@ export const AWARD_CATALOG: AwardCatalog = {
           "rating": 8.3
         },
         {
-          "rank": 2,
-          "title": "王洛埃，未竟之作",
-          "originalTitle": null,
-          "year": 2025,
-          "type": "MOVIE",
-          "winner": true,
-          "doubanId": "37199930",
-          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2918222746.jpg",
-          "rating": 6.6
-        },
-        {
           "rank": 3,
           "title": "天空的另一面",
           "originalTitle": null,
@@ -1539,6 +1526,17 @@ export const AWARD_CATALOG: AwardCatalog = {
           "doubanId": "36493869",
           "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2926374850.jpg",
           "rating": 7.7
+        },
+        {
+          "rank": 4,
+          "title": "音讯",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36514038",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2922113883.jpg",
+          "rating": 5.8
         },
         {
           "rank": 5,
@@ -1585,26 +1583,15 @@ export const AWARD_CATALOG: AwardCatalog = {
           "rating": 6.9
         },
         {
-          "rank": 10,
-          "title": "普通的生活",
+          "rank": 9,
+          "title": "冰之塔",
           "originalTitle": null,
           "year": 2025,
           "type": "MOVIE",
           "winner": true,
-          "doubanId": "37037113",
-          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918062909.jpg",
-          "rating": 6.6
-        },
-        {
-          "rank": 11,
-          "title": "再会科基",
-          "originalTitle": null,
-          "year": 2025,
-          "type": "MOVIE",
-          "winner": true,
-          "doubanId": "37165708",
-          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2918054044.jpg",
-          "rating": 0
+          "doubanId": "36453662",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2924959792.jpg",
+          "rating": 4.8
         },
         {
           "rank": 13,
@@ -1615,6 +1602,17 @@ export const AWARD_CATALOG: AwardCatalog = {
           "winner": true,
           "doubanId": "35411157",
           "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918062377.jpg",
+          "rating": 0
+        },
+        {
+          "rank": 14,
+          "title": "我们相信你",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36921595",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918372830.jpg",
           "rating": 0
         },
         {
@@ -1640,17 +1638,6 @@ export const AWARD_CATALOG: AwardCatalog = {
           "rating": 0
         },
         {
-          "rank": 17,
-          "title": "蝴蝶的记忆",
-          "originalTitle": null,
-          "year": 2025,
-          "type": "MOVIE",
-          "winner": true,
-          "doubanId": "37204577",
-          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917731268.jpg",
-          "rating": 0
-        },
-        {
           "rank": 18,
           "title": "太空百合战姬",
           "originalTitle": null,
@@ -1660,6 +1647,28 @@ export const AWARD_CATALOG: AwardCatalog = {
           "doubanId": "37162020",
           "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2927254437.jpg",
           "rating": 7.8
+        },
+        {
+          "rank": 21,
+          "title": "玛雅，给我一个标题",
+          "originalTitle": null,
+          "year": 2024,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36905437",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2909362054.jpg",
+          "rating": 7.7
+        },
+        {
+          "rank": 23,
+          "title": "植物学家",
+          "originalTitle": null,
+          "year": 2025,
+          "type": "MOVIE",
+          "winner": true,
+          "doubanId": "36053104",
+          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2931582988.jpg",
+          "rating": 6.7
         },
         {
           "rank": 24,
@@ -1673,14 +1682,14 @@ export const AWARD_CATALOG: AwardCatalog = {
           "rating": 6.7
         },
         {
-          "rank": 28,
-          "title": "惊讶的表情",
+          "rank": 26,
+          "title": "一落千丈",
           "originalTitle": null,
           "year": 2025,
           "type": "MOVIE",
           "winner": true,
-          "doubanId": "37204567",
-          "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2917599319.jpg",
+          "doubanId": "37203640",
+          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917731285.jpg",
           "rating": 0
         },
         {
@@ -1704,36 +1713,13 @@ export const AWARD_CATALOG: AwardCatalog = {
           "doubanId": "36473138",
           "posterUrl": "https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2918006100.jpg",
           "rating": 7.8
-        },
-        {
-          "rank": 38,
-          "title": "默尔恩来信",
-          "originalTitle": null,
-          "year": 2025,
-          "type": "MOVIE",
-          "winner": true,
-          "doubanId": "37164978",
-          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2917731266.jpg",
-          "rating": 0
-        },
-        {
-          "rank": 40,
-          "title": "瞬息法则",
-          "originalTitle": null,
-          "year": 2025,
-          "type": "MOVIE",
-          "winner": true,
-          "doubanId": "37204544",
-          "posterUrl": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2919350444.jpg",
-          "rating": 0
         }
       ]
     },
     {
       "id": "berlinale-bear-alltime",
       "awardId": "berlinale",
-      "title": "历届柏林电影节金熊奖获奖影片",
-      "year": 2020,
+      "title": "柏林历届金熊奖",
       "kind": "ALL_TIME",
       "sourceUrl": "https://m.douban.com/subject_collection/ECZAHZJTI",
       "items": [
@@ -1962,7 +1948,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "venice-82-winners",
       "awardId": "venice",
-      "title": "第82届威尼斯电影节获奖名单",
+      "title": "威尼斯电影节 2025 获奖名单",
       "year": 2025,
       "edition": "第82届",
       "kind": "WINNERS",
@@ -2226,7 +2212,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "golden-horse-60-winners",
       "awardId": "golden-horse",
-      "title": "第60届金马奖获奖名单",
+      "title": "金马奖 2023 获奖名单",
       "year": 2023,
       "edition": "第60届",
       "kind": "WINNERS",
@@ -2402,7 +2388,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "magnolia-30-winners",
       "awardId": "magnolia",
-      "title": "第30届上海电视节白玉兰奖获奖名单",
+      "title": "白玉兰奖 2025 获奖名单",
       "year": 2025,
       "edition": "第30届",
       "kind": "WINNERS",
@@ -2633,7 +2619,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "emmy-77-winners",
       "awardId": "emmy",
-      "title": "第77届黄金时段艾美奖获奖名单",
+      "title": "艾美奖 2025 获奖名单",
       "year": 2025,
       "edition": "第77届",
       "kind": "WINNERS",
@@ -2787,7 +2773,7 @@ export const AWARD_CATALOG: AwardCatalog = {
     {
       "id": "emmy-76-winners",
       "awardId": "emmy",
-      "title": "第76届黄金时段艾美奖获奖名单",
+      "title": "艾美奖 2024 获奖名单",
       "year": 2024,
       "edition": "第76届",
       "kind": "WINNERS",
@@ -2922,6 +2908,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2023评分最高华语电影",
       "year": 2023,
       "kind": "ANNUAL",
+      "sectionLabel": "华语电影",
       "sourceUrl": "https://movie.douban.com/annual/2023/",
       "items": [
         {
@@ -3032,6 +3019,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2023评分最高外语电影",
       "year": 2023,
       "kind": "ANNUAL",
+      "sectionLabel": "外语电影",
       "sourceUrl": "https://movie.douban.com/annual/2023/",
       "items": [
         {
@@ -3142,6 +3130,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2023冷门佳片",
       "year": 2023,
       "kind": "ANNUAL",
+      "sectionLabel": "冷门佳片",
       "sourceUrl": "https://movie.douban.com/annual/2023/",
       "items": [
         {
@@ -3252,6 +3241,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2023评分最高华语剧集",
       "year": 2023,
       "kind": "ANNUAL",
+      "sectionLabel": "华语剧集",
       "sourceUrl": "https://movie.douban.com/annual/2023/",
       "items": [
         {
@@ -3362,6 +3352,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2023评分最高英美续订剧",
       "year": 2023,
       "kind": "ANNUAL",
+      "sectionLabel": "英美续订剧",
       "sourceUrl": "https://movie.douban.com/annual/2023/",
       "items": [
         {
@@ -3472,6 +3463,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2023评分最高英美新剧",
       "year": 2023,
       "kind": "ANNUAL",
+      "sectionLabel": "英美新剧",
       "sourceUrl": "https://movie.douban.com/annual/2023/",
       "items": [
         {
@@ -3582,6 +3574,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2024评分最高华语电影",
       "year": 2024,
       "kind": "ANNUAL",
+      "sectionLabel": "华语电影",
       "sourceUrl": "https://movie.douban.com/annual/2024/",
       "items": [
         {
@@ -3692,6 +3685,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2024评分最高外语电影",
       "year": 2024,
       "kind": "ANNUAL",
+      "sectionLabel": "外语电影",
       "sourceUrl": "https://movie.douban.com/annual/2024/",
       "items": [
         {
@@ -3802,6 +3796,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2024冷门佳片",
       "year": 2024,
       "kind": "ANNUAL",
+      "sectionLabel": "冷门佳片",
       "sourceUrl": "https://movie.douban.com/annual/2024/",
       "items": [
         {
@@ -3912,6 +3907,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2024评分最高华语剧集",
       "year": 2024,
       "kind": "ANNUAL",
+      "sectionLabel": "华语剧集",
       "sourceUrl": "https://movie.douban.com/annual/2024/",
       "items": [
         {
@@ -4022,6 +4018,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2024评分最高英美新剧",
       "year": 2024,
       "kind": "ANNUAL",
+      "sectionLabel": "英美新剧",
       "sourceUrl": "https://movie.douban.com/annual/2024/",
       "items": [
         {
@@ -4132,6 +4129,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2024评分最高英美续订剧",
       "year": 2024,
       "kind": "ANNUAL",
+      "sectionLabel": "英美续订剧",
       "sourceUrl": "https://movie.douban.com/annual/2024/",
       "items": [
         {
@@ -4242,6 +4240,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2025评分最高华语电影",
       "year": 2025,
       "kind": "ANNUAL",
+      "sectionLabel": "华语电影",
       "sourceUrl": "https://movie.douban.com/annual/2025/",
       "items": [
         {
@@ -4332,6 +4331,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2025评分最高外语电影",
       "year": 2025,
       "kind": "ANNUAL",
+      "sectionLabel": "外语电影",
       "sourceUrl": "https://movie.douban.com/annual/2025/",
       "items": [
         {
@@ -4442,6 +4442,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2025冷门佳片",
       "year": 2025,
       "kind": "ANNUAL",
+      "sectionLabel": "冷门佳片",
       "sourceUrl": "https://movie.douban.com/annual/2025/",
       "items": [
         {
@@ -4552,6 +4553,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2025评分最高华语剧集",
       "year": 2025,
       "kind": "ANNUAL",
+      "sectionLabel": "华语剧集",
       "sourceUrl": "https://movie.douban.com/annual/2025/",
       "items": [
         {
@@ -4662,6 +4664,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2025评分最高英美新剧",
       "year": 2025,
       "kind": "ANNUAL",
+      "sectionLabel": "英美新剧",
       "sourceUrl": "https://movie.douban.com/annual/2025/",
       "items": [
         {
@@ -4772,6 +4775,7 @@ export const AWARD_CATALOG: AwardCatalog = {
       "title": "豆瓣2025评分最高英美续订剧",
       "year": 2025,
       "kind": "ANNUAL",
+      "sectionLabel": "英美续订剧",
       "sourceUrl": "https://movie.douban.com/annual/2025/",
       "items": [
         {
