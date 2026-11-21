@@ -162,7 +162,7 @@ function LiveRankingSection({ onOpen }: LiveRankingSectionProps) {
 
 interface AwardCardProps {
   overview: AwardOverview;
-  progress: Record<string, { local: number; total: number }>;
+  progress: Record<string, { local: number; total: number; posters: Array<{ url: string; title: string }> }>;
   onOpen: (edition: AwardEdition) => void;
 }
 
@@ -181,7 +181,14 @@ function AwardCard({ overview, progress, onOpen }: AwardCardProps) {
   const { award, latest, otherEditions, allTime } = overview;
   if (!latest) return null;
   const p = progress[latest.id];
-  const posters = latest.primary.items.slice(0, 4).filter((i) => i.posterUrl);
+  // 本地已匹配影片的源站封面优先（和详情页一致）：豆瓣图在某些网络/策略下取不到时仍有图。
+  const posters =
+    p && p.posters.length > 0
+      ? p.posters
+      : latest.primary.items
+          .filter((i) => i.posterUrl)
+          .slice(0, 4)
+          .map((i) => ({ url: i.posterUrl as string, title: i.title }));
   const yearCount = (latest.year != null ? 1 : 0) + otherEditions.length;
 
   return (
@@ -215,11 +222,11 @@ function AwardCard({ overview, progress, onOpen }: AwardCardProps) {
           ) : (
             posters.map((item, idx) => (
               <div
-                key={`${item.title}-${idx}`}
+                key={`${item.url}-${idx}`}
                 className="size-16 rounded-md overflow-hidden border-2 border-[var(--color-background)] bg-[var(--color-secondary-alpha)]"
                 style={{ zIndex: 10 - idx }}
               >
-                <AwardPoster src={item.posterUrl} alt={item.title} className="size-full object-cover" />
+                <AwardPoster src={item.url} alt={item.title} className="size-full object-cover" />
               </div>
             ))
           )}
@@ -282,7 +289,9 @@ export default function RankingsPage() {
   const toast = useToast();
   const service = useMemo(() => getAwardService(), []);
   const [catalog, setCatalog] = useState<AwardCatalog>(() => service.getBundledCatalog());
-  const [progress, setProgress] = useState<Record<string, { local: number; total: number }>>({});
+  const [progress, setProgress] = useState<
+    Record<string, { local: number; total: number; posters: Array<{ url: string; title: string }> }>
+  >({});
   const [checking, setChecking] = useState(false);
 
   useEffect(() => {
@@ -318,17 +327,25 @@ export default function RankingsPage() {
           if (!latest || cancelled) continue;
           let local = 0;
           let total = 0;
+          const posters: Array<{ url: string; title: string }> = [];
           for (const list of latest.lists) {
             if (cancelled) return;
             total += list.items.length;
             try {
               const matches = await service.matchList(list, { refineMissing: false });
               local += matches.filter((m) => m.status === 'PLAYABLE').length;
+              for (const m of matches) {
+                if (posters.length >= 4) break;
+                const url = m.media?.posterUrl;
+                if (url && !posters.some((x) => x.url === url)) {
+                  posters.push({ url, title: m.media?.title ?? '' });
+                }
+              }
             } catch {
               // 单份名单统计失败不影响其余
             }
           }
-          if (!cancelled) setProgress((prev) => ({ ...prev, [latest.id]: { local, total } }));
+          if (!cancelled) setProgress((prev) => ({ ...prev, [latest.id]: { local, total, posters } }));
         }
       }
     })();
