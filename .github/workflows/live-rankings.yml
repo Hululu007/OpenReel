@@ -1,0 +1,40 @@
+name: Refresh Hongguo Live Rankings
+
+# 红果官网在安卓端会返回被截断的 HTML，客户端拿不到榜单；改为服务端定时抓取成小 JSON，
+# 客户端每次打开页面直接读镜像。官方口径是日更，这里每小时刷新一次足够。
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-live-rankings
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate live rankings
+        run: node scripts/gen-live-rankings.mjs
+
+      - name: Publish to live-data branch
+        run: |
+          if [ -z "$(git status --porcelain packages/core/src/awards/live)" ]; then
+            echo "榜单无变化，跳过提交"
+            exit 0
+          fi
+          git config user.name "openreel-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add packages/core/src/awards/live
+          git commit -m "chore: 更新红果实时榜数据"
+          git push --force origin HEAD:live-data

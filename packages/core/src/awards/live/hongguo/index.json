@@ -1,0 +1,86 @@
+{
+  "version": "2026-11-21",
+  "updatedAt": "2026-11-21T06:30:02.709Z",
+  "boards": [
+    {
+      "board": "hot",
+      "type": "all",
+      "file": "hot-all.json",
+      "label": "红果热播榜",
+      "updatedText": "11月21日已更新·基于红果内观看/互动等综合热度排序",
+      "count": 100
+    },
+    {
+      "board": "hot",
+      "type": "real",
+      "file": "hot-real.json",
+      "label": "红果热播榜 · 真人剧",
+      "updatedText": "11月21日已更新·基于红果内观看/互动等综合热度排序",
+      "count": 100
+    },
+    {
+      "board": "hot",
+      "type": "comic",
+      "file": "hot-comic.json",
+      "label": "红果热播榜 · 漫剧",
+      "updatedText": "11月21日已更新·基于红果内观看/互动等综合热度排序",
+      "count": 100
+    },
+    {
+      "board": "hot",
+      "type": "ai",
+      "file": "hot-ai.json",
+      "label": "红果热播榜 · AI剧",
+      "updatedText": "11月21日已更新·基于红果内观看/互动等综合热度排序",
+      "count": 100
+    },
+    {
+      "board": "new",
+      "type": "all",
+      "file": "new-all.json",
+      "label": "红果新剧榜",
+      "updatedText": "11月21日已更新·红果上架3天内的剧集热度排名",
+      "count": 100
+    },
+    {
+      "board": "hot-search",
+      "type": "all",
+      "file": "hot-search-all.json",
+      "label": "红果热搜榜",
+      "updatedText": "11月21日已更新·基于红果内观看/互动以及个人兴趣排序",
+      "count": 100
+    },
+    {
+      "board": "prestige",
+      "type": "all",
+      "file": "prestige-all.json",
+      "label": "红果臻果榜",
+      "updatedText": "根据红果已开分真人剧评分排序",
+      "count": 100
+    },
+    {
+      "board": "must-watch",
+      "type": "all",
+      "file": "must-watch-all.json",
+      "label": "红果必看榜",
+      "updatedText": "11月21日已更新·2025年后的剧集回溯新版最高热度值排序",
+      "count": 100
+    },
+    {
+      "board": "followed",
+      "type": "all",
+      "file": "followed-all.json",
+      "label": "红果收藏榜",
+      "updatedText": "基于红果累计收藏人数进行排序",
+      "count": 100
+    },
+    {
+      "board": "subscribe",
+      "type": "all",
+      "file": "subscribe-all.json",
+      "label": "红果预约榜",
+      "updatedText": "基于红果预约/播放等综合期待值排序",
+      "count": 100
+    }
+  ]
+}

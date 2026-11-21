@@ -56,10 +56,23 @@ export const LIVE_RANKING_TYPES: Array<{ key: LiveRankingTypeKey; label: string 
 const BASE_URL = 'https://hongguoduanju.com';
 const MAX_PAGES = 5;
 const PAGE_SIZE = 20;
+/**
+ * 镜像地址（GitHub Actions 定时用 scripts/gen-live-rankings.mjs 生成）。
+ * 官网在安卓端会返回被截断的 HTML（实测 94,257 字符、结尾停在半个 <li>），
+ * 所以客户端优先读镜像小文件，直连官网只作为兜底。
+ */
+const MIRROR_URLS = [
+  'https://raw.githubusercontent.com/roma007/openreel/live-data/packages/core/src/awards/live/hongguo/',
+  'https://cdn.jsdelivr.net/gh/roma007/openreel@live-data/packages/core/src/awards/live/hongguo/',
+];
 const REQUEST_HEADERS = {
   'User-Agent':
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-  Accept: 'text/html,application/xhtml+xml',
+  Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+  // 官网会按 Accept-Encoding 返回 br/gzip；RN/OkHttp 对 br 解不开，会拿到压缩字节导致解析为空（实测）。
+  'Accept-Encoding': 'identity',
+  Referer: 'https://hongguoduanju.com/',
 };
 /** 兜底缓存的 system_config key 前缀（只用于读失败时展示上次数据）。 */
 const CACHE_KEY_PREFIX = 'liveRanking.hongguo.v1';
@@ -203,6 +216,16 @@ async function fetchText(url: string, signal?: AbortSignal): Promise<string> {
   return res.text();
 }
 
+/** 镜像文件结构（scripts/gen-live-rankings.mjs 产出）。 */
+interface MirrorSnapshot {
+  board: string;
+  type: string;
+  label?: string;
+  updatedText?: string;
+  fetchedAt?: string;
+  items?: LiveRankingItem[];
+}
+
 /**
  * 红果实时榜服务。
  *
@@ -254,6 +277,43 @@ export class LiveRankingService {
     return list;
   }
 
+  /** 读镜像文件（每个榜单一页 100 条，约 36KB）。 */
+  private async loadFromMirror(
+    board: LiveRankingBoardKey,
+    type: LiveRankingTypeKey,
+    maxPages: number,
+    opts?: LiveRankingLoadOptions
+  ): Promise<LiveRankingSnapshot | null> {
+    const fileName = `${board}-${type}.json`;
+    for (const base of MIRROR_URLS) {
+      if (opts?.signal?.aborted) return null;
+      try {
+        const res = await getHttpClient().get(`${base}${fileName}`, {
+          timeout: 12000,
+          mode: 'cors',
+          signal: opts?.signal,
+        });
+        const data = res.data as MirrorSnapshot;
+        const rawItems = Array.isArray(data?.items) ? data.items : [];
+        if (rawItems.length === 0) continue;
+        const items = rawItems.slice(0, maxPages * PAGE_SIZE);
+        const fetchedAt = data.fetchedAt ? Date.parse(data.fetchedAt) : Date.now();
+        opts?.onProgress?.({ page: 1, loaded: items.length });
+        return {
+          board,
+          type,
+          items,
+          updatedText: data.updatedText ?? '',
+          fetchedAt: Number.isFinite(fetchedAt) ? fetchedAt : Date.now(),
+          fromCache: false,
+        };
+      } catch {
+        // 换下一个镜像
+      }
+    }
+    return null;
+  }
+
   private async load(
     board: LiveRankingBoardKey,
     type: LiveRankingTypeKey,
@@ -261,6 +321,16 @@ export class LiveRankingService {
     opts?: LiveRankingLoadOptions
   ): Promise<LiveRankingSnapshot> {
     const resolved = resolveLiveRankingPath(board, type);
+
+    // 1) 优先读镜像小文件（安卓端直连官网会被截断，实测拿不到数据）
+    const mirrored = await this.loadFromMirror(board, resolved.type, maxPages, opts);
+    if (mirrored) {
+      this.snapshots.set(liveRankingListId(board, resolved.type), mirrored);
+      void this.writeCache(resolved.path, mirrored);
+      return mirrored;
+    }
+
+    // 2) 兜底：直连官网（桌面端/服务器侧可用）
     const items: LiveRankingItem[] = [];
     let updatedText = '';
     let failed = false;
