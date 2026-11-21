@@ -1,14 +1,164 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { AwardCatalog, AwardEdition, AwardOverview } from '@openreel/core';
-import { getEditionActionLabel, getEditionShortTitle } from '@openreel/core';
+import type {
+  AwardCatalog,
+  AwardEdition,
+  AwardOverview,
+  LiveRankingBoardKey,
+  LiveRankingSnapshot,
+  LiveRankingTypeKey,
+} from '@openreel/core';
+import {
+  getEditionActionLabel,
+  getEditionShortTitle,
+  LIVE_RANKING_BOARDS,
+  LIVE_RANKING_TYPES,
+  liveRankingListId,
+} from '@openreel/core';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AwardPoster } from '@/components/AwardPoster';
 import { useToast } from '@/components/Layout';
-import { Award, ChevronRight, History, RefreshCw, Trophy, Film } from 'lucide-react';
-import { getAwardService } from './rankings/useAwards';
+import { Award, ChevronRight, Flame, History, RefreshCw, Trophy, Film } from 'lucide-react';
+import { getAwardService, getLiveRankingService } from './rankings/useAwards';
+
+interface LiveRankingSectionProps {
+  onOpen: (listId: string) => void;
+}
+
+/**
+ * 红果短剧实时榜：官方日更，**每次进入榜单页都重新读取**（缓存只做读取失败兜底）。
+ * 首页只拉第 1 页做预览，完整 TOP100 在详情页按需读取。
+ */
+function LiveRankingSection({ onOpen }: LiveRankingSectionProps) {
+  const service = useMemo(() => getLiveRankingService(), []);
+  const [board, setBoard] = useState<LiveRankingBoardKey>('hot');
+  const [type, setType] = useState<LiveRankingTypeKey>('all');
+  const [snapshot, setSnapshot] = useState<LiveRankingSnapshot | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    void service
+      .loadPreview(board, type)
+      .then((s) => {
+        if (!cancelled) setSnapshot(s);
+      })
+      .catch((err: any) => {
+        if (!cancelled) setError(err?.message ?? '读取失败');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [board, type, reloadKey, service]);
+
+  const boardDef = LIVE_RANKING_BOARDS.find((b) => b.key === board);
+
+  return (
+    <section className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <h2 className="text-lg font-semibold flex items-center gap-2">
+          <Flame className="size-4 text-rose-400" />
+          红果短剧 · 实时榜
+        </h2>
+        <span className="text-xs text-muted-foreground">
+          {loading ? '正在读取…' : error ? `读取失败：${error}` : snapshot?.updatedText || '日更'}
+        </span>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="ml-auto"
+          onClick={() => setReloadKey((k) => k + 1)}
+          disabled={loading}
+        >
+          <RefreshCw className={`size-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+          刷新
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-1.5">
+        {LIVE_RANKING_BOARDS.map((b) => (
+          <button
+            key={b.key}
+            type="button"
+            onClick={() => setBoard(b.key)}
+            className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
+              b.key === board
+                ? 'bg-[var(--color-muted-alpha)] text-text'
+                : 'bg-[var(--color-secondary-alpha)] text-text-secondary hover:text-text'
+            }`}
+          >
+            {b.label}
+          </button>
+        ))}
+        {boardDef?.supportsType && (
+          <>
+            <span className="text-[11px] text-muted-foreground ml-1">类型</span>
+            {LIVE_RANKING_TYPES.map((t) => (
+              <button
+                key={t.key}
+                type="button"
+                onClick={() => setType(t.key)}
+                className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
+                  t.key === type
+                    ? 'bg-[var(--color-muted-alpha)] text-text'
+                    : 'bg-[var(--color-secondary-alpha)] text-text-secondary hover:text-text'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </>
+        )}
+      </div>
+
+      <Card className="p-0 overflow-hidden">
+        {!snapshot || snapshot.items.length === 0 ? (
+          <div className="p-8 text-center text-sm text-muted-foreground">
+            {loading ? '正在读取红果实时榜…' : '暂时没有读到榜单数据，点右上角刷新重试。'}
+          </div>
+        ) : (
+          <div className="divide-y divide-[var(--color-border-alpha)]">
+            {snapshot.items.slice(0, 10).map((item) => (
+              <button
+                key={`${item.seriesId}-${item.rank}`}
+                type="button"
+                onClick={() => onOpen(liveRankingListId(board, type))}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-[var(--color-hover-alpha)] transition-colors"
+              >
+                <span
+                  className={`w-6 shrink-0 text-center text-sm font-bold ${
+                    item.rank <= 3 ? 'text-rose-400' : 'text-muted-foreground'
+                  }`}
+                >
+                  {item.rank}
+                </span>
+                <span className="min-w-0 flex-1 truncate text-sm">{item.title}</span>
+                <span className="shrink-0 text-[11px] text-muted-foreground">{item.heatText}</span>
+                <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
+              </button>
+            ))}
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => onOpen(liveRankingListId(board, type))}
+          className="w-full px-4 py-2.5 text-xs text-muted-foreground hover:text-text hover:bg-[var(--color-hover-alpha)] transition-colors border-t border-[var(--color-border-alpha)]"
+        >
+          查看完整 TOP100{snapshot?.fromCache ? '（当前为上次读取的数据）' : ''} →
+        </button>
+      </Card>
+    </section>
+  );
+}
 
 interface AwardCardProps {
   overview: AwardOverview;
@@ -223,6 +373,8 @@ export default function RankingsPage() {
           {checking ? '检查中…' : '检查更新'}
         </Button>
       </div>
+
+      <LiveRankingSection onOpen={(listId) => navigate(`/rankings/${encodeURIComponent(listId)}`)} />
 
       {overviews.map((group) => (
         <section key={group.groupKey} className="space-y-3">

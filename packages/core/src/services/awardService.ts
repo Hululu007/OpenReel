@@ -6,6 +6,7 @@ import { CollectorService } from './collectorService';
 import { AWARD_CATALOG } from '../awards/catalog';
 import type {
   AwardCatalog,
+  AwardListMatchOptions,
   AwardCollectPending,
   AwardCollectProgress,
   AwardCollectResult,
@@ -336,16 +337,17 @@ export class AwardService {
     const cached = this.matchCache.get(cacheKey);
     if (cached && Date.now() - cached.at < 60_000) return cached.matches;
 
-    const batch = await this.queryCandidatesBatch(list.items);
+    const matchOptions = list.matchOptions;
+    const batch = await this.queryCandidatesBatch(list.items, matchOptions);
     const matches: AwardItemMatch[] = [];
     for (let i = 0; i < list.items.length; i++) {
       const item = list.items[i];
       const itemKey = `${list.id}:${i}`;
       try {
-        let scored = await this.findBestCandidateFrom(batch, item);
+        let scored = await this.findBestCandidateFrom(batch, item, matchOptions);
         if (!scored && refineMissing) {
-          const rows = await this.queryCandidates(item);
-          scored = await this.findBestCandidateFrom(rows, item);
+          const rows = await this.queryCandidates(item, matchOptions);
+          scored = await this.findBestCandidateFrom(rows, item, matchOptions);
         }
         if (!scored) {
           matches.push({ itemKey, itemIndex: i, status: 'MISSING', confidence: 'NONE' });
@@ -377,7 +379,8 @@ export class AwardService {
   /** 标题/年份打分（批量候选与单条候选共用）。 */
   private async findBestCandidateFrom(
     rows: AwardMediaCandidate[],
-    item: AwardItem
+    item: AwardItem,
+    options?: AwardListMatchOptions
   ): Promise<ScoredCandidate | null> {
     if (rows.length === 0) return null;
 
@@ -411,7 +414,8 @@ export class AwardService {
       }
       if (titleScore === 0) continue;
 
-      const yearDiff = Math.abs(row.year - item.year);
+      // 实时榜（短剧）没有上映年：不按年份排除，只靠标题精确度判置信度。
+      const yearDiff = options?.ignoreYear ? 0 : Math.abs(row.year - item.year);
       if (yearDiff >= 2) continue;
       const confidence: AwardMatchConfidence = titleScore >= 100 && yearDiff === 0 ? 'HIGH' : 'LOW';
       const score = titleScore + (yearDiff === 0 ? 20 : 8) + (row.hasSource ? 2 : 0);
@@ -431,12 +435,17 @@ export class AwardService {
    * 批量精确匹配：一次查询取回整页榜单里「标题/原名/别名完全相等」的本地候选。
    * 只用等值比较（不用 LIKE），避免 30 条标题 × 大年份跨度把大表扫穿。
    */
-  private async queryCandidatesBatch(items: AwardItem[]): Promise<AwardMediaCandidate[]> {
+  private async queryCandidatesBatch(
+    items: AwardItem[],
+    options?: AwardListMatchOptions
+  ): Promise<AwardMediaCandidate[]> {
     if (items.length === 0) return [];
-    const types = [...new Set(items.map((i) => i.type))];
+    const types = options?.types ?? [...new Set(items.map((i) => i.type))];
     const years = items.map((i) => i.year);
-    const minYear = Math.max(0, Math.min(...years) - 1);
-    const maxYear = Math.max(...years) + 1;
+    // 短剧没有上映年，用固定窗口限制扫描范围，避免全表扫（实测跨全表 15s，2024-2026 窗口 155ms）。
+    const [minYear, maxYear] = options?.ignoreYear
+      ? options.yearWindow ?? [new Date().getFullYear() - 3, new Date().getFullYear() + 1]
+      : [Math.max(0, Math.min(...years) - 1), Math.max(...years) + 1];
     const titles = [
       ...new Set(
         items
@@ -488,9 +497,15 @@ export class AwardService {
     return out;
   }
 
-  private async queryCandidates(item: AwardItem): Promise<AwardMediaCandidate[]> {
-    const yearFrom = Math.max(0, item.year - 1);
-    const yearTo = item.year + 1;
+  private async queryCandidates(
+    item: AwardItem,
+    options?: AwardListMatchOptions
+  ): Promise<AwardMediaCandidate[]> {
+    const [yearFrom, yearTo] = options?.ignoreYear
+      ? options.yearWindow ?? [new Date().getFullYear() - 3, new Date().getFullYear() + 1]
+      : [Math.max(0, item.year - 1), item.year + 1];
+    const types = options?.types ?? [item.type];
+    const typePlaceholders = types.map(() => '?').join(', ');
     const titles = [item.title, item.originalTitle].filter((t): t is string => !!t && t.trim().length > 0);
     if (titles.length === 0) return [];
 
@@ -515,12 +530,12 @@ export class AwardService {
                 EXISTS(SELECT 1 FROM media_source ms WHERE ms.media_id = m.id) AS has_source
          FROM media m
          WHERE (m.hidden IS NULL OR m.hidden = 0)
-           AND m.type = ?
+           AND m.type IN (${typePlaceholders})
            AND m.year BETWEEN ? AND ?
            AND (m.title LIKE ? OR m.alias LIKE ? OR m.original_title LIKE ?)
          ORDER BY CASE WHEN m.year = ? THEN 0 ELSE 1 END, m.view_count DESC
          LIMIT 40`,
-        [item.type, yearFrom, yearTo, like, like, like, item.year]
+        [...types, yearFrom, yearTo, like, like, like, item.year]
       );
       rows.push(...part);
       if (rows.length >= 40) break;

@@ -6,8 +6,9 @@ import type {
   AwardCollectProgress,
   AwardItem,
   AwardItemMatch,
+  AwardList,
 } from '@openreel/core';
-import { getEditionTitle } from '@openreel/core';
+import { getEditionTitle, parseLiveRankingListId } from '@openreel/core';
 import { getProvider } from '../init';
 import { openMediaPlay } from '../utils/openMediaPlay';
 import { Button } from '@/components/ui/button';
@@ -37,7 +38,7 @@ import {
   Trophy,
   X,
 } from 'lucide-react';
-import { AWARD_STATUS_META, getAwardService } from './rankings/useAwards';
+import { AWARD_STATUS_META, getAwardService, getLiveRankingService } from './rankings/useAwards';
 
 const TYPE_LABEL: Record<string, string> = {
   MOVIE: '电影',
@@ -70,10 +71,38 @@ export default function RankingDetailPage() {
   const abortRef = useRef<AbortController | null>(null);
   const restoredScroll = useRef(false);
 
+  const liveService = useMemo(() => getLiveRankingService(), []);
+  const liveId = useMemo(() => parseLiveRankingListId(listId), [listId]);
+  const [liveList, setLiveList] = useState<AwardList | null>(null);
+  const [liveLoading, setLiveLoading] = useState(false);
+  const [liveError, setLiveError] = useState<string | null>(null);
   const list = useMemo(
-    () => catalog.lists.find((l) => l.id === listId),
-    [catalog, listId]
+    () => catalog.lists.find((l) => l.id === listId) ?? (liveList?.id === listId ? liveList : undefined),
+    [catalog, listId, liveList]
   );
+
+  // 实时榜：每次进入页面都重新读取（用户要求「每次打开时去读取」）。
+  useEffect(() => {
+    if (!liveId) return;
+    if (catalog.lists.some((l) => l.id === listId)) return;
+    let cancelled = false;
+    setLiveLoading(true);
+    setLiveError(null);
+    void liveService
+      .loadList(listId)
+      .then((l) => {
+        if (!cancelled) setLiveList(l);
+      })
+      .catch((err: any) => {
+        if (!cancelled) setLiveError(err?.message ?? '读取失败');
+      })
+      .finally(() => {
+        if (!cancelled) setLiveLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [listId, liveId, catalog, liveService]);
   const award = useMemo(
     () => catalog.awards.find((a) => a.id === list?.awardId),
     [catalog, list]
@@ -286,7 +315,11 @@ export default function RankingDetailPage() {
           <ArrowLeft className="size-4 mr-2" /> 返回榜单
         </Button>
         <Card className="mt-4 p-8 text-center text-muted-foreground">
-          榜单不存在或数据已更新，请返回榜单首页重新进入。
+          {liveLoading
+            ? '正在读取红果实时榜（TOP100）…'
+            : liveError
+              ? `读取失败：${liveError}`
+              : '榜单不存在或数据已更新，请返回榜单首页重新进入。'}
         </Card>
       </div>
     );
@@ -304,8 +337,12 @@ export default function RankingDetailPage() {
             <span className="truncate">{edition ? getEditionTitle(edition) : list.title}</span>
           </h1>
           <div className="mt-1 text-sm text-muted-foreground flex flex-wrap items-center gap-2">
-            <span>{award?.name}</span>
-            <span>·</span>
+            {list.kind !== 'LIVE' && award?.name && (
+              <>
+                <span>{award.name}</span>
+                <span>·</span>
+              </>
+            )}
             {edition?.year != null && (
               <>
                 <span>{edition.year}</span>
@@ -316,6 +353,7 @@ export default function RankingDetailPage() {
               {list.items.length} 部
               {edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''}
             </span>
+            {list.kind === 'LIVE' && list.updatedText && <span>· {list.updatedText}</span>}
             {list.kind === 'WINNERS' && (
               <Badge variant="secondary" className="text-[10px]">
                 获奖名单
@@ -469,9 +507,15 @@ export default function RankingDetailPage() {
                     {item.title}
                   </div>
                   <div className="mt-0.5 text-[11px] text-muted-foreground flex items-center gap-1.5">
-                    <span>{item.year}</span>
-                    <span>·</span>
-                    <span>{TYPE_LABEL[item.type] ?? item.type}</span>
+                    {list.kind === 'LIVE' ? (
+                      <span>{item.note || '短剧'}</span>
+                    ) : (
+                      <>
+                        <span>{item.year}</span>
+                        <span>·</span>
+                        <span>{TYPE_LABEL[item.type] ?? item.type}</span>
+                      </>
+                    )}
                     {item.rating != null && item.rating > 0 && (
                       <span className="ml-auto inline-flex items-center gap-0.5 text-amber-400">
                         <Star className="size-2.5 fill-current" />

@@ -1,5 +1,15 @@
 export interface HttpClient {
   get(url: string, options?: HttpOptions): Promise<HttpResponse>;
+  /**
+   * 读取非 JSON 响应（HTML/纯文本）。
+   * 桌面端走 Tauri HTTP 插件才能绕开 CORS；未实现时调用方会退回全局 fetch。
+   */
+  getText?(url: string, options?: HttpOptions): Promise<HttpTextResponse>;
+}
+
+export interface HttpTextResponse {
+  data: string;
+  status: number;
 }
 
 export interface HttpOptions {
@@ -107,6 +117,41 @@ function createDefaultHttpClient(): HttpClient {
         if (errorMsg.includes('abort') || errorMsg.includes('timeout')) {
           throw new Error('请求超时 - 服务器响应时间过长。');
         }
+        throw error;
+      }
+    },
+
+    async getText(url: string, options?: HttpOptions) {
+      const controller = new AbortController();
+      const timeout = options?.timeout || 15000;
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+      if (options?.signal) {
+        if (options.signal.aborted) {
+          clearTimeout(timeoutId);
+          throw new DOMException('The operation was aborted.', 'AbortError');
+        }
+        options.signal.addEventListener('abort', () => controller.abort(), { once: true });
+      }
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            ...options?.headers,
+          },
+          signal: controller.signal,
+          mode: options?.mode ?? 'cors',
+        });
+        clearTimeout(timeoutId);
+        if (response.type === 'opaque') {
+          throw new Error('CORS blocked - 无法访问外部API。');
+        }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return { data: await response.text(), status: response.status };
+      } catch (error) {
+        clearTimeout(timeoutId);
         throw error;
       }
     },

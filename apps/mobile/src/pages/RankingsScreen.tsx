@@ -8,8 +8,21 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { AwardCatalog, AwardEdition, AwardOverview } from '@openreel/core';
-import { getEditionActionLabel, getEditionShortTitle } from '@openreel/core';
+import type {
+  AwardCatalog,
+  AwardEdition,
+  AwardOverview,
+  LiveRankingBoardKey,
+  LiveRankingSnapshot,
+  LiveRankingTypeKey,
+} from '@openreel/core';
+import {
+  getEditionActionLabel,
+  getEditionShortTitle,
+  LIVE_RANKING_BOARDS,
+  LIVE_RANKING_TYPES,
+  liveRankingListId,
+} from '@openreel/core';
 import { useThemeColors } from '../themes/useThemeColors';
 import { useThemeStore } from '../themes/store';
 import { useScaledFontSize } from '../themes/useScaledFontSize';
@@ -17,9 +30,9 @@ import { hexToRgba } from '../themes/colorUtils';
 import { radius } from '../themes/radiusTokens';
 import BlurredBackground from '../components/BlurredBackground';
 import AwardPoster from '../components/AwardPoster';
-import { ArrowLeft, ChevronRight, Film, History, RefreshCw, Trophy } from 'lucide-react-native';
+import { ArrowLeft, ChevronRight, Film, Flame, History, RefreshCw, Trophy } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getAwardService } from '../awards/useAwards';
+import { getAwardService, getLiveRankingService } from '../awards/useAwards';
 
 const KIND_LABEL: Record<string, string> = {
   FESTIVAL: '电影节',
@@ -27,6 +40,170 @@ const KIND_LABEL: Record<string, string> = {
   ANNUAL: '年度',
   MOVIE: '电影',
 };
+
+/**
+ * 红果短剧实时榜：官方日更，**每次进入榜单页都重新读取**；缓存只做读取失败兜底。
+ * 首页只拉第 1 页做预览，完整 TOP100 进详情页再读。
+ */
+function LiveRankingSection({ onOpen }: { onOpen: (listId: string) => void }) {
+  const colors = useThemeColors();
+  const cardOpacity = useThemeStore((st) => st.cardOpacity);
+  const s = useScaledFontSize();
+  const service = useMemo(() => getLiveRankingService(), []);
+  const [board, setBoard] = useState<LiveRankingBoardKey>('hot');
+  const [type, setType] = useState<LiveRankingTypeKey>('all');
+  const [snapshot, setSnapshot] = useState<LiveRankingSnapshot | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    void service
+      .loadPreview(board, type)
+      .then((snap) => {
+        if (!cancelled) setSnapshot(snap);
+      })
+      .catch((err: any) => {
+        if (!cancelled) setError(err?.message ?? '读取失败');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [board, type, reloadKey, service]);
+
+  const boardDef = LIVE_RANKING_BOARDS.find((b) => b.key === board);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        header: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
+        title: { fontSize: s(16), fontWeight: '700', color: colors.text },
+        hint: { flex: 1, fontSize: s(11), color: colors.mutedForeground },
+        chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 10 },
+        chip: {
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+          borderRadius: radius.full,
+          backgroundColor: hexToRgba(colors.surface, cardOpacity / 100),
+        },
+        chipActive: { backgroundColor: hexToRgba(colors.mutedForeground, 0.35) },
+        chipText: { fontSize: s(11), color: colors.textSecondary },
+        chipTextActive: { color: colors.text, fontWeight: '600' },
+        card: {
+          backgroundColor: hexToRgba(colors.card, cardOpacity / 100),
+          borderRadius: radius.lg,
+          overflow: 'hidden',
+        },
+        row: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 10,
+          paddingHorizontal: 14,
+          paddingVertical: 9,
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: hexToRgba(colors.mutedForeground, 0.18),
+        },
+        rank: { width: 22, textAlign: 'center', fontSize: s(13), fontWeight: '700' },
+        rowTitle: { flex: 1, fontSize: s(13), color: colors.text },
+        heat: { fontSize: s(11), color: colors.mutedForeground },
+        empty: { paddingVertical: 24, alignItems: 'center' },
+        emptyText: { fontSize: s(12), color: colors.mutedForeground, textAlign: 'center', paddingHorizontal: 20 },
+        footer: { paddingVertical: 10, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: 4 },
+        footerText: { fontSize: s(11), color: colors.mutedForeground },
+        section: { marginBottom: 18 },
+      }),
+    [colors, cardOpacity, s]
+  );
+
+  return (
+    <View style={styles.section}>
+      <View style={styles.header}>
+        <Flame size={16} color="#fb7185" />
+        <Text style={styles.title}>红果短剧 · 实时榜</Text>
+        <Text style={styles.hint} numberOfLines={1}>
+          {loading ? '正在读取…' : error ? `读取失败：${error}` : snapshot?.updatedText || '日更'}
+        </Text>
+        <TouchableOpacity onPress={() => setReloadKey((k) => k + 1)} disabled={loading} style={{ padding: 6 }}>
+          {loading ? (
+            <ActivityIndicator size="small" color={colors.mutedForeground} />
+          ) : (
+            <RefreshCw size={15} color={colors.mutedForeground} />
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.chips}>
+        {LIVE_RANKING_BOARDS.map((b) => (
+          <TouchableOpacity
+            key={b.key}
+            style={[styles.chip, b.key === board && styles.chipActive]}
+            onPress={() => setBoard(b.key)}
+          >
+            <Text style={[styles.chipText, b.key === board && styles.chipTextActive]}>{b.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {boardDef?.supportsType && (
+        <View style={styles.chips}>
+          {LIVE_RANKING_TYPES.map((t) => (
+            <TouchableOpacity
+              key={t.key}
+              style={[styles.chip, t.key === type && styles.chipActive]}
+              onPress={() => setType(t.key)}
+            >
+              <Text style={[styles.chipText, t.key === type && styles.chipTextActive]}>{t.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
+      <View style={styles.card}>
+        {!snapshot || snapshot.items.length === 0 ? (
+          <View style={styles.empty}>
+            <Text style={styles.emptyText}>
+              {loading ? '正在读取红果实时榜…' : '暂时没有读到榜单数据，点右上角刷新重试。'}
+            </Text>
+          </View>
+        ) : (
+          snapshot.items.slice(0, 10).map((item) => (
+            <TouchableOpacity
+              key={`${item.seriesId}-${item.rank}`}
+              style={styles.row}
+              activeOpacity={0.8}
+              onPress={() => onOpen(liveRankingListId(board, type))}
+            >
+              <Text style={[styles.rank, { color: item.rank <= 3 ? '#fb7185' : colors.mutedForeground }]}>
+                {item.rank}
+              </Text>
+              <Text style={styles.rowTitle} numberOfLines={1}>
+                {item.title}
+              </Text>
+              <Text style={styles.heat}>{item.heatText}</Text>
+              <ChevronRight size={13} color={colors.mutedForeground} />
+            </TouchableOpacity>
+          ))
+        )}
+        <TouchableOpacity
+          style={styles.footer}
+          onPress={() => onOpen(liveRankingListId(board, type))}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.footerText}>
+            查看完整 TOP100{snapshot?.fromCache ? '（当前为上次读取的数据）' : ''}
+          </Text>
+          <ChevronRight size={13} color={colors.mutedForeground} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
 
 export default function RankingsScreen() {
   const navigation = useNavigation<any>();
@@ -291,6 +468,10 @@ export default function RankingsScreen() {
               豆瓣年度榜单、奥斯卡、金球、电影节与华语电视奖项，一年一个入口。先看本地能不能播，缺的可以一键找源。
             </Text>
           </View>
+
+          <LiveRankingSection
+            onOpen={(listId) => navigation.navigate('RankingDetail', { listId })}
+          />
 
           {groups.map((group) => (
             <View key={group.groupKey} style={styles.section}>

@@ -104,6 +104,40 @@ async function createTauriHttpClient(): Promise<HttpClient> {
 
         return Promise.race([fetchPromise, timeoutPromise]);
       },
+
+      /**
+       * 读取 HTML/文本（实时榜用）。
+       * 浏览器 fetch 会被 CORS 拦，必须走 Tauri HTTP 插件。
+       */
+      async getText(url: string, options?: { headers?: Record<string, string>; timeout?: number; signal?: AbortSignal }) {
+        const timeout = options?.timeout || 20000;
+        const fetchPromise = (async () => {
+          const response = await tauriFetch(url, {
+            method: 'GET',
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              ...options?.headers,
+            },
+            connectTimeout: timeout,
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return { data: await response.text(), status: response.status };
+        })();
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          const timer = setTimeout(() => reject(new Error('请求超时')), timeout);
+          options?.signal?.addEventListener(
+            'abort',
+            () => {
+              clearTimeout(timer);
+              reject(new DOMException('The operation was aborted.', 'AbortError'));
+            },
+            { once: true }
+          );
+        });
+        return Promise.race([fetchPromise, timeoutPromise]);
+      },
     };
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
@@ -160,6 +194,28 @@ async function createTauriHttpClient(): Promise<HttpClient> {
           if (fetchErrorMsg.includes('Failed to fetch') || fetchErrorMsg.includes('NetworkError')) {
             throw new Error('网络错误 - 无法连接到服务器。请检查网络连接。');
           }
+          throw error;
+        }
+      },
+      async getText(url: string, options?: { headers?: Record<string, string>; timeout?: number }) {
+        const controller = new AbortController();
+        const timeout = options?.timeout || 20000;
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              ...options?.headers,
+            },
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          if (response.type === 'opaque') throw new Error('CORS blocked - 无法访问外部API。');
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          return { data: await response.text(), status: response.status };
+        } catch (error) {
+          clearTimeout(timeoutId);
           throw error;
         }
       },

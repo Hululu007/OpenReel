@@ -18,8 +18,9 @@ import type {
   AwardCollectProgress,
   AwardItem,
   AwardItemMatch,
+  AwardList,
 } from '@openreel/core';
-import { getEditionTitle } from '@openreel/core';
+import { getEditionTitle, parseLiveRankingListId } from '@openreel/core';
 import { getProvider } from '../init';
 import { openMediaPlay } from '../utils/openMediaPlay';
 import { useThemeColors } from '../themes/useThemeColors';
@@ -42,7 +43,7 @@ import {
   Trophy,
   X,
 } from 'lucide-react-native';
-import { AWARD_STATUS_LABEL, TYPE_LABEL, getAwardService } from '../awards/useAwards';
+import { AWARD_STATUS_LABEL, TYPE_LABEL, getAwardService, getLiveRankingService } from '../awards/useAwards';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = (SCREEN_WIDTH - 15 * 2 - 10) / 2;
@@ -71,7 +72,38 @@ export default function RankingDetailScreen() {
   const [playingId, setPlayingId] = useState<number | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
-  const list = useMemo(() => catalog.lists.find((l) => l.id === listId), [catalog, listId]);
+  const liveService = useMemo(() => getLiveRankingService(), []);
+  const liveId = useMemo(() => parseLiveRankingListId(listId), [listId]);
+  const [liveList, setLiveList] = useState<AwardList | null>(null);
+  const [liveLoading, setLiveLoading] = useState(false);
+  const [liveError, setLiveError] = useState<string | null>(null);
+  const list = useMemo(
+    () => catalog.lists.find((l) => l.id === listId) ?? (liveList?.id === listId ? liveList : undefined),
+    [catalog, listId, liveList]
+  );
+
+  // 实时榜：每次进入页面都重新读取。
+  useEffect(() => {
+    if (!liveId) return;
+    if (catalog.lists.some((l) => l.id === listId)) return;
+    let cancelled = false;
+    setLiveLoading(true);
+    setLiveError(null);
+    void liveService
+      .loadList(listId)
+      .then((l) => {
+        if (!cancelled) setLiveList(l);
+      })
+      .catch((err: any) => {
+        if (!cancelled) setLiveError(err?.message ?? '读取失败');
+      })
+      .finally(() => {
+        if (!cancelled) setLiveLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [listId, liveId, catalog, liveService]);
   const award = useMemo(
     () => catalog.awards.find((a) => a.id === list?.awardId),
     [catalog, list]
@@ -430,7 +462,14 @@ export default function RankingDetailScreen() {
             <Text style={styles.headerTitle}>榜单</Text>
           </View>
           <View style={styles.empty}>
-            <Text style={styles.emptyText}>榜单不存在或数据已更新</Text>
+            {liveLoading ? <ActivityIndicator color={colors.mutedForeground} /> : null}
+            <Text style={styles.emptyText}>
+              {liveLoading
+                ? '正在读取红果实时榜（TOP100）…'
+                : liveError
+                  ? `读取失败：${liveError}`
+                  : '榜单不存在或数据已更新'}
+            </Text>
           </View>
         </View>
       </BlurredBackground>
@@ -494,7 +533,7 @@ export default function RankingDetailScreen() {
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.cardMeta}>
-              {item.year} · {TYPE_LABEL[item.type] ?? item.type}
+              {list.kind === 'LIVE' ? item.note || '短剧' : `${item.year} · ${TYPE_LABEL[item.type] ?? item.type}`}
             </Text>
             {item.rating != null && item.rating > 0 && (
               <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 'auto', gap: 2 }}>
@@ -525,9 +564,11 @@ export default function RankingDetailScreen() {
               {edition ? getEditionTitle(edition) : list.title}
             </Text>
             <Text style={styles.headerSub} numberOfLines={1}>
-              {award?.name}
-              {edition?.year != null ? ` · ${edition.year}` : ''} · {list.items.length} 部
-              {edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''}
+              {list.kind === 'LIVE'
+                ? `${list.items.length} 部 · ${list.updatedText || '红果日更'}`
+                : `${award?.name ?? ''}${edition?.year != null ? ` · ${edition.year}` : ''} · ${list.items.length} 部${
+                    edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''
+                  }`}
             </Text>
           </View>
           <TouchableOpacity style={styles.iconBtn} onPress={refreshMatches} disabled={loading}>

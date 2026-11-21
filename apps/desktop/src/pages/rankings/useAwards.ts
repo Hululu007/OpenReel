@@ -1,4 +1,4 @@
-import { AwardService } from '@openreel/core';
+import { AwardService, LiveRankingService } from '@openreel/core';
 import { getProvider } from '../../init';
 
 let service: AwardService | null = null;
@@ -20,3 +20,11 @@ export const AWARD_STATUS_META: Record<string, AwardStatusMeta> = {
   PENDING: { label: '待确认', className: 'bg-amber-500/15 text-amber-400 border-amber-500/20' },
   MISSING: { label: '未收录', className: 'bg-white/5 text-muted-foreground border-white/10' },
 };
+
+let liveService: LiveRankingService | null = null;
+
+/** 红果实时榜服务单例：每次进页都重新读取，缓存只做兜底。 */
+export function getLiveRankingService(): LiveRankingService {
+  if (!liveService) liveService = new LiveRankingService(getProvider());
+  return liveService;
+}

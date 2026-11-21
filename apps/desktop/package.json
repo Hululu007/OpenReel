@@ -1,6 +1,6 @@
 {
   "name": "@openreel/desktop",
-  "version": "1.0.247",
+  "version": "1.0.248",
   "private": true,
   "type": "module",
   "scripts": {

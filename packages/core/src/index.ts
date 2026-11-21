@@ -49,6 +49,20 @@ export { VideoDurationService, setVideoFetchFn, getVideoFetchFn } from './servic
 export { SourceImportService, exportSourcesToJson } from './services/sourceImportService';
 export { RecommendationService, type RecommendationOverview, type DislikedMediaItem, type TagBlacklistItem } from './services/recommendationService';
 export { AwardService } from './services/awardService';
+export {
+  LiveRankingService,
+  LIVE_RANKING_BOARDS,
+  LIVE_RANKING_TYPES,
+  liveRankingListId,
+  parseLiveRankingListId,
+  extractJsonArrayAfterKey,
+  parseLiveRankingPage,
+  type LiveRankingBoardKey,
+  type LiveRankingTypeKey,
+  type LiveRankingBoardDef,
+  type LiveRankingItem,
+  type LiveRankingSnapshot,
+} from './services/liveRankingService';
 export * from './awards/catalog';
 export { resolveDefaultPlayTarget, type DefaultPlayTarget } from './services/playbackTarget';
 export { prefetchPlayTargets, resetPlayPrefetchCache } from './services/playPrefetch';

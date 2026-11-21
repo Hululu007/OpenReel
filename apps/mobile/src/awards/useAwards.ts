@@ -1,4 +1,4 @@
-import { AwardService } from '@openreel/core';
+import { AwardService, LiveRankingService } from '@openreel/core';
 import { getProvider } from '../init';
 
 let service: AwardService | null = null;
@@ -33,4 +33,12 @@ const DOUBAN_IMAGE_HEADERS = {
 /** 豆瓣图床要求 Referer；其他图床返回 undefined，保持原有加载方式。 */
 export function awardPosterHeaders(uri?: string | null): Record<string, string> | undefined {
   return uri && /doubanio\.com|douban\.com/.test(uri) ? DOUBAN_IMAGE_HEADERS : undefined;
+}
+
+let liveService: LiveRankingService | null = null;
+
+/** 红果实时榜服务单例：每次进页都重新读取，缓存只做兜底。 */
+export function getLiveRankingService(): LiveRankingService {
+  if (!liveService) liveService = new LiveRankingService(getProvider());
+  return liveService;
 }

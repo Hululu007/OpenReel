@@ -2321,7 +2321,7 @@ dependencies = [
 
 [[package]]
 name = "movie-app-desktop"
-version = "1.0.247"
+version = "1.0.248"
 dependencies = [
  "base64 0.22.1",
  "fs2",

@@ -17,8 +17,8 @@ export type AwardGroup = 'AWARDS' | 'CHINESE' | 'TV' | 'DOUBAN';
 /** 奖项类型：电影奖 / 电视奖 / 电影节 / 豆瓣年度榜单。 */
 export type AwardKind = 'MOVIE' | 'TV' | 'FESTIVAL' | 'ANNUAL';
 
-/** 榜单类型：获奖名单 / 提名名单 / 历届片单 / 年度榜单。 */
-export type AwardListKind = 'WINNERS' | 'NOMINEES' | 'ALL_TIME' | 'ANNUAL';
+/** 榜单类型：获奖名单 / 提名名单 / 历届片单 / 年度榜单 / 实时榜（第三方日更，客户端现拉）。 */
+export type AwardListKind = 'WINNERS' | 'NOMINEES' | 'ALL_TIME' | 'ANNUAL' | 'LIVE';
 
 export interface AwardDef {
   id: string;
@@ -51,6 +51,16 @@ export interface AwardItem {
   note?: string;
 }
 
+/** 实时榜的匹配策略（短剧榜单没有上映年份，源站类型也不统一）。 */
+export interface AwardListMatchOptions {
+  /** 忽略年份差：仅靠标题精确度判置信度（红果短剧无上映年）。 */
+  ignoreYear?: boolean;
+  /** 覆盖候选类型范围（同一部短剧在源站可能是 MOVIE 或 TV）。 */
+  types?: MediaType[];
+  /** ignoreYear 时用于限制扫描范围的年份窗口，默认 [今年-3, 今年+1]。 */
+  yearWindow?: [number, number];
+}
+
 /**
  * 「一届」内的名单分区名，如豆瓣一年 6 份片单的「华语电影 / 外语电影 / 冷门佳片」。
  * 同一 awardId + year 的多份榜单在 UI 里是同一页的 section，不并列成多个年份入口。
@@ -66,6 +76,10 @@ export interface AwardList {
   kind: AwardListKind;
   /** 同一届内的分区名（多份名单时作为页内 tab 文案）。 */
   sectionLabel?: string;
+  /** 实时榜的来源更新说明，如「11月21日已更新·基于红果内观看/互动等综合热度排序」。 */
+  updatedText?: string;
+  /** 实时榜专用匹配策略（静态榜单不设）。 */
+  matchOptions?: AwardListMatchOptions;
   sourceUrl?: string;
   items: AwardItem[];
 }

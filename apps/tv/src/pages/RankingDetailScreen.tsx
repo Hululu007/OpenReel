@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AwardCatalog, AwardItem, AwardItemMatch, AwardList } from '@openreel/core';
-import { getEditionTitle } from '@openreel/core';
+import { getEditionTitle, parseLiveRankingListId } from '@openreel/core';
 import { useThemeColors, useScaledFontSize, radius, useThemeStore, hexToRgba } from '@openreel/expo-ui';
 
 import { TVButton } from '../components/TVButton';
@@ -15,7 +15,7 @@ import { TV_GRID_CARD, TV_LAYOUT, tv } from '../theme/tokens';
 import AwardPoster from '../components/AwardPoster';
 import { useBackgroundImageStore } from '../stores/backgroundImageStore';
 import type { RootStackParamList } from '../navigation/types';
-import { AWARD_STATUS_LABEL, TYPE_LABEL, getAwardService } from '../awards/useAwards';
+import { AWARD_STATUS_LABEL, TYPE_LABEL, getAwardService, getLiveRankingService } from '../awards/useAwards';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 type Rt = RouteProp<RootStackParamList, 'RankingDetail'>;
@@ -35,10 +35,38 @@ export function RankingDetailScreen() {
   const [loading, setLoading] = useState(true);
   const setBackgroundImage = useBackgroundImageStore((s) => s.setImageUrl);
 
+  const liveService = useMemo(() => getLiveRankingService(), []);
+  const liveId = useMemo(() => parseLiveRankingListId(activeListId), [activeListId]);
+  const [liveList, setLiveList] = useState<AwardList | null>(null);
+  const [liveLoading, setLiveLoading] = useState(false);
+  const [liveError, setLiveError] = useState<string | null>(null);
   const list = useMemo(
-    () => catalog.lists.find((l) => l.id === activeListId),
-    [catalog, activeListId]
+    () => catalog.lists.find((l) => l.id === activeListId) ?? (liveList?.id === activeListId ? liveList : undefined),
+    [catalog, activeListId, liveList]
   );
+
+  // 实时榜：每次进入页面都重新读取。
+  useEffect(() => {
+    if (!liveId) return;
+    if (catalog.lists.some((l) => l.id === activeListId)) return;
+    let cancelled = false;
+    setLiveLoading(true);
+    setLiveError(null);
+    void liveService
+      .loadList(activeListId)
+      .then((l) => {
+        if (!cancelled) setLiveList(l);
+      })
+      .catch((err: any) => {
+        if (!cancelled) setLiveError(err?.message ?? '读取失败');
+      })
+      .finally(() => {
+        if (!cancelled) setLiveLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [activeListId, liveId, catalog, liveService]);
   const award = useMemo(
     () => catalog.awards.find((a) => a.id === list?.awardId),
     [catalog, list]
@@ -134,7 +162,11 @@ export function RankingDetailScreen() {
           <Text style={[styles.topTitle, { color: colors.foreground, fontSize: scale(23) }]}>榜单</Text>
         </View>
         <Text style={{ color: colors.mutedForeground, textAlign: 'center', marginTop: tv(60), fontSize: scale(18) }}>
-          榜单不存在或数据已更新
+          {liveLoading
+            ? '正在读取红果实时榜（TOP100）…'
+            : liveError
+              ? `读取失败：${liveError}`
+              : '榜单不存在或数据已更新'}
         </Text>
       </View>
     );
@@ -148,10 +180,12 @@ export function RankingDetailScreen() {
           <Text style={[styles.topTitle, { color: colors.foreground, fontSize: scale(22) }]} numberOfLines={1}>
             {edition ? getEditionTitle(edition) : list.title}
           </Text>
-          <Text style={[styles.topHint, { color: colors.mutedForeground, fontSize: scale(13) }]}>
-            {award?.name}
-            {edition?.year != null ? ` · ${edition.year}` : ''} · {list.items.length} 部
-            {edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''}
+          <Text style={[styles.topHint, { color: colors.mutedForeground, fontSize: scale(13) }]} numberOfLines={1}>
+            {list.kind === 'LIVE'
+              ? `${list.items.length} 部 · ${list.updatedText || '红果日更'}`
+              : `${award?.name ?? ''}${edition?.year != null ? ` · ${edition.year}` : ''} · ${list.items.length} 部${
+                  edition && sectionLists.length > 1 ? `（共 ${edition.totalItems} 部）` : ''
+                }`}
             {loading ? ' · 正在核对本地库…' : ''}
           </Text>
         </View>
@@ -273,7 +307,10 @@ export function RankingDetailScreen() {
                     {row.item.title}
                   </Text>
                   <Text style={{ color, fontSize: scale(11), marginTop: tv(2) }} numberOfLines={1}>
-                    {AWARD_STATUS_LABEL[status] ?? status} · {row.item.year} · {TYPE_LABEL[row.item.type] ?? row.item.type}
+                    {AWARD_STATUS_LABEL[status] ?? status} ·{' '}
+                    {list.kind === 'LIVE'
+                      ? row.item.note || '短剧'
+                      : `${row.item.year} · ${TYPE_LABEL[row.item.type] ?? row.item.type}`}
                   </Text>
                 </View>
               </View>
