@@ -285,30 +285,34 @@ export class LiveRankingService {
     opts?: LiveRankingLoadOptions
   ): Promise<LiveRankingSnapshot | null> {
     const fileName = `${board}-${type}.json`;
-    for (const base of MIRROR_URLS) {
-      if (opts?.signal?.aborted) return null;
-      try {
-        const res = await getHttpClient().get(`${base}${fileName}`, {
-          timeout: 12000,
-          mode: 'cors',
-          signal: opts?.signal,
-        });
-        const data = res.data as MirrorSnapshot;
-        const rawItems = Array.isArray(data?.items) ? data.items : [];
-        if (rawItems.length === 0) continue;
-        const items = rawItems.slice(0, maxPages * PAGE_SIZE);
-        const fetchedAt = data.fetchedAt ? Date.parse(data.fetchedAt) : Date.now();
-        opts?.onProgress?.({ page: 1, loaded: items.length });
-        return {
-          board,
-          type,
-          items,
-          updatedText: data.updatedText ?? '',
-          fetchedAt: Number.isFinite(fetchedAt) ? fetchedAt : Date.now(),
-          fromCache: false,
-        };
-      } catch {
-        // 换下一个镜像
+    // 实测网络会偶发把响应截断（Content-Length 完整但 body 只到一半，JSON 解析失败），
+    // 所以每个镜像都重试一次，再换下一个镜像。
+    for (let attempt = 0; attempt < 2; attempt++) {
+      for (const base of MIRROR_URLS) {
+        if (opts?.signal?.aborted) return null;
+        try {
+          const res = await getHttpClient().get(`${base}${fileName}`, {
+            timeout: 12000,
+            mode: 'cors',
+            signal: opts?.signal,
+          });
+          const data = res.data as MirrorSnapshot;
+          const rawItems = Array.isArray(data?.items) ? data.items : [];
+          if (rawItems.length === 0) continue;
+          const items = rawItems.slice(0, maxPages * PAGE_SIZE);
+          const fetchedAt = data.fetchedAt ? Date.parse(data.fetchedAt) : Date.now();
+          opts?.onProgress?.({ page: 1, loaded: items.length });
+          return {
+            board,
+            type,
+            items,
+            updatedText: data.updatedText ?? '',
+            fetchedAt: Number.isFinite(fetchedAt) ? fetchedAt : Date.now(),
+            fromCache: false,
+          };
+        } catch {
+          // 截断/网络错误：换镜像或重试
+        }
       }
     }
     return null;
