@@ -31,6 +31,7 @@ import HistoryScreen from './src/pages/HistoryScreen';
 import TaskListScreen from './src/pages/TaskListScreen';
 import CollectConfigScreen from './src/pages/CollectConfigScreen';
 import SourceManagerScreen from './src/pages/SourceManagerScreen';
+import MobileSyncScreen from './src/pages/MobileSyncScreen';
 import AiSourceImportScreen from './src/pages/AiSourceImportScreen';
 import VideoManagementScreen from './src/pages/VideoManagementScreen';
 import SettingsScreen from './src/pages/SettingsScreen';
@@ -71,6 +72,7 @@ function RootNavigator() {
         <Stack.Screen name="TaskList" component={TaskListScreen} />
         <Stack.Screen name="CollectConfig" component={CollectConfigScreen} />
         <Stack.Screen name="SourceManager" component={SourceManagerScreen} />
+        <Stack.Screen name="MobileSync" component={MobileSyncScreen} />
         <Stack.Screen name="AiSourceImport" component={AiSourceImportScreen} />
         <Stack.Screen name="VideoManagement" component={VideoManagementScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />

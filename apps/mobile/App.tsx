@@ -57,6 +57,7 @@ import RankingsScreen from './src/pages/RankingsScreen';
 import RankingDetailScreen from './src/pages/RankingDetailScreen';
 import PlayScreen from './src/pages/PlayScreen';
 import SourceManagerScreen from './src/pages/SourceManagerScreen';
+import TvSyncScreen from './src/pages/TvSyncScreen';
 import AiSourceImportScreen from './src/pages/AiSourceImportScreen';
 import CollectConfigScreen from './src/pages/CollectConfigScreen';
 import AppearanceSettingsScreen from './src/pages/AppearanceSettingsScreen';
@@ -112,6 +113,7 @@ function RootNavigator() {
         <Stack.Screen name="Documentary" component={DocumentaryScreen} />
         <Stack.Screen name="Play" component={PlayScreen} options={{ animation: 'default' }} />
         <Stack.Screen name="SourceManager" component={SourceManagerScreen} />
+        <Stack.Screen name="TvSync" component={TvSyncScreen} />
         <Stack.Screen name="AiSourceImport" component={AiSourceImportScreen} />
         <Stack.Screen name="CollectConfig" component={CollectConfigScreen} />
         <Stack.Screen name="AppearanceSettings" component={AppearanceSettingsScreen} />

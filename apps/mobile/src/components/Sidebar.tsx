@@ -170,6 +170,9 @@ export default function Sidebar() {
             <TouchableOpacity style={styles.menuItem} onPress={() => handleNav('SourceManager')}>
               <Text style={styles.menuText}>管理视频源</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => handleNav('TvSync')}>
+              <Text style={styles.menuText}>同步到电视</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.menuItem} onPress={() => handleNav('CollectConfig')}>
               <Text style={styles.menuText}>采集配置</Text>
             </TouchableOpacity>

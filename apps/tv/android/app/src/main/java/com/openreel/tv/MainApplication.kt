@@ -30,6 +30,8 @@ class MainApplication : Application(), ReactApplication {
           add(LanPastePackage())
           // 原生焦点补位（JS view.focus() 在本机失效，弹层初始焦点改用原生 requestFocus）
           add(TvFocusPackage())
+          // 手机 → 电视 整库替换（分片接收 + 校验 + 原子替换 + 重启）
+          add(LibrarySyncPackage())
         }
     )
   }

@@ -350,4 +350,11 @@ export interface DatabaseProvider {
 
   // —— 生命周期 ——
   init(): Promise<void>;
+  /**
+   * 关闭底层数据库连接（释放文件句柄、WAL 落盘）。
+   *
+   * 仅用于「整库替换」类操作：替换前必须先关闭，否则旧连接会继续持有已删除/被覆盖的
+   * 数据库句柄，导致 WAL 回放把新库写坏。正常业务路径不需要调用。
+   */
+  close(): Promise<void>;
 }

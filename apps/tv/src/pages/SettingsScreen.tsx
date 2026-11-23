@@ -31,6 +31,7 @@ const MAIN_ENTRIES: Entry[] = [
   { key: 'usage', label: '使用偏好', route: 'UsagePreferences', desc: '播放行为与默认设置' },
   { key: 'appearance', label: '外观设置', route: 'AppearanceSettings', desc: '颜色模式、字体大小、背景图设置、透明度' },
   { key: 'sources', label: '管理视频源', route: 'SourceManager', desc: '增删改查采集源' },
+  { key: 'mobilesync', label: '手机同步到电视', route: 'MobileSync', desc: '用手机片库整份替换电视数据（全覆盖）' },
   { key: 'collectcfg', label: '采集配置', route: 'CollectConfig', desc: '采集范围与并发参数' },
   { key: 'tasklist', label: '采集任务', route: 'TaskList', desc: '查看采集进度与任务记录' },
   { key: 'video', label: '视频管理', route: 'VideoManagement', desc: '缓存占用、清理缓存、删除影片' },

@@ -2,7 +2,7 @@
   "expo": {
     "name": "OpenReel",
     "slug": "openreel",
-    "version": "1.0.253",
+    "version": "1.0.254",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -19,6 +19,7 @@
       "bundleIdentifier": "com.openreel.ios",
       "infoPlist": {
         "NSLocalNetworkUsageDescription": "需要访问本地网络以发现和连接投屏设备",
+        "NSCameraUsageDescription": "用于扫描电视上的同步二维码",
         "NSBonjourServices": ["_raop._tcp", "_upnp._tcp", "_airplay._tcp"],
         "UIBackgroundModes": ["audio"]
       }
@@ -41,7 +42,9 @@
       "expo-image",
       ["expo-video", { "supportsPictureInPicture": true }],
       "expo-screen-orientation",
-      "expo-status-bar"
+      "expo-status-bar",
+      "./plugins/withCleartextTraffic",
+      ["expo-camera", { "cameraPermission": "用于扫描电视上的同步二维码" }]
     ]
   }
 }

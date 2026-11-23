@@ -34,6 +34,7 @@ export type RootStackParamList = {
   CollectConfig: undefined;
   TaskList: undefined;
   SourceManager: undefined;
+  MobileSync: undefined;
   AiSourceImport: undefined;
   VideoManagement: undefined;
   Settings: undefined;

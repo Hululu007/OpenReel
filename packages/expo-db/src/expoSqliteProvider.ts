@@ -3832,6 +3832,26 @@ export class ExpoSqliteProvider implements DatabaseProvider {
     await this.db!.runAsync(sql, params || []);
   }
 
+  /**
+   * 关闭数据库连接（整库替换前调用）。
+   *
+   * 先 checkpoint 再依次关闭写/读连接，确保 WAL 落盘、文件句柄释放；
+   * 之后原生侧才能安全地替换 movieapp.db 并删除 -wal/-shm。
+   */
+  async close(): Promise<void> {
+    try {
+      await this.db?.execAsync('PRAGMA wal_checkpoint(TRUNCATE);').catch(() => undefined);
+    } catch {}
+    try {
+      await this.db?.closeAsync();
+    } catch {}
+    try {
+      await this.readDb?.closeAsync();
+    } catch {}
+    this.db = null;
+    this.readDb = null;
+  }
+
   async withTransactionAsync<T>(fn: () => Promise<T>): Promise<T> {
     const db = this.db!;
     if (this.txDepth > 0) return fn();

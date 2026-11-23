@@ -3170,6 +3170,14 @@ async clearWatchHistory(): Promise<void> {
     await this.db!.execute(sql, params);
   }
 
+  /** 关闭数据库连接（整库替换前调用；桌面端当前无替换入口，保持与移动端接口一致）。 */
+  async close(): Promise<void> {
+    try {
+      await this.db?.close();
+    } catch {}
+    this.db = null;
+  }
+
   // ────────────────────────────────────────────────────────────────
   // 数据库查看工具（只读）
   // 全部走现有 db 读锁与重试，不抢写锁；写语句/多语句一律拦截。
