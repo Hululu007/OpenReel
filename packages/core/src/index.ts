@@ -47,6 +47,10 @@ export { SystemConfigService, type CollectConfig, type ShortDramaConfig } from '
 export { KidLockService } from './services/kidLockService';
 export { VideoDurationService, setVideoFetchFn, getVideoFetchFn } from './services/videoDurationService';
 export { SourceImportService, exportSourcesToJson } from './services/sourceImportService';
+export {
+  buildPhoneBridgePage,
+  type PhoneBridgePageOptions,
+} from './services/phoneBridgePage';
 export { RecommendationService, type RecommendationOverview, type DislikedMediaItem, type TagBlacklistItem } from './services/recommendationService';
 export { AwardService } from './services/awardService';
 export {

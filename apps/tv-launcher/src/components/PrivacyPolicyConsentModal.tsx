@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal } from 'react-native';
 import { useThemeColors, useScaledFontSize, hexToRgba } from '@openreel/expo-ui';
 import { agreePrivacy } from '../utils/privacyConsent';
 import { TVFocusable } from '../focus/TVFocusable';
+import { focusRegistry } from '../focus/registry';
 import { tv } from '../theme/tokens';
 
 interface Props {
@@ -34,7 +35,16 @@ export function PrivacyPolicyConsentModal({ visible, onAgreed, onViewPolicy }: P
     // TV 遥控 BACK 键在同意前拦截：必须同意或退出
     const { BackHandler } = require('react-native');
     const sub = BackHandler.addEventListener('hardwareBackPress', () => true);
-    return () => sub.remove();
+    // 焦点监狱：弹窗期间焦点锁定在 privacy-consent- 前缀内，
+    // 并把初始焦点给到复选框（否则焦点留在背后首页顶栏，遥控进不了弹窗）。
+    focusRegistry.pushScope('privacy-consent-');
+    focusRegistry.requestInitialFocus('privacy-consent-check');
+    const t = setTimeout(() => focusRegistry.focusNode('privacy-consent-check'), 120);
+    return () => {
+      sub.remove();
+      clearTimeout(t);
+      focusRegistry.popScope();
+    };
   }, [visible]);
 
   if (!visible) return null;
@@ -51,51 +61,80 @@ export function PrivacyPolicyConsentModal({ visible, onAgreed, onViewPolicy }: P
   };
 
   return (
-    <View style={styles.overlay} pointerEvents="auto">
-      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <Text style={[styles.title, { color: colors.foreground, fontSize: scale(26) }]}>隐私政策提示</Text>
-        <Text style={[styles.content, { color: colors.textSecondary, fontSize: scale(19), lineHeight: scale(27) }]}>
-          感谢您使用 OpenReel。为了更好地保护您的隐私，请您在使用前阅读并同意《隐私政策》。
-        </Text>
-        <Text style={[styles.content, { color: colors.textSecondary, fontSize: scale(18), lineHeight: scale(26), marginTop: tv(10) }]}>
-          本应用为本地优先工具，不要求注册登录，片库、观看记录等数据仅存储在您的设备本地。
-        </Text>
+    <Modal visible transparent animationType="none" onRequestClose={() => {}} statusBarTranslucent>
+      <View style={styles.overlay} pointerEvents="auto">
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[styles.title, { color: colors.foreground, fontSize: scale(26) }]}>隐私政策提示</Text>
+          <Text style={[styles.content, { color: colors.textSecondary, fontSize: scale(19), lineHeight: scale(27) }]}>
+            感谢您使用 OpenReel。为了更好地保护您的隐私，请您在使用前阅读并同意《隐私政策》。
+          </Text>
+          <Text style={[styles.content, { color: colors.textSecondary, fontSize: scale(18), lineHeight: scale(26), marginTop: tv(10) }]}>
+            本应用为本地优先工具，不要求注册登录，片库、观看记录等数据仅存储在您的设备本地。
+          </Text>
 
-        <View style={styles.linkWrap}>
-          <TVFocusable id="privacy-consent-view-policy" onPress={onViewPolicy}>
-            <Text style={[styles.link, { color: colors.buttonPrimaryBg, fontSize: scale(18) }]}>查看完整隐私政策</Text>
-          </TVFocusable>
-        </View>
-
-        <TouchableOpacity activeOpacity={0.7} onPress={() => setChecked((c) => !c)} style={styles.checkRow}>
-          <View style={[styles.checkbox, checked && { backgroundColor: colors.buttonPrimaryBg }]}>
-            {checked ? <Text style={{ color: '#fff', fontSize: scale(16) }}>✓</Text> : null}
+          <View style={styles.linkWrap}>
+            <TVFocusable
+              id="privacy-consent-view-policy"
+              onPress={onViewPolicy}
+              nextFocusUpId="privacy-consent-check"
+              nextFocusDownId="privacy-consent-check"
+              nextFocusLeftId="privacy-consent-check"
+              nextFocusRightId="privacy-consent-check"
+            >
+              <Text style={[styles.link, { color: colors.buttonPrimaryBg, fontSize: scale(18) }]}>查看完整隐私政策</Text>
+            </TVFocusable>
           </View>
-          <Text style={[styles.checkText, { color: colors.textSecondary, fontSize: scale(17) }]}>我已阅读并理解《OpenReel 隐私政策》</Text>
-        </TouchableOpacity>
 
-        <View style={styles.actions}>
+          {/* 复选框必须用 TVFocusable：TouchableOpacity 只能触摸，遥控聚焦不到 → 无法勾选 → 无法同意。 */}
           <TVFocusable
-            id="privacy-consent-disagree"
-            onPress={handleExit}
-            disabled={!checked}
+            id="privacy-consent-check"
+            onPress={() => setChecked((c) => !c)}
+            style={styles.checkRow}
+            testID="tv-privacy-check"
+            nextFocusUpId="privacy-consent-view-policy"
+            nextFocusDownId={checked ? 'privacy-consent-disagree' : 'privacy-consent-view-policy'}
+            nextFocusLeftId="privacy-consent-view-policy"
+            nextFocusRightId={checked ? 'privacy-consent-agree' : 'privacy-consent-view-policy'}
           >
-            <View style={[styles.btn, { borderColor: colors.border, opacity: checked ? 1 : 0.5 }]}>
-              <Text style={[styles.btnText, { color: colors.textSecondary, fontSize: scale(18) }]}>不同意并退出</Text>
+            <View style={[styles.checkbox, checked && { backgroundColor: colors.buttonPrimaryBg }]}>
+              {checked ? <Text style={{ color: '#fff', fontSize: scale(16) }}>✓</Text> : null}
             </View>
+            <Text style={[styles.checkText, { color: colors.textSecondary, fontSize: scale(17) }]}>我已阅读并理解《OpenReel 隐私政策》</Text>
           </TVFocusable>
-          <TVFocusable
-            id="privacy-consent-agree"
-            onPress={handleAgree}
-            disabled={!checked}
-          >
-            <View style={[styles.btn, styles.btnPrimary, { backgroundColor: colors.buttonPrimaryBg, opacity: checked ? 1 : 0.5 }]}>
-              <Text style={[styles.btnText, { color: colors.buttonPrimaryText, fontSize: scale(18) }]}>同意并继续</Text>
-            </View>
-          </TVFocusable>
+
+          <View style={styles.actions}>
+            <TVFocusable
+              id="privacy-consent-disagree"
+              onPress={handleExit}
+              disabled={!checked}
+              testID="tv-privacy-disagree"
+              nextFocusUpId="privacy-consent-check"
+              nextFocusDownId="privacy-consent-view-policy"
+              nextFocusLeftId="privacy-consent-agree"
+              nextFocusRightId="privacy-consent-agree"
+            >
+              <View style={[styles.btn, { borderColor: colors.border, opacity: checked ? 1 : 0.5 }]}>
+                <Text style={[styles.btnText, { color: colors.textSecondary, fontSize: scale(18) }]}>不同意并退出</Text>
+              </View>
+            </TVFocusable>
+            <TVFocusable
+              id="privacy-consent-agree"
+              onPress={handleAgree}
+              disabled={!checked}
+              testID="tv-privacy-agree"
+              nextFocusUpId="privacy-consent-check"
+              nextFocusDownId="privacy-consent-view-policy"
+              nextFocusLeftId="privacy-consent-disagree"
+              nextFocusRightId="privacy-consent-disagree"
+            >
+              <View style={[styles.btn, styles.btnPrimary, { backgroundColor: colors.buttonPrimaryBg, opacity: checked ? 1 : 0.5 }]}>
+                <Text style={[styles.btnText, { color: colors.buttonPrimaryText, fontSize: scale(18) }]}>同意并继续</Text>
+              </View>
+            </TVFocusable>
+          </View>
         </View>
       </View>
-    </View>
+    </Modal>
   );
 }
 

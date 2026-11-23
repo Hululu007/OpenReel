@@ -76,6 +76,12 @@ export interface TVFocusableProps {
    * 几何 x 就近选到上一卡片中间的按钮。
    */
   nextFocusUpId?: string;
+  /**
+   * 「向左 / 向右」焦点目标（registry id，非必填）。用于模态弹窗把方向键
+   * 锁在弹窗内，避免原生 FocusFinder 按几何搜索跳到弹窗外（如隐私政策弹窗）。
+   */
+  nextFocusLeftId?: string;
+  nextFocusRightId?: string;
 }
 
 let seq = 0;
@@ -97,6 +103,8 @@ export function TVFocusable({
   onKeyDown,
   nextFocusDownId,
   nextFocusUpId,
+  nextFocusLeftId,
+  nextFocusRightId,
 }: TVFocusableProps) {
   const colors = useThemeColors();
   const nodeRef = useRef<React.ElementRef<typeof Pressable> | null>(null);
@@ -113,6 +121,9 @@ export function TVFocusable({
   const [nextFocusDownTag, setNextFocusDownTag] = useState<number | undefined>(undefined);
   // 「向上」目标的原生 reactTag，机制同 nextFocusDownTag。
   const [nextFocusUpTag, setNextFocusUpTag] = useState<number | undefined>(undefined);
+  // 「向左 / 向右」目标的原生 reactTag，机制同 nextFocusDownTag。
+  const [nextFocusLeftTag, setNextFocusLeftTag] = useState<number | undefined>(undefined);
+  const [nextFocusRightTag, setNextFocusRightTag] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (!nextFocusDownId) {
@@ -157,6 +168,42 @@ export function TVFocusable({
   }, [nextFocusUpId]);
 
   useEffect(() => {
+    if (!nextFocusLeftId) {
+      setNextFocusLeftTag(undefined);
+      return;
+    }
+    const resolve = () => {
+      if (focusRegistry.isDisabled(nextFocusLeftId)) {
+        setNextFocusLeftTag(undefined);
+        return;
+      }
+      const node = focusRegistry.node(nextFocusLeftId);
+      const tag = node ? findNodeHandle(node as unknown as React.Component) : null;
+      setNextFocusLeftTag(tag ?? undefined);
+    };
+    resolve();
+    return focusRegistry.subscribe(resolve);
+  }, [nextFocusLeftId]);
+
+  useEffect(() => {
+    if (!nextFocusRightId) {
+      setNextFocusRightTag(undefined);
+      return;
+    }
+    const resolve = () => {
+      if (focusRegistry.isDisabled(nextFocusRightId)) {
+        setNextFocusRightTag(undefined);
+        return;
+      }
+      const node = focusRegistry.node(nextFocusRightId);
+      const tag = node ? findNodeHandle(node as unknown as React.Component) : null;
+      setNextFocusRightTag(tag ?? undefined);
+    };
+    resolve();
+    return focusRegistry.subscribe(resolve);
+  }, [nextFocusRightId]);
+
+  useEffect(() => {
     focusRegistry.register({
       id: realId,
       // 供 TVFocusBridge 主动补焦点（页面初始焦点 / 焦点丢失恢复）时调用原生 focus()
@@ -198,6 +245,8 @@ export function TVFocusable({
       focusable={!disabled}
       nextFocusDown={nextFocusDownTag}
       nextFocusUp={nextFocusUpTag}
+      nextFocusLeft={nextFocusLeftTag}
+      nextFocusRight={nextFocusRightTag}
       onLayout={onLayout}
       onFocus={handleFocus}
       onBlur={handleBlur}

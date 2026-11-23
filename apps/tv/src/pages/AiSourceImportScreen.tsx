@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import {
   SourceImportService,
   AI_SOURCE_PROMPT,
   AI_SOURCE_IMPORT_SAMPLE,
+  buildPhoneBridgePage,
   type ParsedImportSource,
 } from '@openreel/core';
 
@@ -14,8 +15,16 @@ import { useAppStore } from '../useAppStore';
 import { TVPageHeader } from '../components/TVPageHeader';
 import { TVButton } from '../components/TVButton';
 import { TVTextInput } from '../components/TVTextInput';
+import { PhonePasteModal } from '../components/PhonePasteModal';
 import { showTVToast } from '../components/TVToast';
 import { focusRegistry } from '../focus/registry';
+import {
+  isLanPasteSupported,
+  pollLanPaste,
+  startLanPaste,
+  stopLanPaste,
+  type LanPasteSession,
+} from '../services/lanPaste';
 import { TV_LAYOUT, tv } from '../theme/tokens';
 
 type Step = 'prompt' | 'paste' | 'preview';
@@ -63,10 +72,20 @@ export function AiSourceImportScreen() {
   const [preview, setPreview] = useState<ParsedImportSource[]>([]);
   const [importing, setImporting] = useState(false);
   const [result, setResult] = useState<{ imported: number; skipped: number } | null>(null);
+  // 手机扫码粘贴（局域网中转）：电视起服务 → 手机扫码打开页面 → 手机提交文本回传
+  const [scanVisible, setScanVisible] = useState(false);
+  const [scanSession, setScanSession] = useState<LanPasteSession | null>(null);
+  const [scanError, setScanError] = useState<string | null>(null);
+  const scanSupported = useMemo(() => isLanPasteSupported(), []);
 
   useEffect(() => {
     const t = setTimeout(() => focusRegistry.requestInitialFocus('ai-back'), 120);
     return () => clearTimeout(t);
+  }, []);
+
+  // 页面离开时关闭局域网服务（含从手机页面提交后直接返回首页的情况）
+  useEffect(() => () => {
+    void stopLanPaste();
   }, []);
 
   const validCount = preview.filter((p) => p.status === 'valid').length;
@@ -94,24 +113,77 @@ export function AiSourceImportScreen() {
     }
   }, []);
 
+  const parseText = useCallback(
+    async (raw: string) => {
+      const text = raw.trim();
+      if (!text) {
+        showTVToast('请先粘贴 AI 返回的数据', 'info');
+        return;
+      }
+      const parsed = SourceImportService.parseJson(text);
+      if (parsed.errors.length > 0) {
+        showTVToast(`解析失败：${parsed.errors[0].message}`, 'error');
+        return;
+      }
+      if (parsed.items.length === 0) {
+        showTVToast('未解析到有效数据', 'info');
+        return;
+      }
+      const p = await validateImportSources(parsed.items);
+      setPreview(p);
+      setStep('preview');
+      const hasValid = p.some((x) => x.status === 'valid');
+      setTimeout(() => focusRegistry.requestInitialFocus(hasValid ? 'ai-import' : 'ai-back3'), 150);
+    },
+    [validateImportSources],
+  );
+
   const parse = useCallback(async () => {
-    if (!pasted.trim()) {
-      showTVToast('请先粘贴 AI 返回的数据', 'info');
-      return;
+    await parseText(pasted);
+  }, [pasted, parseText]);
+
+  /** 启动局域网中转服务并展示二维码 */
+  const openScan = useCallback(async () => {
+    setScanVisible(true);
+    setScanError(null);
+    setScanSession(null);
+    try {
+      const session = await startLanPaste(buildPhoneBridgePage({ prompt: AI_SOURCE_PROMPT }));
+      setScanSession(session);
+    } catch (e) {
+      setScanError(`手机中转启动失败：${e instanceof Error ? e.message : String(e)}`);
     }
-    const parsed = SourceImportService.parseJson(pasted.trim());
-    if (parsed.errors.length > 0) {
-      showTVToast(`解析失败：${parsed.errors[0].message}`, 'error');
-      return;
-    }
-    if (parsed.items.length === 0) {
-      showTVToast('未解析到有效数据', 'info');
-      return;
-    }
-    const p = await validateImportSources(parsed.items);
-    setPreview(p);
-    setStep('preview');
-  }, [pasted, validateImportSources]);
+  }, []);
+
+  const closeScan = useCallback(() => {
+    setScanVisible(false);
+    setScanSession(null);
+    setScanError(null);
+    void stopLanPaste();
+  }, []);
+
+  // 轮询手机提交的数据（1s/次）；收到后关闭服务、填入文本并直接进入预览
+  useEffect(() => {
+    if (!scanVisible || !scanSession) return;
+    let stopped = false;
+    const timer = setInterval(async () => {
+      if (stopped) return;
+      const text = await pollLanPaste();
+      if (!text) return;
+      stopped = true;
+      clearInterval(timer);
+      await stopLanPaste();
+      setScanVisible(false);
+      setScanSession(null);
+      setPasted(text);
+      showTVToast(`已从手机接收 ${text.length} 个字符`, 'success');
+      void parseText(text);
+    }, 1000);
+    return () => {
+      stopped = true;
+      clearInterval(timer);
+    };
+  }, [scanVisible, scanSession, parseText]);
 
   const doImport = useCallback(async () => {
     const validItems = preview.filter((p) => p.status === 'valid').map((p) => p.item);
@@ -173,7 +245,8 @@ export function AiSourceImportScreen() {
         {step === 'prompt' ? (
           <>
             <Text style={[styles.desc, { color: colors.textSecondary, fontSize: scale(17) }]}>
-              点「复制提示词」把它复制到剪贴板，发给 AI 助手（如 ChatGPT、Claude 等），再把 AI 返回的结果复制回来，下一步粘贴。
+              点「复制提示词」把它复制到剪贴板。下一步可用「手机扫码粘贴」：在手机上打开 AI
+              （DeepSeek、豆包、Kimi 等）提问，再把回答发回电视，电视上无需安装任何 AI 应用。
             </Text>
             <View style={[styles.promptBox, { backgroundColor: hexToRgba(colors.surface, cardOpacity / 100), borderColor: colors.border }]}>
               <Text style={[styles.promptText, { color: colors.textSecondary, fontSize: scale(14) }]}>
@@ -186,10 +259,20 @@ export function AiSourceImportScreen() {
         {step === 'paste' ? (
           <>
             <Text style={[styles.desc, { color: colors.textSecondary, fontSize: scale(17) }]}>
-              点「从剪贴板粘贴」把 AI 返回的 JSON 贴进来，再点「解析并预览」。也可以用下方输入框手动输入（按 OK 打开电视键盘）。
+              推荐用「手机扫码粘贴」：电视显示二维码，手机扫码后在手机上用 AI 提问，点「发送到电视」即可自动填入。
+              也可以点「从剪贴板粘贴」把 AI 返回的 JSON 贴进来，或用下方输入框手动输入（按 OK 打开电视键盘）。
             </Text>
             <View style={styles.actionRow}>
-              <TVButton id="ai-paste" label="从剪贴板粘贴" variant="primary" onPress={pasteFromClipboard} testID="tv-ai-paste" />
+              {scanSupported ? (
+                <TVButton
+                  id="ai-scan"
+                  label="手机扫码粘贴"
+                  variant="primary"
+                  onPress={openScan}
+                  testID="tv-ai-scan"
+                />
+              ) : null}
+              <TVButton id="ai-paste" label="从剪贴板粘贴" variant="secondary" onPress={pasteFromClipboard} testID="tv-ai-paste" />
               <TVButton
                 id="ai-sample"
                 label="填入示例"
@@ -306,6 +389,14 @@ export function AiSourceImportScreen() {
           )
         ) : null}
       </View>
+
+      <PhonePasteModal
+        visible={scanVisible}
+        url={scanSession?.url ?? null}
+        error={scanError}
+        onClose={closeScan}
+        onRetry={openScan}
+      />
     </View>
   );
 }

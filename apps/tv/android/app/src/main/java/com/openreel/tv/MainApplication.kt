@@ -26,6 +26,10 @@ class MainApplication : Application(), ReactApplication {
         PackageList(this).packages.apply {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // add(MyReactNativePackage())
+          // AI 导入「手机扫码粘贴」：局域网一次性 HTTP 服务（app 内手动注册）
+          add(LanPastePackage())
+          // 原生焦点补位（JS view.focus() 在本机失效，弹层初始焦点改用原生 requestFocus）
+          add(TvFocusPackage())
         }
     )
   }

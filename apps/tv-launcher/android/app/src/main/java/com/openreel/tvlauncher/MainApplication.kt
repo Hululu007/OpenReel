@@ -28,6 +28,10 @@ class MainApplication : Application(), ReactApplication {
           // add(MyReactNativePackage())
           // TV Launcher「应用列表区」：已安装应用查询与启动（app 内手动注册）
           add(InstalledAppsPackage())
+          // AI 导入「手机扫码粘贴」：局域网一次性 HTTP 服务（app 内手动注册）
+          add(LanPastePackage())
+          // 原生焦点补位（JS view.focus() 在本机失效，弹层初始焦点改用原生 requestFocus）
+          add(TvFocusPackage())
         }
     )
   }

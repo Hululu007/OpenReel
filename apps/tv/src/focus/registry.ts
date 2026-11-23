@@ -1,3 +1,6 @@
+import { findNodeHandle } from 'react-native';
+import { requestNativeFocus } from './nativeFocus';
+
 /**
  * TV 焦点注册表。
  *
@@ -211,6 +214,24 @@ class FocusRegistry {
   /** 取某 id 的原生节点（滚动跟随用；不存在返回 null） */
   node(id: string): FocusNodeHandle | null {
     return this.entries.get(id)?.getNode?.() ?? null;
+  }
+
+  /**
+   * 用原生 requestFocus 把焦点给到指定 id（弹层初始焦点用）。
+   *
+   * 与 `focusNode` 的区别：后者走 JS 侧 `view.focus()`，在本机（酷开 Android 9 /
+   * RN 0.86 新架构）实测返回成功但不产生焦点事件；本方法按 reactTag 交给原生
+   * `requestFocus()`，实测可真正拿到焦点。只作为补焦点通道，不改变任何焦点策略。
+   */
+  focusNodeNative(id: string): boolean {
+    const e = this.entries.get(id);
+    if (!e || e.disabled) return false;
+    const node = e.getNode?.();
+    if (!node) return false;
+    const tag = findNodeHandle(node as unknown as React.Component);
+    if (!tag) return false;
+    requestNativeFocus(tag);
+    return true;
   }
 
   /**
